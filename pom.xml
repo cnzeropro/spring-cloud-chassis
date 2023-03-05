@@ -37,11 +37,13 @@
         <!-- dependencies -->
         <!-- spring cloud基于java 8的最后一版 -->
         <spring-boot.version>2.6.11</spring-boot.version>
+        <spring-shell.version>2.1.7</spring-shell.version>
         <spring-cloud.version>2021.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
 
         <!-- starters -->
         <druid.version>1.2.16</druid.version>
+        <arthas.version>3.4.8</arthas.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatis.version>2.3.0</mybatis.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
@@ -122,6 +124,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.shell</groupId>
+                <artifactId>spring-shell-dependencies</artifactId>
+                <version>${spring-shell.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
@@ -185,6 +194,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taobao.arthas</groupId>
+                <artifactId>arthas-spring-boot-starter</artifactId>
+                <version>${arthas.version}</version>
+                <scope>runtime</scope>
             </dependency>
             <!-- dynamic-datasource（动态数据源） -->
             <dependency>
