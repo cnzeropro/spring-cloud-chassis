@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.6.11</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>org.zero</groupId>
+    <artifactId>cloud-demo</artifactId>
+    <version>1.0.0</version>
+
+    <name>cloud-demo</name>
+    <description>微服务Demo</description>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>micro-service-1</module>
+    </modules>
+
+
+    <properties>
+        <!-- properties -->
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.encoding>UTF-8</project.encoding>
+        <maven.compiler.encoding>${project.encoding}</maven.compiler.encoding>
+        <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+        <resource.delimiter>@</resource.delimiter>
+
+        <!-- dependencies -->
+        <!-- spring cloud基于java 8的最后一版 -->
+        <spring-boot.version>2.6.11</spring-boot.version>
+        <spring-cloud.version>2021.0.4</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+
+        <!-- starters -->
+        <druid.version>1.2.16</druid.version>
+        <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
+        <mybatis.version>2.3.0</mybatis.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <shiro.version>1.9.1</shiro.version>
+        <redisson.version>3.19.3</redisson.version>
+        <jasypt.version>3.0.4</jasypt.version>
+        <powerjob.version>4.3.0</powerjob.version>
+        <txlcn.version>5.0.2.RELEASE</txlcn.version>
+        <xxl-job.version>2.3.1</xxl-job.version>
+        <apollo.version>2.1.0</apollo.version>
+        <minio.version>8.5.2</minio.version>
+        <!-- others -->
+        <hutool.version>5.8.11</hutool.version>
+        <guava.version>31.1-jre</guava.version>
+        <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+
+        <!-- plugins -->
+        <!-- maven plugins -->
+        <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
+        <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>3.2.0</maven-dependency-plugin.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0</maven-enforcer-plugin.version>
+        <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
+        <maven-help-plugin.version>3.2.0</maven-help-plugin.version>
+        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven-invoker-plugin.version>3.2.2</maven-invoker-plugin.version>
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
+        <maven-javadoc-plugin.version>3.3.2</maven-javadoc-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+        <!-- spring plugins -->
+        <spring-javaformat-plugin.version>0.0.35</spring-javaformat-plugin.version>
+        <spring-boot-plugin.version>${spring-boot.version}</spring-boot-plugin.version>
+        <!-- other plugins -->
+        <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
+        <docker-plugin.version>0.42.0</docker-plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- autoconfigure（自动装配） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+        <!-- test（测试依赖） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- configuration-processor（配置文件处理器） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- devtools（热部署） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- apollo（配置中心） -->
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-client</artifactId>
+                <version>${apollo.version}</version>
+            </dependency>
+            <!-- xxl-job（分布式任务调度） -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
+            <!-- minio（分布式存储） -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <!-- tx-lcn（分布式事务） -->
+            <!-- 事务管理器（服务端） -->
+            <dependency>
+                <groupId>com.codingapi.txlcn</groupId>
+                <artifactId>txlcn-tm</artifactId>
+                <version>${txlcn.version}</version>
+            </dependency>
+            <!-- 事务参与方（客户端） -->
+            <dependency>
+                <groupId>com.codingapi.txlcn</groupId>
+                <artifactId>txlcn-tc</artifactId>
+                <version>${txlcn.version}</version>
+            </dependency>
+            <!-- power-job（分布式任务调度） -->
+            <dependency>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-worker-spring-boot-starter</artifactId>
+                <version>${powerjob.version}</version>
+            </dependency>
+            <!-- redisson（分布式锁） -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <!-- druid（数据源） -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- dynamic-datasource（动态数据源） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
+            </dependency>
+            <!-- mybatis（数据持久层（ORM）框架） -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!-- MP（mybatis（数据持久层（ORM）框架）增强组件） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- shiro（安全框架） -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring-boot-starter</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <!-- jasypt（配置加密解密） -->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
+
+            <!-- hutool（工具集） -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- guava（工具集） -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- transmittable-thread-local（TTL） -->
+            <!-- 处理父子线程变量不能共用的情况 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.ftl</include>
+                    <include>**/*.json</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <!-- maven 打包时跳过测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <!-- docker镜像推送 -->
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker-plugin.version}</version>
+                    <configuration>
+                        <!-- Docker远程守护进程URL -->
+                        <dockerHost>${docker.host}</dockerHost>
+                        <!-- Docker镜像私服地址 -->
+                        <registry>${docker.registry}</registry>
+                        <!-- 认证信息 -->
+                        <authConfig>
+                            <push>
+                                <username>${docker.username}</username>
+                                <password>${docker.password}</password>
+                            </push>
+                        </authConfig>
+                        <images>
+                            <image>
+                                <!-- 镜像名称：127.0.0.1/lib/demo:1.0.0 -->
+                                <name>${docker.registry}/${docker.namespace}/${project.name}:${project.version}</name>
+                                <build>
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                </plugin>
+                <!-- 代码格式插件，默认使用spring 规则，可运行命令进行项目格式化 -->
+                <plugin>
+                    <groupId>io.spring.javaformat</groupId>
+                    <artifactId>spring-javaformat-maven-plugin</artifactId>
+                    <version>${spring-javaformat-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>validate</phase>
+                            <inherited>true</inherited>
+                            <goals>
+                                <goal>validate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>nacos</nacos.password>
+
+                <docker.host>http://127.0.0.1:2375</docker.host>
+                <docker.registry>127.0.0.1:8081</docker.registry>
+                <docker.username>admin</docker.username>
+                <docker.password>abc123</docker.password>
+                <docker.namespace>lib</docker.namespace>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+</project>
