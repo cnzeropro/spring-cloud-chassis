@@ -15,7 +15,7 @@
     <version>1.0.0</version>
 
     <name>cloud-demo</name>
-    <description>微服务Demo</description>
+    <description>微服务 Demo</description>
 
     <packaging>pom</packaging>
     <modules>
@@ -257,9 +257,10 @@
     <build>
         <resources>
             <resource>
-                <directory>${basedir}/src/main/resources</directory>
+                <directory>${basedir}/src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/*.dtd</include>
                     <include>**/*.ftl</include>
                     <include>**/*.json</include>
                 </includes>

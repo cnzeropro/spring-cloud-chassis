@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- spring logback 日志配置 -->
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <property name="LOG_PATH" value="${LOG_PATH:-." />
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-MM-dd HH:mm:ss.SSS}}){faint} %clr(%7r){yellow} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(-){faint} [%clr(%-15.15t){faint} %clr(-){faint} %clr(%-70.70c{35}#%-25.25M:%-5L){cyan}] %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+    <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-%cn ${PID:- } %r %d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} - [%t @ %c#%M:%L]: %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+
+    <include resource="logback-base.xml" />
+
+    <!-- 日志上下文名称，默认使用Spring项目名称 -->
+    <contextName>${LOG_APP:-default}</contextName>
+
+    <include resource="logback-console.xml" />
+    <include resource="logback-rolling-file.xml" />
+    <include resource="logback-logger.xml" />
+
+    <!-- dev环境日志输出配置 -->
+    <springProfile name="dev">
+        <root level="${ROOT_LOGGER_LEVEL:-ALL}">
+            <appender-ref ref="console" />
+            <appender-ref ref="rollingDebugFile" />
+            <appender-ref ref="rollingInfoFile" />
+            <appender-ref ref="rollingWarnFile" />
+            <appender-ref ref="rollingErrorFile" />
+        </root>
+        <logger name="com.apache.ibatis" level="TRACE" additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+        <logger name="java.sql" level="DEBUG" additivity="false">
+            <appender-ref ref="console" />
+        </logger>
+    </springProfile>
+</configuration> 

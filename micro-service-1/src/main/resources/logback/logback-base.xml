@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 基础配置定义 -->
+<included>
+    <!-- 彩色日志支持 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <!-- 异常信息空白包裹支持 -->
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+    <!-- Spring配置项 -->
+    <springProperty scope="context" name="LOG_APP" source="spring.application.name" defaultValue="app" />
+
+    <!-- 日志文件路径相关 -->
+    <property name="LOG_PATH" value="${log.path:-${LOG_PATH:-${catalina.base:-${user.home:-${java.io.tmpdir:-/tmp}}}}}" />
+    <property name="LOG_HOME" value="${log.home:-${LOG_HOME:-${LOG_PATH}/${LOG_APP}}}" />
+    <property name="LOG_BASE" value="${log.base:-${LOG_BASE:-${LOG_HOME}/logs}}" />
+
+    <!-- 控制台日志相关 -->
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+    <property name="CONSOLE_LOG_CHARSET" value="${CONSOLE_LOG_CHARSET:-${file.encoding:-UTF-8}}" />
+
+    <!-- 文件日志相关 -->
+    <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN:-%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+    <property name="FILE_LOG_CHARSET" value="${FILE_LOG_CHARSET:-${file.encoding:-UTF-8}}" />
+    <property name="FILE_LOG_APPEND" value="${FILE_LOG_APPEND:-true}" />
+
+    <!-- 其他相关 -->
+    <property name="ROOT_LOGGER_LEVEL" value="${ROOT_LOGGER_LEVEL:-ALL" />
+</included>

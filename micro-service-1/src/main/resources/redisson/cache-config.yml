@@ -1,0 +1,12 @@
+myCache:
+  ttl: 1440000
+  maxIdleTime: 720000
+  # 注意：localCacheOptions配置实例仅适用于以下类（仅限于Redisson PRO版本），
+  # org.redisson.spring.cache.RedissonSpringLocalCachedCacheManager类
+  # org.redisson.spring.cache.RedissonSpringClusteredLocalCachedCacheManager类
+  localCacheOptions:
+    invalidationPolicy: "ON_CHANGE"
+    evictionPolicy: "NONE"
+    cacheSize: 9999999
+    timeToLiveInMillis: 6000000
+    maxIdleInMillis: 10000
