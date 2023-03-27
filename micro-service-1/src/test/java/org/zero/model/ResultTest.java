@@ -39,7 +39,7 @@ class ResultTest {
 
     @Test
     void error() {
-        Result<Void> error = Result.error("登录失败", "A10001", "用户名或密码错误");
+        Result<Void> error = Result.error("登录失败");
         System.out.println(error);
     }
 

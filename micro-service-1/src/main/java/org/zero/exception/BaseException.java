@@ -41,7 +41,7 @@ public class BaseException extends RuntimeException {
         this.sysError = sysError;
     }
 
-    public BaseException(String message, SysError sysError, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected BaseException(String message, SysError sysError, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
         this.sysError = sysError;
     }

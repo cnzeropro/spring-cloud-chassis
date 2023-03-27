@@ -1,6 +1,7 @@
 package org.zero.assembly.txlcn;
 
 import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
+import com.codingapi.txlcn.tm.config.EnableTransactionManagerServer;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -11,8 +12,9 @@ import org.springframework.context.annotation.Configuration;
  * @since 2021/12/1 14:41
  */
 @Configuration(proxyBeanMethods = false)
-// 服务端启用注解
-//@EnableTransactionManagerServer
+// 注意区分两端之后再使用
+// 服务端启用注解，启用分布式事务管理器
+@EnableTransactionManagerServer
 // 客户端使用注解，启用分布式事务
 @EnableDistributedTransaction
 public class TxLcnConfig {

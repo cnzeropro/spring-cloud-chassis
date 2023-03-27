@@ -58,7 +58,7 @@ public class MyBatisPlusConfig {
     }
 
     /**
-     * 用了分页插件需要设置 MybatisConfiguration#useDeprecatedExecutor = false 避免缓存万一出现问题
+     * 用了分页插件需要设置 MybatisConfiguration#useDeprecatedExecutor = false 避免缓存出现问题
      * MP 3.4已移除
      */
 //    @Bean

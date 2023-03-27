@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
  * @since 2023/2/10
  */
 class CustomGroupTest {
-
     @Test
     void test() {
         Class<?> createClass = CustomGroup.Crud.Create.class;

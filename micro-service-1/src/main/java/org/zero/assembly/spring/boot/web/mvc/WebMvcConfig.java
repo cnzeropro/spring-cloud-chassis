@@ -2,7 +2,6 @@ package org.zero.assembly.spring.boot.web.mvc;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -65,7 +64,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                 .addPathPatterns(config.getInterceptedPaths())
                                 .excludePathPatterns(config.getExcludedPaths());
                     } catch (Exception e) {
-                        log.warn(StrUtil.format("add HandlerInterceptor[{}] error", clazz), e);
+                        log.warn(String.format("Add HandlerInterceptor error: %s", clazz), e);
                     }
                 });
             }
@@ -133,7 +132,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                             registry.addStatusController(config.getSrc(), HttpStatus.valueOf(Integer.parseInt(config.getDest())));
                         }
                     } catch (Exception e) {
-                        log.warn(StrUtil.format("add ViewController[{}] error", config), e);
+                        log.warn(String.format("Add ViewController error: %s", config), e);
                     }
                 });
             }

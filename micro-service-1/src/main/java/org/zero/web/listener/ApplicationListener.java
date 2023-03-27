@@ -17,7 +17,7 @@ public class ApplicationListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
-        log.info("web 应用（" + servletContext.getContextPath() + "）已启动");
+        log.info("The web app ({}) is initialized", servletContext.getContextPath());
         JndiEnhancer jndiEnhancer = new JndiEnhancer("java:comp/env/jdbc/test");
         servletContext.setAttribute("jndi", jndiEnhancer);
     }
@@ -26,6 +26,6 @@ public class ApplicationListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
         servletContext.removeAttribute("jndi");
-        log.info("web 应用（" + servletContext.getContextPath() + "）已销毁");
+        log.info("The web app ({}) has been destroyed", servletContext.getContextPath());
     }
 }

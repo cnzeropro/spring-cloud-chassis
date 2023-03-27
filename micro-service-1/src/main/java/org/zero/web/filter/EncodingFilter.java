@@ -36,12 +36,12 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {
-        log.info("编码过滤器已启动");
+        log.info("The encoding filter is initialized");
         encoding = config.getInitParameter("encoding");
     }
 
     @Override
     public void destroy() {
-        log.info("编码过滤器已销毁");
+        log.info("The encoding filter has been destroyed");
     }
 }

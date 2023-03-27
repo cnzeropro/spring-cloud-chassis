@@ -11,7 +11,6 @@ import org.zero.constant.SysError;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Zero (cnzeropro@qq.com)
@@ -26,11 +25,12 @@ public class Result<T> implements Serializable {
 
     public static final String OK_MSG = "操作成功";
     public static final String ERROR_MSG = "操作失败";
+    public static final String FAIL_MSG = "请求错误";
 
     /**
      * HTTP 状态码
      */
-    private Integer code;
+    private int code;
     /**
      * 用户提示信息
      */
@@ -38,11 +38,7 @@ public class Result<T> implements Serializable {
     /**
      * 错误码
      */
-    private String errorCode;
-    /**
-     * 错误信息
-     */
-    private String errorMsg;
+    private SysError error;
 
     /**
      * 成功标志
@@ -69,6 +65,10 @@ public class Result<T> implements Serializable {
         return ok(OK_MSG, data);
     }
 
+    public static <T> Result<T> ok(String msg) {
+        return ok(msg, null);
+    }
+
     public static <T> Result<T> ok(String msg, T data) {
         return of(HttpStatus.OK, msg, SysError.OK, data);
     }
@@ -82,22 +82,6 @@ public class Result<T> implements Serializable {
         return error(msg, SysError.ERROR);
     }
 
-    public static <T> Result<T> error(String msg, SysError sysError) {
-        return of(HttpStatus.OK, msg, sysError, null);
-    }
-
-    public static <T> Result<T> error(String msg, String errorCode, String errorMsg) {
-        return of(HttpStatus.OK, msg, errorCode, errorMsg);
-    }
-
-    public static <T> Result<T> error(String msg, SysError sysError, T data) {
-        return of(HttpStatus.OK, msg, sysError, data);
-    }
-
-    public static <T> Result<T> error(String msg, String errorCode, String errorMsg, T data) {
-        return of(HttpStatus.OK, msg, errorCode, errorMsg, data);
-    }
-
     public static <T> Result<T> error(T data) {
         return error(ERROR_MSG, data);
     }
@@ -106,17 +90,25 @@ public class Result<T> implements Serializable {
         return of(HttpStatus.OK, msg, SysError.ERROR, data);
     }
 
+    public static <T> Result<T> error(String msg, SysError error) {
+        return error(msg, error, null);
+    }
+
+    public static <T> Result<T> error(String msg, SysError error, T data) {
+        return of(HttpStatus.OK, msg, error, data);
+    }
+
     /* ******************************************************** 请求失败 ******************************************************** */
     public static <T> Result<T> fail() {
-        return fail(null);
+        return fail(FAIL_MSG);
     }
 
     public static <T> Result<T> fail(String msg) {
         return fail(msg, SysError.ERROR);
     }
 
-    public static <T> Result<T> fail(String msg, SysError sysError) {
-        return fail(HttpStatus.INTERNAL_SERVER_ERROR, msg, sysError);
+    public static <T> Result<T> fail(String msg, SysError error) {
+        return fail(HttpStatus.INTERNAL_SERVER_ERROR, msg, error);
     }
 
     public static <T> Result<T> fail(int code, String msg) {
@@ -127,54 +119,37 @@ public class Result<T> implements Serializable {
         return fail(code, msg, SysError.ERROR);
     }
 
-    public static <T> Result<T> fail(int code, String msg, SysError sysError) {
-        return of(code, msg, sysError, null);
+    public static <T> Result<T> fail(HttpStatus httpStatus, String msg, SysError error) {
+        return of(httpStatus, msg, error, null);
     }
 
-    public static <T> Result<T> fail(HttpStatus httpStatus, String msg, SysError sysError) {
-        return of(httpStatus, msg, sysError, null);
+    public static <T> Result<T> fail(int code, String msg, SysError error) {
+        return of(code, msg, error, null);
     }
 
-    /* ******************************************************** 通用构造方法 ******************************************************** */
-    public static <T> Result<T> of(HttpStatus httpStatus, String msg, SysError sysError, T data) {
-        return of(httpStatus.value(), msg, sysError, data);
+    /* ******************************************************** 通用构造 ******************************************************** */
+
+    public static <T> Result<T> of(HttpStatus httpStatus, String msg, SysError error, T data) {
+        return of(httpStatus.value(), msg, error, LocalDateTime.now(), data);
     }
 
-    public static <T> Result<T> of(int code, String msg, SysError sysError, T data) {
-        Optional<SysError> sysErrorOpt = Optional.ofNullable(sysError);
-        return of(code, msg, sysErrorOpt.map(SysError::getCode).orElse(null), sysErrorOpt.map(SysError::getMsg).orElse(null), data);
+    public static <T> Result<T> of(int code, String msg, SysError error, T data) {
+        return of(code, msg, error, LocalDateTime.now(), data);
     }
 
-    public static <T> Result<T> of(HttpStatus httpStatus, String msg, String errorCode, String errorMsg) {
-        return of(httpStatus, msg, errorCode, errorMsg, null);
-    }
-
-    public static <T> Result<T> of(int code, String msg, String errorCode, String errorMsg) {
-        return of(code, msg, errorCode, errorMsg, null);
-    }
-
-    public static <T> Result<T> of(HttpStatus httpStatus, String msg, String errorCode, String errorMsg, T data) {
-        return of(httpStatus.value(), msg, errorCode, errorMsg, LocalDateTime.now(), data);
-    }
-
-    public static <T> Result<T> of(int code, String msg, String errorCode, String errorMsg, T data) {
-        return of(code, msg, errorCode, errorMsg, LocalDateTime.now(), data);
-    }
-
-    public static <T> Result<T> of(int code, String msg, String errorCode, String errorMsg, LocalDateTime time, T data) {
-        if (Objects.isNull(errorCode)) {
-            return of(code, msg, null, errorMsg, HttpStatus.OK.value() == code, time, data);
+    public static <T> Result<T> of(int code, String msg, SysError error, LocalDateTime time, T data) {
+        if (Objects.isNull(error)) {
+            return of(code, msg, null, HttpStatus.OK.value() == code, time, data);
         }
 
-        return of(code, msg, errorCode, errorMsg, HttpStatus.OK.value() == code && SysError.OK.getCode().equals(errorCode), time, data);
+        return of(code, msg, error, HttpStatus.OK.value() == code && SysError.OK.getCode().equals(error.getCode()), time, data);
     }
 
-    public static <T> Result<T> of(int code, String msg, String errorCode, String errorMsg, boolean success, LocalDateTime time, T data) {
+    public static <T> Result<T> of(int code, String msg, SysError error, boolean success, LocalDateTime time, T data) {
         return Result.<T>builder()
                 .code(code)
                 .msg(msg)
-                .errorCode(errorCode)
-                .errorMsg(errorMsg)
+                .error(error)
                 .success(success)
                 .time(time)
                 .data(data)

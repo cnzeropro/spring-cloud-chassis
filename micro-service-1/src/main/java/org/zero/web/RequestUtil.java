@@ -1,7 +1,6 @@
 package org.zero.web;
 
 import lombok.experimental.UtilityClass;
-import org.apache.catalina.connector.Request;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -23,7 +22,7 @@ public class RequestUtil {
         return Optional.ofNullable(RequestContextHolder.getRequestAttributes())
                 .map(ServletRequestAttributes.class::cast)
                 .map(ServletRequestAttributes::getRequest)
-                .orElse(new Request(null));
+                .orElse(null);
     }
 
     public static String getDomain(HttpServletRequest request) {

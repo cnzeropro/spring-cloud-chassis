@@ -1,5 +1,6 @@
 package org.zero.constant;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,8 +8,9 @@ import lombok.Getter;
  * @author Zero (cnzeropro@qq.com)
  * @date 2022/12/1
  */
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum SysError {
     /**
      * 一切ok

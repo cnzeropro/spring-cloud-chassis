@@ -25,7 +25,7 @@ public class MinioProperties {
      */
     private String secretKey;
     /**
-     * 桶名称
+     * 桶名称，如果配置则系统启动时自动创建该桶，反之则反
      */
-    private String bucket = "default";
+    private String bucket;
 }

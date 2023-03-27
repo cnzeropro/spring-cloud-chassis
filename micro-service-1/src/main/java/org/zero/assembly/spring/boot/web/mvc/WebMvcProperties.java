@@ -226,6 +226,7 @@ public class WebMvcProperties {
              * 原始URL
              */
             private String src;
+
             /**
              * 映射目标
              */

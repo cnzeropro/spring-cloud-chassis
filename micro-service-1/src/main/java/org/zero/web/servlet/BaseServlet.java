@@ -29,6 +29,7 @@ public abstract class BaseServlet extends HttpServlet {
             // 调用子类方法
             method.invoke(getClass().getDeclaredConstructor().newInstance(), request, response);
         } catch (Exception e) {
+            // 代理情况下拿取真实错误信息
             String msg = e.getMessage();
             Throwable cause = e.getCause();
             if (Objects.nonNull(cause)) {

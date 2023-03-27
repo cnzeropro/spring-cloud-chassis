@@ -3,6 +3,7 @@ package org.zero.assembly.xxl.job;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(XxlJobProperties.class)
 @RequiredArgsConstructor
+@ConditionalOnProperty(prefix = "xxl.job", name = "enable", havingValue = "true")
 public class XxlJobConfig {
 
     private final XxlJobProperties xxlJobProperties;
@@ -49,7 +51,7 @@ public class XxlJobConfig {
      *          spring.cloud.inetutils.preferred-networks: 'xxx.xxx.xxx.'
      *
      *      3、获取IP
-     *          String ip_ = inetUtils.findFirstNonLoopbackHostInfo().getIpAddress();
+     *          String ip = inetUtils.findFirstNonLoopbackHostInfo().getIpAddress();
      * </pre>
      */
 }

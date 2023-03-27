@@ -15,12 +15,12 @@ public class XxlJobProperties {
     private Executor executor;
 
     @Data
-    public static class Admin{
+    public static class Admin {
         private String addresses;
     }
 
     @Data
-    public static class Executor{
+    public static class Executor {
         private String appName;
         private String address;
         private String ip;

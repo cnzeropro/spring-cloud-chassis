@@ -173,10 +173,11 @@ public class IpUtil {
     }
 
     public boolean isIpv4(String ipv4Str) {
-        String ipFirst = "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|[1-9])";
-        String ipOther = "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)";
-        String ipDot = "\\" + IPV4_DELIMITER;
-        return ipv4Str.matches(ipFirst + ipDot + ipOther + ipDot + ipOther + ipDot + ipOther);
+        String ipFirstRegex = "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|[1-9])";
+        String ipOtherRegex = "(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]\\d|\\d)";
+        String ipDotRegex = "\\" + IPV4_DELIMITER;
+        String regex = ipFirstRegex + ipDotRegex + ipOtherRegex + ipDotRegex + ipOtherRegex + ipDotRegex + ipOtherRegex;
+        return ipv4Str.matches(regex);
     }
 
     private boolean isNotUnknown(String ip) {

@@ -29,7 +29,7 @@ public class MpEnumUtil {
     public static Method getMethod(Class<? extends Enum<?>> enumType) {
         Method method = METHOD_MAP.get(enumType);
         if (Objects.isNull(method)) {
-            // 此处可使用自定义父类和注解
+            // 此处可使用自定义父类和注解，但因为Mp已经提供，所有无需重复造轮子
             if (IEnum.class.isAssignableFrom(enumType)) {
                 method = getMethodWithName(enumType, "getValue");
             } else {
