@@ -146,6 +146,14 @@ public class GlobalExceptionHandler {
         return Result.fail(String.format("数据绑定错误：%s", errors.stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining("；"))));
     }
 
+    /* *************************************************** Feign异常 *************************************************** */
+
+    @ExceptionHandler(feign.FeignException.class)
+    public Result<Void> feignException(feign.FeignException e) {
+        log.error("feign call error", e);
+        return Result.error("微服务间调用失败");
+    }
+
     /* *************************************************** SQL异常 *************************************************** */
 
     @ExceptionHandler(java.sql.SQLIntegrityConstraintViolationException.class)
