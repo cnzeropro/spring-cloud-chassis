@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 @AllArgsConstructor
 public final class CustomCacheResolver implements CacheResolver {
-    private List<CacheManager> cacheManagerList;
+    private final List<CacheManager> cacheManagerList;
 
     @Override
     public Collection<? extends Cache> resolveCaches(CacheOperationInvocationContext<?> context) {

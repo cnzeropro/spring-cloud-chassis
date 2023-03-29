@@ -76,7 +76,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         // redis缓存管理器
         CacheManager redisCacheManager = cacheManager();
         // 优先读取堆内存缓存，堆内存缓存读取不到该key时再读取redis缓存
-        return new CustomCacheResolver(ListUtil.list(true, caffeineCacheManager, redisCacheManager));
+        return new CustomCacheResolver(ListUtil.of(caffeineCacheManager, redisCacheManager));
     }
 
     /**
@@ -98,7 +98,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
      */
     @Override
     public CacheErrorHandler errorHandler() {
-        return new IgnoreExceptionCacheErrorHandler();
+        return new IgnoreCacheErrorHandler();
     }
 
     private CaffeineCacheManager getCaffeineCacheManager() {

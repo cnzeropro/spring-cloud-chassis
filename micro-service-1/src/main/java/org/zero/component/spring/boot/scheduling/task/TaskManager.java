@@ -1,4 +1,4 @@
-package org.zero.component.spring.boot.scheduling;
+package org.zero.component.spring.boot.scheduling.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -16,7 +16,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 
 /**
- * 动态定时任务管理类
+ * 动态任务管理类
  *
  * @author Zero (cnzeropro@qq.com)
  * @since 2022/7/20
@@ -32,14 +32,10 @@ public class TaskManager {
 
     /**
      * 启动任务
-     *
-     * @param cron
-     * @param task
-     * @param taskId
      */
-    public boolean startTask(String cron, Runnable task, String taskId) {
+    public synchronized boolean startTask(String cron, Runnable task, String taskId) {
         // 如果存在该任务先停止
-        if (getTaskType(taskId) > -1) {
+        if (Objects.nonNull(getTaskType(taskId))) {
             stopTask(taskId);
         }
 
@@ -70,10 +66,8 @@ public class TaskManager {
 
     /**
      * 停止任务
-     *
-     * @param taskId
      */
-    public boolean stopTask(String taskId) {
+    public synchronized boolean stopTask(String taskId) {
         if (triggeredTaskMap.containsKey(taskId)) {
             log.info("The triggered task exists, try to stop...");
             Future<?> future = triggeredTaskMap.get(taskId).getFuture();
@@ -96,11 +90,8 @@ public class TaskManager {
 
     /**
      * 任务是否在运行
-     *
-     * @param taskId
-     * @return
      */
-    public boolean isRunning(String taskId) {
+    public synchronized boolean isRunning(String taskId) {
         if (triggeredTaskMap.containsKey(taskId)) {
             Future<?> future = triggeredTaskMap.get(taskId).getFuture();
             if (Objects.nonNull(future)) {
@@ -118,73 +109,56 @@ public class TaskManager {
 
     /**
      * 获取任务类型
-     *
-     * @param taskId
-     * @return
      */
-    public int getTaskType(String taskId) {
+    public synchronized TaskType getTaskType(String taskId) {
         if (triggeredTaskMap.containsKey(taskId)) {
-            return 0;
+            return TaskType.TRIGGERED_TASK;
         }
         if (scheduledTaskMap.containsKey(taskId)) {
-            return 1;
+            return TaskType.SCHEDULED_TASK;
         }
-        return -1;
+        return null;
     }
 
     /**
      * 获取当前触发任务总数量
-     *
-     * @return
      */
-    public int countTriggeredTask() {
+    public synchronized int countTriggeredTask() {
         return triggeredTaskMap.size();
     }
 
     /**
      * 获取当前定时任务总数量
-     *
-     * @return
      */
-    public int countScheduledTask() {
+    public synchronized int countScheduledTask() {
         return scheduledTaskMap.size();
     }
 
     /**
      * 查询指定的触发任务
-     *
-     * @param taskId
-     * @return
      */
-    public FutureBean getTriggeredTask(String taskId) {
+    public synchronized FutureBean getTriggeredTask(String taskId) {
         return triggeredTaskMap.get(taskId);
     }
 
     /**
      * 查询指定的定时任务
-     *
-     * @param taskId
-     * @return
      */
-    public ScheduledFutureBean getScheduledTask(String taskId) {
+    public synchronized ScheduledFutureBean getScheduledTask(String taskId) {
         return scheduledTaskMap.get(taskId);
     }
 
     /**
      * 查询所有的触发任务
-     *
-     * @return
      */
-    public Map<String, FutureBean> listTriggeredTask() {
+    public synchronized Map<String, FutureBean> listTriggeredTask() {
         return triggeredTaskMap;
     }
 
     /**
      * 查询所有的定时任务
-     *
-     * @return
      */
-    public Map<String, ScheduledFutureBean> listScheduledTask() {
+    public synchronized Map<String, ScheduledFutureBean> listScheduledTask() {
         return scheduledTaskMap;
     }
 }

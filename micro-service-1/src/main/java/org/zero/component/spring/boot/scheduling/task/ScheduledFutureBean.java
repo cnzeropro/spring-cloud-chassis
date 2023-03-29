@@ -1,4 +1,4 @@
-package org.zero.component.spring.boot.scheduling;
+package org.zero.component.spring.boot.scheduling.task;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

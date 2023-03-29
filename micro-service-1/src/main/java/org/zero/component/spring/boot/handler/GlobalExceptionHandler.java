@@ -3,7 +3,6 @@ package org.zero.component.spring.boot.handler;
 import cn.hutool.core.io.unit.DataSizeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -12,7 +11,6 @@ import org.zero.model.vo.Result;
 
 import javax.validation.ConstraintViolation;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -131,26 +129,27 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
     public Result<Void> methodArgumentNotValidException(org.springframework.web.bind.MethodArgumentNotValidException e) {
-        String msg = Optional.of(e.getBindingResult())
-                .map(BindingResult::getAllErrors)
+        String errorMsg = Optional.of(e.getAllErrors())
                 .map(errors -> errors.stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(", ", "[", "]")))
                 .orElse("[]");
-        log.error(String.format("The request parameter validation is abnormal: %s", msg), e);
-        return Result.fail(HttpStatus.BAD_REQUEST, msg.replace(", ", "；"));
+        log.error(String.format("The request parameter validation is abnormal: %s", errorMsg), e);
+        return Result.fail(HttpStatus.BAD_REQUEST, errorMsg.replace(", ", "；"));
     }
 
     @ExceptionHandler(org.springframework.validation.BindException.class)
     public Result<Void> bindException(org.springframework.validation.BindException e) {
-        List<ObjectError> errors = Optional.of(e.getBindingResult()).map(BindingResult::getAllErrors).orElse(Collections.emptyList());
-        log.error(String.format("Data binding exception: %s", errors), e);
-        return Result.fail(String.format("数据绑定错误：%s", errors.stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining("；"))));
+        String errorMsg = Optional.of(e.getAllErrors())
+                .map(errors -> errors.stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(", ", "[", "]")))
+                .orElse("[]");
+        log.error(String.format("Data binding exception: %s", errorMsg), e);
+        return Result.fail(String.format("数据绑定错误：%s", errorMsg.replace(", ", "；")));
     }
 
     /* *************************************************** Feign异常 *************************************************** */
 
     @ExceptionHandler(feign.FeignException.class)
     public Result<Void> feignException(feign.FeignException e) {
-        log.error("feign call error", e);
+        log.error("Feign call failed.", e);
         return Result.error("微服务间调用失败");
     }
 
@@ -233,19 +232,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(org.springframework.data.redis.connection.PoolException.class)
     public Result<Void> poolException(org.springframework.data.redis.connection.PoolException e) {
-        log.error("Redis connection pool exception", e);
+        log.error("Redis connection pool exception.", e);
         return Result.fail("Redis连接池错误");
     }
 
     @ExceptionHandler(org.springframework.data.redis.RedisSystemException.class)
     public Result<Void> redisSystemException(org.springframework.data.redis.RedisSystemException e) {
-        log.error("Redis system exception", e);
+        log.error("Redis system exception.", e);
         return Result.fail("Redis系统错误");
     }
 
     @ExceptionHandler(org.springframework.data.redis.RedisConnectionFailureException.class)
     public Result<Void> redisConnectionFailureException(org.springframework.data.redis.RedisConnectionFailureException e) {
-        log.error("Redis connection exception", e);
+        log.error("Redis connection failed.", e);
         return Result.fail("Redis连接失败");
     }
 
@@ -253,7 +252,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(java.util.concurrent.RejectedExecutionException.class)
     public Result<Void> rejectedExecutionException(java.util.concurrent.RejectedExecutionException e) {
-        log.error("The thread pool is full", e);
+        log.error("Thread pool is full.", e);
         return Result.fail("线程池已满");
     }
 
@@ -262,7 +261,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Result<Void> exception(Exception e) {
-        log.error("System unknown exception", e);
+        log.error("System unknown exception.", e);
         return Result.fail("系统未知错误，请联系管理员");
     }
 }

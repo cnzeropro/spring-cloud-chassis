@@ -14,7 +14,6 @@ import javax.annotation.Resource;
 @Configuration(proxyBeanMethods = false)
 @EnableWebSocket
 public class SpringWebSocketConfig implements WebSocketConfigurer {
-
     @Resource
     private CustomWsHandler customWsHandler;
 

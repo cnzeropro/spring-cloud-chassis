@@ -50,7 +50,7 @@ public class WsSessionManager {
             try {
                 session.close();
             } catch (Exception e) {
-                log.warn("close WebSocketSession error", e);
+                log.warn(String.format("%s close WebSocketSession error", key), e);
             }
         }
     }

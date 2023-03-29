@@ -17,6 +17,6 @@ import org.quartz.PersistJobDataAfterExecution;
 public class CustomJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        log.info(context.getMergedJobDataMap().toString());
+        log.info("CustomJob Param: {}", context.getMergedJobDataMap());
     }
 }

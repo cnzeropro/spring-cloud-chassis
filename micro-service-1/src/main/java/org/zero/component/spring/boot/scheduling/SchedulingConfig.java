@@ -1,5 +1,6 @@
 package org.zero.component.spring.boot.scheduling;
 
+import org.springframework.aop.interceptor.AsyncExecutionAspectSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -20,7 +21,7 @@ public class SchedulingConfig {
      * 异步方法注解@Async默认使用名称为taskExecutor的Executor执行任务
      * 详情请参见：{@link org.springframework.aop.interceptor.AsyncExecutionAspectSupport#DEFAULT_TASK_EXECUTOR_BEAN_NAME}
      */
-    @Bean(name = "taskExecutor", destroyMethod = "shutdown")
+    @Bean(name = AsyncExecutionAspectSupport.DEFAULT_TASK_EXECUTOR_BEAN_NAME, destroyMethod = "shutdown")
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         // 创建线程池对象
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
