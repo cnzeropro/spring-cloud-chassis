@@ -4,15 +4,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.zero</groupId>
-    <artifactId>util</artifactId>
+    <artifactId>cloud-demo</artifactId>
     <version>1.0.0</version>
 
-    <name>util</name>
-    <description>util</description>
+    <name>cloud-demo</name>
+    <description>微服务 Demo</description>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>micro-service-1</module>
+    </modules>
 
     <properties>
         <!-- properties -->
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.encoding>UTF-8</project.encoding>
@@ -22,29 +27,35 @@
         <resource.delimiter>@</resource.delimiter>
 
         <!-- dependencies -->
-        <!--        <spring-boot.version>3.0.0</spring-boot.version>-->
-        <spring-boot.version>2.6.11</spring-boot.version>
-        <!--        <spring-cloud.version>2022.0.0</spring-cloud.version>-->
-        <spring-cloud.version>2021.0.4</spring-cloud.version>
-        <!--        <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>-->
-        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
-
-        <!-- starters -->
+        <!-- spring dependencies -->
+        <spring-boot.version>3.0.0</spring-boot.version>
+        <spring-cloud.version>2022.0.0</spring-cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
+        <!-- spring other dependencies -->
+        <spring-shell.version>2.1.7</spring-shell.version>
+        <!-- starter dependencies -->
+        <arthas.version>3.4.8</arthas.version>
         <druid.version>1.2.16</druid.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
+        <mybatis.version>2.3.0</mybatis.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <shiro.version>1.9.1</shiro.version>
         <redisson.version>3.19.3</redisson.version>
         <jasypt.version>3.0.4</jasypt.version>
         <powerjob.version>4.3.0</powerjob.version>
+        <!-- component dependencies -->
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <xxl-job.version>2.3.1</xxl-job.version>
         <apollo.version>2.1.0</apollo.version>
         <minio.version>8.5.2</minio.version>
-        <!-- others -->
+        <!-- util dependencies -->
         <hutool.version>5.8.11</hutool.version>
         <guava.version>31.1-jre</guava.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <fastjson2.version>2.0.26</fastjson2.version>
         <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+        <!-- other dependencies -->
+        <mysql.version>8.0.32</mysql.version>
 
         <!-- plugins -->
         <!-- maven plugins -->
@@ -75,431 +86,7 @@
     </properties>
 
     <dependencies>
-        <!-- ######################################################## Spring Cloud Alibaba Starter（Alibaba微服务启动器） ######################################################## -->
-        <!-- nacos discovery（服务注册/发现） -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!-- nacos config（配置中心） -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <!-- sentinel（服务熔断） -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
-        <!-- sentinel支持多种持久化存储：nacos，apollo，redis，zk，consul... -->
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>
-        <!-- 用于解决sentinel高版本下流控链路不生效的问题 -->
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-web-servlet</artifactId>
-        </dependency>
-        <!-- seata（分布式事务） -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-        </dependency>
 
-        <!-- ######################################################## Spring Cloud Netflix Starter（Netflix微服务启动器） ######################################################## -->
-        <!-- eureka（服务注册/发现） -->
-        <!-- Netflix在Spring Cloud Dependencies中唯一坚挺的组件，但是留给Eureka的时间也不多了 -->
-        <!-- 客户端 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
-        <!-- 服务端 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-        </dependency>
-        <!-- hystrix（服务熔断） -->
-        <!-- Spring Cloud 2020.0版本以后，Hystrix已从Spring Cloud Dependencies中删除 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-            <version>2.2.10.RELEASE</version>
-        </dependency>
-        <!-- ribbon（负载均衡） -->
-        <!-- Spring Cloud 2020.0版本以后，Ribbon已从Spring Cloud Dependencies中删除 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-            <version>2.2.10.RELEASE</version>
-        </dependency>
-        <!-- zuul（网关） -->
-        <!-- Spring Cloud 2020.0版本以后，Zuul已从Spring Cloud Dependencies中删除 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
-            <version>2.2.10.RELEASE</version>
-        </dependency>
-
-        <!-- ######################################################## Spring Cloud Starter（Spring官方微服务启动器） ######################################################## -->
-        <!-- config（配置中心） -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <!-- openfeign（服务调用） -->
-        <!--
-            Feign 和 OpenFeign：
-            feign原本是Netflix提供的一个轻量级RESTful的HTTP服务客户端，内置了ribbon，用来做客户端负载均衡，去调用服务注册中心的服务
-            于是基于feign提供了spring-cloud-starter-feign组件，成为spring官方推荐
-            后来，在2019年Netflix不再维护feign，feign转由社区维护，并更名为openfeign
-            于是又基于openfeign进行包装，并在Spring Cloud Netflix Feign的基础上支持了SpringMVC的注解
-            因此spring-cloud-starter-openfeign代替spring-cloud-starter-feign组件，成为官方维护、推荐组件
-        -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <!-- feign（服务调用） -->
-        <!-- 在Spring Cloud Finchley及以上版本已过期，被spring-cloud-starter-openfeign组件替代 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
-            <version>1.4.7.RELEASE</version>
-        </dependency>
-        <!-- resilience4j（服务熔断） -->
-        <!-- Spring Cloud 2020.0版本以后，Resilience4J正式替换Hystrix，但目前Resilience4J还比较小众 -->
-        <!-- 非响应式 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-        </dependency>
-        <!-- 响应式 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
-        </dependency>
-        <!-- loadbalancer（负载均衡） -->
-        <!-- Spring Cloud 2020.0版本以后，官方默认推荐使用Spring Cloud Loadbalancer正式替换Ribbon，并成为了Spring Cloud负载均衡器的唯一实现 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-        <!-- gateway（网关） -->
-        <!--
-            Zuul 1.x（第一代Zuul）官宣会进行优化性能问题，结果Netflix跳票
-            spring官方不得不推出新一代网关Gateway，此时Spring Cloud Gateway就已经替换了Zuul
-            后来Netflix发布Zuul 2.x，又开始抢占了一部分市场
-            再后来Zuul进入维护阶段，到Spring Cloud 2020.0版本以后，Zuul已从Spring Cloud中删除
-        -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
-        </dependency>
-        <!-- bootstrap（Bootstrap配置文件支持） -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
-        <!-- ######################################################## Spring Cloud（Spring官方微服务组件） ######################################################## -->
-        <!-- commons（微服务公共组件） -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-commons</artifactId>
-        </dependency>
-
-        <!-- ######################################################## Other Cloud（其他微服务组件） ######################################################## -->
-        <!-- apollo（配置中心） -->
-        <dependency>
-            <groupId>com.ctrip.framework.apollo</groupId>
-            <artifactId>apollo-client</artifactId>
-            <version>${apollo.version}</version>
-        </dependency>
-        <!-- xxl-job（分布式任务调度） -->
-        <dependency>
-            <groupId>com.xuxueli</groupId>
-            <artifactId>xxl-job-core</artifactId>
-            <version>${xxl-job.version}</version>
-        </dependency>
-        <!-- minio（分布式存储） -->
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>${minio.version}</version>
-        </dependency>
-        <!-- tx-lcn（分布式事务） -->
-        <!-- 事务管理器（服务端） -->
-        <dependency>
-            <groupId>com.codingapi.txlcn</groupId>
-            <artifactId>txlcn-tm</artifactId>
-            <version>${txlcn.version}</version>
-        </dependency>
-        <!-- 事务参与方（客户端） -->
-        <dependency>
-            <groupId>com.codingapi.txlcn</groupId>
-            <artifactId>txlcn-tc</artifactId>
-            <version>${txlcn.version}</version>
-        </dependency>
-        <!-- power-job（分布式任务调度） -->
-        <dependency>
-            <groupId>tech.powerjob</groupId>
-            <artifactId>powerjob-worker-spring-boot-starter</artifactId>
-            <version>${powerjob.version}</version>
-        </dependency>
-        <!-- redisson（分布式锁） -->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>${redisson.version}</version>
-        </dependency>
-
-        <!-- ######################################################## Spring Boot Starter ######################################################## -->
-        <!-- starter -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <!-- logging（日志） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-        </dependency>
-        <!-- web（非响应式） -->
-        <!-- 请注意：web和webflux组件无法共存 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- webflux（响应式） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-        <!-- websocket -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <!-- actuator（程序监控/管理） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <!-- mail（邮件） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-        <!-- freemarker（模板引擎） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-        <!-- thymeleaf（模板引擎） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <!-- validation -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <!-- jdbc -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        <!-- data redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <!-- amqp[rabbitmq]（消息队列） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- aop（切面编程支持） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <!-- quartz（定时任务） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
-        </dependency>
-        <!-- test（测试） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- ######################################################## Other Boot Starter（其他启动器） ######################################################## -->
-        <!-- druid（数据源） -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid.version}</version>
-        </dependency>
-        <!-- dynamic-datasource（动态数据源） -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>${dynamic-datasource.version}</version>
-        </dependency>
-        <!-- MP（mybatis（数据持久层（ORM）框架）增强组件） -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
-        </dependency>
-        <!-- shiro（安全框架） -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring-boot-starter</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <!-- jasypt（配置加密解密） -->
-        <dependency>
-            <groupId>com.github.ulisesbocchio</groupId>
-            <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>${jasypt.version}</version>
-        </dependency>
-
-        <!-- ######################################################## Spring Boot ######################################################## -->
-        <!-- autoconfigure（自动装配） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <!-- configuration processor（自定义配置处理） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- devtools（热部署） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>runtime</scope>
-            <optional>true</optional>
-        </dependency>
-
-        <!-- ######################################################## Spring Framework ######################################################## -->
-        <!-- context-support（上下文增强支持） -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-        </dependency>
-        <!-- retry（重试） -->
-        <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-        </dependency>
-
-        <!-- ######################################################## Spring Other（Spring官方依赖组件） ######################################################## -->
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- mysql（MySQL JDBC） -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <!-- ojdbc8（Oracle JDBC） -->
-        <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-        </dependency>
-        <!-- jedis（Redis客户端） -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-        </dependency>
-        <!-- okhttp（Http客户端） -->
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-        </dependency>
-        <!-- httpclient（Http客户端） -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-        <!-- caffeine（本地缓存） -->
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-        </dependency>
-        <!-- aspectjweaver（解析切入点表达式） -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-        </dependency>
-        <!-- commons-dbcp2（数据库连接池） -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-        </dependency>
-        <!-- commons-codec（加密解密） -->
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
-
-        <!-- ######################################################## Other（本项目其他依赖组件） ######################################################## -->
-        <!-- hutool（工具集） -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
-        </dependency>
-        <!-- guava（工具集） -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
-        </dependency>
-        <!-- transmittable-thread-local（TTL） -->
-        <!-- 处理父子线程变量不能共用的情况 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>transmittable-thread-local</artifactId>
-            <version>${transmittable-thread-local.version}</version>
-        </dependency>
-        <!-- commons-io -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
-        </dependency>
-        <!-- commons-dbutils（数据库工具） -->
-        <dependency>
-            <groupId>commons-dbutils</groupId>
-            <artifactId>commons-dbutils</artifactId>
-            <version>1.7</version>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -530,12 +117,15 @@
 
     <build>
         <resources>
-            <!-- 针对mapper.xml文件放置于src下的子级目录的情况 -->
+            <!-- classpath下需要引用的资源文件 -->
             <resource>
                 <directory>${basedir}/src/main/java</directory>
                 <includes>
+                    <!-- 针对mapper.xml文件放置于src下的子级目录的情况 -->
                     <include>**/*.xml</include>
                     <include>**/*.dtd</include>
+                    <include>**/*.ftl</include>
+                    <include>**/*.json</include>
                 </includes>
             </resource>
             <!-- 需要进行预编译的资源文件 -->
@@ -558,6 +148,28 @@
                 </excludes>
             </resource>
         </resources>
+
+        <plugins>
+            <!-- 父子模块版本管理 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <configuration>
+                    <!-- 无需备份pom文件 -->
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+            <!-- 单元测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- 跳过单测 -->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -573,21 +185,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <excludes>
-                            <exclusion>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                            </exclusion>
-                        </excludes>
                         <mainClass>${start-class}</mainClass>
-                    </configuration>
-                </plugin>
-                <!-- maven 打包时跳过测试 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <skip>true</skip>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -725,14 +323,15 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- docker镜像推送 -->
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>${docker-plugin.version}</version>
                     <configuration>
-                        <!-- Docker Remote Api -->
+                        <!-- Docker远程守护进程URL -->
                         <dockerHost>${docker.host}</dockerHost>
-                        <!-- Docker 镜像私服 -->
+                        <!-- Docker镜像私服地址 -->
                         <registry>${docker.registry}</registry>
                         <!-- 认证信息 -->
                         <authConfig>
@@ -743,7 +342,7 @@
                         </authConfig>
                         <images>
                             <image>
-                                <!-- 镜像名称：172.17.0.111/lib/demo:1.0.0 -->
+                                <!-- 镜像名称 -->
                                 <name>${docker.registry}/${docker.namespace}/${project.name}:${project.version}</name>
                                 <build>
                                     <dockerFile>${project.basedir}/Dockerfile</dockerFile>
@@ -752,7 +351,7 @@
                         </images>
                     </configuration>
                 </plugin>
-                <!-- 代码格式插件，默认使用spring 规则，可运行命令进行项目格式化 -->
+                <!-- 代码格式插件，默认使用spring规则，可运行命令进行项目格式化 -->
                 <plugin>
                     <groupId>io.spring.javaformat</groupId>
                     <artifactId>spring-javaformat-maven-plugin</artifactId>
@@ -836,8 +435,15 @@
             <id>dev</id>
             <properties>
                 <profiles.active>dev</profiles.active>
+
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>nacos</nacos.password>
+
+                <docker.host>http://127.0.0.1:2375</docker.host>
+                <docker.registry>127.0.0.1:8081</docker.registry>
+                <docker.username>admin</docker.username>
+                <docker.password>abc123</docker.password>
+                <docker.namespace>lib</docker.namespace>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>

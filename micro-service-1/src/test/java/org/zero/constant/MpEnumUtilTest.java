@@ -2,8 +2,8 @@ package org.zero.constant;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.core.convert.converter.Converter;
-import org.zero.assembly.mp.util.MpEnumUtil;
-import org.zero.assembly.spring.boot.web.mvc.conversion.EnumConverterFactory;
+import org.zero.component.mp.util.MpEnumUtil;
+import org.zero.component.spring.boot.web.mvc.conversion.EnumConverterFactory;
 
 import java.lang.reflect.Method;
 
