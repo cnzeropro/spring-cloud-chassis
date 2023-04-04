@@ -1,8 +1,8 @@
 package org.zero.component.spring.boot.scheduling;
 
-import org.springframework.aop.interceptor.AsyncExecutionAspectSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.AsyncAnnotationBeanPostProcessor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -19,9 +19,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class SchedulingConfig {
     /**
      * 异步方法注解@Async默认使用名称为taskExecutor的Executor执行任务
-     * 详情请参见：{@link org.springframework.aop.interceptor.AsyncExecutionAspectSupport#DEFAULT_TASK_EXECUTOR_BEAN_NAME}
+     * 详情请参见：{@link org.springframework.aop.interceptor.AsyncExecutionAspectSupport#DEFAULT_TASK_EXECUTOR_BEAN_NAME}，
+     * {@link AsyncAnnotationBeanPostProcessor#DEFAULT_TASK_EXECUTOR_BEAN_NAME}
      */
-    @Bean(name = AsyncExecutionAspectSupport.DEFAULT_TASK_EXECUTOR_BEAN_NAME, destroyMethod = "shutdown")
+    @Bean(name = AsyncAnnotationBeanPostProcessor.DEFAULT_TASK_EXECUTOR_BEAN_NAME, destroyMethod = "shutdown")
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         // 创建线程池对象
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
@@ -45,6 +46,9 @@ public class SchedulingConfig {
          */
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         taskExecutor.initialize();
+        // 如果要支持阿里TTL，建议使用Java Agent来修饰JDK线程池实现类
+        // 详情参见：com.alibaba.ttl.threadpool.agent.TtlAgent
+//        Executor executor = TtlExecutors.getTtlExecutor(taskExecutor);
         return taskExecutor;
     }
 }

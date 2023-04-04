@@ -67,7 +67,7 @@ public class WebMvcProperties {
              */
             private String[] interceptedPaths = new String[]{"/**"};
             /**
-             * 排除的路径，默认：{@code DEFAULT_EXCLUDE_PATHS}
+             * 排除的路径，默认：{@link InterceptorProperties#DEFAULT_EXCLUDE_PATHS}
              */
             private String[] excludedPaths = DEFAULT_EXCLUDE_PATHS;
         }
@@ -177,7 +177,7 @@ public class WebMvcProperties {
              */
             private long cacheMaxAge = 1L;
             /**
-             * 资源位置，默认：{@code DEFAULT_LOCATIONS}
+             * 资源位置，默认：{@link ResourceHandlerProperties#DEFAULT_LOCATIONS}
              */
             private String[] locations = DEFAULT_LOCATIONS;
         }

@@ -56,6 +56,7 @@
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <xxl-job.version>2.3.1</xxl-job.version>
         <apollo.version>2.1.0</apollo.version>
+        <file-storage.version>0.7.0</file-storage.version>
         <minio.version>8.5.2</minio.version>
         <!-- util dependencies -->
         <hutool.version>5.8.11</hutool.version>
@@ -63,6 +64,7 @@
         <fastjson.version>1.2.83</fastjson.version>
         <fastjson2.version>2.0.26</fastjson2.version>
         <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+        <disruptor.version>3.4.4</disruptor.version>
         <!-- other dependencies -->
         <mysql.version>8.0.32</mysql.version>
 
@@ -141,6 +143,11 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.xuyanwu</groupId>
+                <artifactId>spring-file-storage</artifactId>
+                <version>${file-storage.version}</version>
             </dependency>
             <!-- minio（分布式存储） -->
             <dependency>
@@ -248,6 +255,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>${transmittable-thread-local.version}</version>
+            </dependency>
+            <!-- log4j2异步日志依赖 -->
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
