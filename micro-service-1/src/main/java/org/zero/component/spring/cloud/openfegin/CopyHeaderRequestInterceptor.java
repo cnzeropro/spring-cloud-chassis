@@ -54,8 +54,8 @@ public class CopyHeaderRequestInterceptor implements RequestInterceptor {
         if (log.isDebugEnabled()) {
             Target<?> target = template.feignTarget();
             log.debug("Feign Request:\n\tapp: {}\n\tclass: {}\n\tmethod: {}\n\turl: {}\n\tparam: {}\n",
-                    target.name(), target.type().getName(), template.method(),
-                    template.url(),
+                    target.name(), target.type().getName(),
+                    template.method(), template.url(),
                     getParam(template)
             );
         }

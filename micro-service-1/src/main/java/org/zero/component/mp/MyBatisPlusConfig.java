@@ -19,7 +19,7 @@ import javax.annotation.Resource;
  * @date 2021/6/13
  */
 @Configuration(proxyBeanMethods = false)
-@MapperScan("org.zero.mapper")
+@MapperScan({"org.zero.**.mapper"})
 public class MyBatisPlusConfig {
     @Resource
     private TenantLineHandler tenantLineHandler;
