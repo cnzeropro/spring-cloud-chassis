@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 枚举转换类，使用时注意注册：
@@ -22,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 public class EnumConverterFactory implements ConverterFactory<String, Enum<?>> {
-    private static final Map<Class<?>, Converter<String, ? extends Enum<?>>> CONVERTER_MAP = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<Class<?>, Converter<String, ? extends Enum<?>>> CONVERTER_MAP = new ConcurrentHashMap<>();
 
     @SuppressWarnings("unchecked")
     @Override
