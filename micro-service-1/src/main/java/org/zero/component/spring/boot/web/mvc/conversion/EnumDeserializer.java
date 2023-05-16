@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.jackson.JsonComponent;
-import org.zero.component.mp.util.MpEnumUtil;
+import org.zero.component.mybatisplus.util.MpEnumUtil;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

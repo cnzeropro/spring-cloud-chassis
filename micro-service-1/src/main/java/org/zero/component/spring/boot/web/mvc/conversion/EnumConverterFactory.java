@@ -4,7 +4,7 @@ package org.zero.component.spring.boot.web.mvc.conversion;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
-import org.zero.component.mp.util.MpEnumUtil;
+import org.zero.component.mybatisplus.util.MpEnumUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

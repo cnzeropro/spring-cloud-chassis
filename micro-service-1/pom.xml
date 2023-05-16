@@ -475,6 +475,18 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
+        <!-- MyBatis-Flex（mybatis增强组件） -->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- MyBatis-Flex提供的APT服务，建议不要使用此方式，而是通过插件配置到annotationProcessorPaths -->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-processor</artifactId>
+            <version>${mybatis-flex.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- shiro（安全框架） -->
         <dependency>
             <groupId>org.apache.shiro</groupId>

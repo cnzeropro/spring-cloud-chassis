@@ -1,4 +1,4 @@
-package org.zero.component.mp;
+package org.zero.component.mybatisplus;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;

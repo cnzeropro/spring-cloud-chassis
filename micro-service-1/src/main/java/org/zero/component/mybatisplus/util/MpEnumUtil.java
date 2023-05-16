@@ -1,4 +1,4 @@
-package org.zero.component.mp.util;
+package org.zero.component.mybatisplus.util;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.EnumValue;

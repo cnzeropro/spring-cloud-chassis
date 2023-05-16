@@ -1,4 +1,4 @@
-package org.zero.component.mp.util;
+package org.zero.component.mybatisplus.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NamedInheritableThreadLocal;

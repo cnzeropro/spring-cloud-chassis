@@ -1,4 +1,4 @@
-package org.zero.component.mp;
+package org.zero.component.mybatisplus;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import net.sf.jsqlparser.expression.Expression;
@@ -6,7 +6,7 @@ import net.sf.jsqlparser.expression.StringValue;
 import net.sf.jsqlparser.schema.Column;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.zero.component.mp.util.TenantContext;
+import org.zero.component.mybatisplus.util.TenantContext;
 
 import java.util.List;
 

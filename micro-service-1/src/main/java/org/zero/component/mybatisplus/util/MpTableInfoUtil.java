@@ -1,4 +1,4 @@
-package org.zero.component.mp.util;
+package org.zero.component.mybatisplus.util;
 
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ArrayUtil;
