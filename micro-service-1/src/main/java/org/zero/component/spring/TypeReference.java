@@ -1,4 +1,4 @@
-package org.zero.model;
+package org.zero.component.spring;
 
 import lombok.EqualsAndHashCode;
 

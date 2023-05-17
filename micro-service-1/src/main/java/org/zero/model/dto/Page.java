@@ -10,7 +10,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * 带修正的分页对象
+ * 带修正的分页对象（构建、更新时自动修正相关参数，但是影响性能）
  *
  * @author Zero (cnzeropro@qq.com)
  * @date 2021/8/18 9:07
@@ -23,7 +23,8 @@ public class Page<T> implements Serializable {
     /**
      * 默认每页数目：10
      */
-    public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final String DEFAULT_PAGE_SIZE_STR = "10";
+    public static final int DEFAULT_PAGE_SIZE = Integer.parseInt(DEFAULT_PAGE_SIZE_STR);
 
     /**
      * 当前页码
@@ -48,7 +49,6 @@ public class Page<T> implements Serializable {
     private List<T> records = Collections.emptyList();
 
     private Page() {
-        this(1, DEFAULT_PAGE_SIZE);
     }
 
     private Page(long currentPage, long pageSize) {
@@ -76,7 +76,7 @@ public class Page<T> implements Serializable {
     }
 
     /**
-     * 设置并修正每页条数为默认值
+     * 设置并修正每页条数
      */
     public Page<T> setPageSize(long pageSize) {
         if (pageSize <= 0) {

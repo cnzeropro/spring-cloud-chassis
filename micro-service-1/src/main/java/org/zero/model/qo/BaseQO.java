@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 前端列表查询对象，两种使用方式：
  * 1、直接使用：直接用于承接前端传入参数
- * 2、继承使用：查询实体继承并扩展字段
+ * 2、继承使用：查询实体继承其并扩展字段
  *
  * @author Zero (cnzeropro@qq.com)
  * @since 2023/1/5
@@ -20,13 +20,13 @@ public class BaseQO implements Serializable {
      * 页码
      */
     @Positive(message = "当前页码不能小于或等于0")
-    private Integer pageNum = 1;
+    private long pageNum = 1L;
 
     /**
      * 每页显示数
      */
     @Positive(message = "每页数目不能小于或等于0")
-    private Integer pageSize = Page.DEFAULT_PAGE_SIZE;
+    private long pageSize = Page.DEFAULT_PAGE_SIZE;
 
     /**
      * 需求字段

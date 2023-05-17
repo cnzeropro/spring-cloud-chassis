@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.zero.component.spring.SpringContextHelper;
-import org.zero.model.TypeReference;
+import org.zero.component.spring.TypeReference;
 
 import java.util.Arrays;
 import java.util.Collection;

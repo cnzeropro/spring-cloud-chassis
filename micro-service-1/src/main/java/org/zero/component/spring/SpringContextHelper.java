@@ -12,7 +12,6 @@ import org.springframework.core.ResolvableType;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.zero.exception.UtilException;
-import org.zero.model.TypeReference;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;

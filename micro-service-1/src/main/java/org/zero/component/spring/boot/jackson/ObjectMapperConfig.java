@@ -1,4 +1,4 @@
-package org.zero.component.spring.boot.web.mvc;
+package org.zero.component.spring.boot.jackson;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
