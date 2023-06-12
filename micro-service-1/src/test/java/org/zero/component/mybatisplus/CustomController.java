@@ -12,7 +12,7 @@ public class CustomController extends BaseController<CustomService, StudentPO> {
 
     /**
      * 当有多个类型的业务类在spring容器中，重写该set方法用于注入指定类型
-     * 如果只用有唯一一个，请大胆删除它
+     * 如果只有唯一一个，请大胆删除它
      */
     @Override
     @Resource

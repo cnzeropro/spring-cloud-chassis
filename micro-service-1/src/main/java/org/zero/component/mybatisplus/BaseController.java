@@ -44,6 +44,7 @@ public abstract class BaseController<S extends IService<T>, T extends BasePO> {
 
     /* ====================================================================== R(Read) ====================================================================== */
     /* ********************************************************************** get ********************************************************************** */
+
     @GetMapping(path = "/get", params = {"id"})
     public Result<T> get(@RequestParam Serializable id) {
         return getById(id);
@@ -51,11 +52,11 @@ public abstract class BaseController<S extends IService<T>, T extends BasePO> {
 
     @GetMapping("/getById")
     public Result<T> getById(@RequestParam Serializable id) {
-        T dbRecord = baseService.getById(id);
-        if (Objects.isNull(dbRecord)) {
-            return Result.error("数据不存在！");
+        T dataRecord = baseService.getById(id);
+        if (Objects.isNull(dataRecord)) {
+            return Result.error("无指定数据！");
         }
-        return Result.ok(dbRecord);
+        return Result.ok(dataRecord);
     }
 
     @GetMapping("/get-by-id")
@@ -150,43 +151,48 @@ public abstract class BaseController<S extends IService<T>, T extends BasePO> {
     }
 
     /* ====================================================================== D(Delete) ====================================================================== */
-    @DeleteMapping("/deleteById")
-    public Result<Boolean> deleteById(@RequestParam Serializable id) {
+    @DeleteMapping(value = "/remove", params = {"id"})
+    public Result<Boolean> remove(@RequestParam Serializable id) {
+        return removeById(id);
+    }
+
+    @DeleteMapping("/removeById")
+    public Result<Boolean> removeById(@RequestParam Serializable id) {
         return Result.ok(baseService.removeById(id));
     }
 
-    @DeleteMapping("/delete-by-id")
-    public Result<Boolean> deleteByIdWithKebabCase(@RequestParam Serializable id) {
-        return deleteById(id);
+    @DeleteMapping("/remove-by-id")
+    public Result<Boolean> removeByIdWithKebabCase(@RequestParam Serializable id) {
+        return removeById(id);
     }
 
-    @DeleteMapping("/deleteById/{id}")
-    public Result<Boolean> deleteByIdWithPathVariable(@PathVariable Serializable id) {
-        return deleteById(id);
+    @DeleteMapping("/removeById/{id}")
+    public Result<Boolean> removeByIdWithPathVariable(@PathVariable Serializable id) {
+        return removeById(id);
     }
 
-    @DeleteMapping("/delete-by-id/{id}")
-    public Result<Boolean> deleteByIdWithPathVariableAndKebabCase(@PathVariable Serializable id) {
-        return deleteById(id);
+    @DeleteMapping("/remove-by-id/{id}")
+    public Result<Boolean> removeByIdWithPathVariableAndKebabCase(@PathVariable Serializable id) {
+        return removeById(id);
     }
 
-    @DeleteMapping("/deleteByIds")
-    public Result<Boolean> deleteByIds(@RequestParam Collection<? extends Serializable> ids) {
+    @DeleteMapping("/removeByIds")
+    public Result<Boolean> removeByIds(@RequestParam Collection<? extends Serializable> ids) {
         return Result.ok(baseService.removeByIds(ids));
     }
 
-    @DeleteMapping("/delete-by-ids")
-    public Result<Boolean> deleteByIdsWithKebabCase(@RequestParam Collection<? extends Serializable> ids) {
-        return deleteByIds(ids);
+    @DeleteMapping("/remove-by-ids")
+    public Result<Boolean> removeByIdsWithKebabCase(@RequestParam Collection<? extends Serializable> ids) {
+        return removeByIds(ids);
     }
 
-    @DeleteMapping("/deleteByIds/{ids}")
-    public Result<Boolean> deleteByIdsWithPathVariable(@PathVariable Collection<? extends Serializable> ids) {
-        return deleteByIds(ids);
+    @DeleteMapping("/removeByIds/{ids}")
+    public Result<Boolean> removeByIdsWithPathVariable(@PathVariable Collection<? extends Serializable> ids) {
+        return removeByIds(ids);
     }
 
-    @DeleteMapping("/delete-by-ids/{ids}")
-    public Result<Boolean> deleteByIdsWithPathVariableAndKebabCase(@PathVariable Collection<? extends Serializable> ids) {
-        return deleteByIds(ids);
+    @DeleteMapping("/remove-by-ids/{ids}")
+    public Result<Boolean> removeByIdsWithPathVariableAndKebabCase(@PathVariable Collection<? extends Serializable> ids) {
+        return removeByIds(ids);
     }
 }

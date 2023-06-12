@@ -39,7 +39,7 @@ public abstract class BasePO implements Serializable {
     /**
      * 逻辑删除标识
      */
-    @TableField("is_deleted")
+    @TableField(value = "is_deleted", fill = FieldFill.INSERT)
     @TableLogic
     @JsonIgnore
     @Setter(AccessLevel.NONE)
@@ -49,12 +49,14 @@ public abstract class BasePO implements Serializable {
      * 乐观锁标识
      */
     @Version
+    @TableField(fill = FieldFill.INSERT)
     @JsonIgnore
     private Integer version;
 
     /**
      * 创建人
      */
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /**
@@ -69,6 +71,7 @@ public abstract class BasePO implements Serializable {
     /**
      * 更新人
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
 
     /**

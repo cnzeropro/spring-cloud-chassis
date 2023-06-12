@@ -15,6 +15,6 @@ import org.zero.model.StudentPO;
 public class CustomServiceImpl extends ServiceImpl<BaseMapper<StudentPO>, StudentPO> implements CustomService {
     @Override
     public void test() {
-
+        System.out.println("我是测试方法");
     }
 }
