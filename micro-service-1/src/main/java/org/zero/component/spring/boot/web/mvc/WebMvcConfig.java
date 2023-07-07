@@ -5,6 +5,7 @@ import cn.hutool.core.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.CacheControl;
@@ -40,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Configuration
 @EnableWebMvc
+@ServletComponentScan({"org.zero.web"})
 @EnableConfigurationProperties({WebMvcProperties.class})
 public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${spring.mvc.async.request-timeout:30000}")

@@ -160,18 +160,33 @@ public class GlobalExceptionHandler {
         return Result.fail(HttpStatus.BAD_REQUEST, String.format("数据绑定异常：%s", errorMsg.replace(",", "；")));
     }
 
+    /**
+     * spring.jackson.deserialization.fail_on_unknown_properties=true时，json反序列化如果存在不明确的属性，抛出该异常
+     */
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public Result<Void> httpMessageNotReadableException(org.springframework.http.converter.HttpMessageNotReadableException e) {
+        log.error("Unknown parameter", e);
+        return Result.fail(HttpStatus.BAD_REQUEST, "参数不合法：存在多余参数");
+    }
+
+    @ExceptionHandler(org.springframework.web.server.NotAcceptableStatusException.class)
+    public Result<Void> notAcceptableStatusException(org.springframework.web.server.NotAcceptableStatusException e) {
+        log.error("not acceptable status exception(406)", e);
+        return Result.fail(HttpStatus.NOT_ACCEPTABLE, "406 - Not Acceptable");
+    }
+
     /* *************************************************** Feign异常 *************************************************** */
 
     @ExceptionHandler(feign.codec.EncodeException.class)
     public Result<Void> encodeException(feign.codec.EncodeException e) {
         log.error("Feign encode exception", e);
-        return Result.error("编码参数异常");
+        return Result.fail("编码参数异常");
     }
 
     @ExceptionHandler(feign.codec.DecodeException.class)
     public Result<Void> decodeException(feign.codec.DecodeException e) {
         log.error("Feign decode exception", e);
-        return Result.error("解码响应异常");
+        return Result.fail("解码响应异常");
     }
 
     @ExceptionHandler(feign.FeignException.class)
@@ -182,7 +197,7 @@ public class GlobalExceptionHandler {
                 .map(RequestTemplate::feignTarget)
                 .map(Target::name)
                 .orElse("unknown");
-        return Result.error(String.format("微服务[%s]调用失败", feignServiceName));
+        return Result.fail(String.format("微服务[%s]调用失败", feignServiceName));
     }
 
     /* *************************************************** SQL异常 *************************************************** */
@@ -281,6 +296,17 @@ public class GlobalExceptionHandler {
     }
 
     /* *************************************************** 其他异常 *************************************************** */
+    @ExceptionHandler(java.io.IOException.class)
+    public Result<Void> ioException(java.io.IOException e) {
+        log.error("IO exception", e);
+        return Result.fail("IO 异常");
+    }
+
+    @ExceptionHandler(com.fasterxml.jackson.core.JacksonException.class)
+    public Result<Void> jacksonException(com.fasterxml.jackson.core.JacksonException e) {
+        log.error("JSON parsing exception", e);
+        return Result.fail("JSON 解析异常");
+    }
 
     @ExceptionHandler(java.util.concurrent.RejectedExecutionException.class)
     public Result<Void> rejectedExecutionException(java.util.concurrent.RejectedExecutionException e) {

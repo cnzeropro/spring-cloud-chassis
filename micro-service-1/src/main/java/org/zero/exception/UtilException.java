@@ -7,5 +7,5 @@ import lombok.experimental.StandardException;
  * @since 2022/6/20
  */
 @StandardException
-public class UtilException extends RuntimeException {
+public class UtilException extends BaseException {
 }

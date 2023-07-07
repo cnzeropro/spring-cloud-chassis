@@ -15,17 +15,21 @@ public class BaseException extends RuntimeException {
         this(SysError.ERROR);
     }
 
-    public BaseException(SysError sysError) {
-        this(sysError.getMsg(), sysError);
-    }
-
     public BaseException(String message) {
         this(message, SysError.ERROR);
+    }
+
+    public BaseException(SysError sysError) {
+        this(sysError.getMsg(), sysError);
     }
 
     public BaseException(String message, SysError sysError) {
         super(message);
         this.sysError = sysError;
+    }
+
+    public BaseException(Throwable cause) {
+        this(SysError.ERROR, cause);
     }
 
     public BaseException(String message, Throwable cause) {

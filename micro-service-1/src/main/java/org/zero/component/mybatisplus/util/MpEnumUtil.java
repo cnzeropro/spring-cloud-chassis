@@ -1,5 +1,6 @@
 package org.zero.component.mybatisplus.util;
 
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.baomidou.mybatisplus.annotation.IEnum;
@@ -10,7 +11,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -26,21 +26,25 @@ public class MpEnumUtil {
      */
     private static final ConcurrentMap<Class<? extends Enum<?>>, Method> METHOD_MAP = new ConcurrentHashMap<>();
 
-    public static Method getMethod(Class<? extends Enum<?>> enumType) {
-        Method method = METHOD_MAP.get(enumType);
-        if (Objects.isNull(method)) {
-            // 此处可使用自定义父类和注解，但因为Mp已经提供，所有无需重复造轮子
-            if (IEnum.class.isAssignableFrom(enumType)) {
-                method = getMethodWithName(enumType, "getValue");
-            } else {
-                Field field = getAnnotatedField(enumType, EnumValue.class).orElseThrow(() -> new UtilException(String.format("Class[%s] could not find @EnumValue", enumType.getName())));
-                method = getMethodWithField(enumType, field);
-            }
-        }
-        return METHOD_MAP.put(enumType, method);
+    public static Object invoke(Enum<?> enumObj) {
+        Method method = MpEnumUtil.getMethod(enumObj.getDeclaringClass());
+        return ReflectUtil.invoke(enumObj, method);
     }
 
-    private static Optional<Field> getAnnotatedField(Class<? extends Enum<?>> targetClass, Class<? extends Annotation> annotationClass) {
+    public static Method getMethod(Class<? extends Enum<?>> enumType) {
+        return METHOD_MAP.computeIfAbsent(enumType, k -> {
+            // 此处可使用自定义父类和注解，但因为Mp已经提供，所有无需重复造轮子
+            if (IEnum.class.isAssignableFrom(k)) {
+                return getMethodWithName(k, "getValue");
+            } else {
+                Field field = getAnnotatedField(k, EnumValue.class)
+                        .orElseThrow(() -> new UtilException(String.format("Class[%s] fields could not find @EnumValue", k.getName())));
+                return getMethodWithField(k, field);
+            }
+        });
+    }
+
+    public static Optional<Field> getAnnotatedField(Class<? extends Enum<?>> targetClass, Class<? extends Annotation> annotationClass) {
         return targetClass.isEnum() ? Arrays.stream(targetClass.getDeclaredFields()).filter(field -> field.isAnnotationPresent(annotationClass)).findFirst() : Optional.empty();
     }
 
