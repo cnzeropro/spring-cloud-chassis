@@ -19,14 +19,16 @@ public class MicroService1Application {
     public static void main(String[] args) {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(MicroService1Application.class, args);
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
+
         String appName = environment.getProperty("spring.application.name", "app");
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = environment.getProperty("server.port", "8080");
         String contextPath = environment.getProperty("server.servlet.context-path", "/");
         log.info("\n----------------------------------------------------------\n"
-                + "\tApplication [" + appName + "] is running! Access urls:\n"
-                + "\tLocal: \t\thttp://127.0.0.1:" + port + contextPath + "\n"
-                + "\tExternal: \thttp://" + ip + ":" + port + contextPath + "\n"
-                + "----------------------------------------------------------");
+                        + "\tApplication [{}] is running! Access urls:\n"
+                        + "\tLocal: \t\thttp://127.0.0.1:{}{}\n"
+                        + "\tExternal: \thttp://{}:{}{}\n"
+                        + "----------------------------------------------------------\n"
+                , appName, port, contextPath, ip, port, contextPath);
     }
 }

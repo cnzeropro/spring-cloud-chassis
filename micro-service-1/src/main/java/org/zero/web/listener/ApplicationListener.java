@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebListener;
  * @author Zero
  */
 @Slf4j
-@WebListener
+@WebListener("Application Listener")
 public class ApplicationListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {

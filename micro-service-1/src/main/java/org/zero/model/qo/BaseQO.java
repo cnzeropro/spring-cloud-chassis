@@ -16,6 +16,8 @@ import java.io.Serializable;
  */
 @Data
 public class BaseQO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * 页码
      */

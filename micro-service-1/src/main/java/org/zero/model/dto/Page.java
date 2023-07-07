@@ -24,6 +24,7 @@ public class Page<T> implements Serializable {
      * 默认每页数目：10
      */
     public static final String DEFAULT_PAGE_SIZE_STR = "10";
+    // public static final int DEFAULT_PAGE_SIZE = 10;
     public static final int DEFAULT_PAGE_SIZE = Integer.parseInt(DEFAULT_PAGE_SIZE_STR);
 
     /**
@@ -108,6 +109,7 @@ public class Page<T> implements Serializable {
         return setTotalPage(totalPage);
     }
 
+    @SuppressWarnings("unchecked")
     public <R> Page<R> convert(Function<? super T, ? extends R> mapper) {
         List<R> data = this.getRecords().stream().map(mapper).collect(Collectors.toList());
         return ((Page<R>) this).setRecords(data);

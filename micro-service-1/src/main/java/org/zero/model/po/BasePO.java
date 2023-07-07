@@ -22,6 +22,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
+ * 基础实体类
+ *
  * @author Zero (cnzeropro@qq.com)
  * @since 2023/1/5
  */
@@ -29,6 +31,8 @@ import java.time.LocalDateTime;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 public abstract class BasePO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * 主键
      */

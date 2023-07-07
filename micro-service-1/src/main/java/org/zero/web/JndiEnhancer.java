@@ -13,9 +13,9 @@ import java.sql.Connection;
  */
 public class JndiEnhancer {
     /**
-     * name like: "java:comp/env/jdbc/shopping"
+     * name like: "java:comp/env/jdbc/test"
      */
-    private String name;
+    private final String name;
     private DataSource dataSource;
 
     public JndiEnhancer(String name) {

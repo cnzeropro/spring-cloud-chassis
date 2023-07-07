@@ -7,8 +7,8 @@ import org.zero.constant.SysError;
  * @author Zero (cnzeropro@qq.com)
  * @since 2022/6/20
  */
-@Getter
 public class BaseException extends RuntimeException {
+    @Getter
     private final SysError sysError;
 
     public BaseException() {
