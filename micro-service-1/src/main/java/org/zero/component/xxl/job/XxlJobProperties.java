@@ -10,9 +10,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties("xxl.job")
 public class XxlJobProperties {
-    private Admin admin;
+    private Admin admin = new Admin();
     private String accessToken;
-    private Executor executor;
+    private Executor executor = new Executor();
 
     @Data
     public static class Admin {

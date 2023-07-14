@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.experimental.UtilityClass;
-import org.zero.exception.UtilException;
+import org.zero.common.data.exception.UtilException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

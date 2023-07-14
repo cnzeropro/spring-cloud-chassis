@@ -19,6 +19,8 @@
 
     <packaging>pom</packaging>
     <modules>
+        <module>gateway</module>
+        <module>common</module>
         <module>micro-service-1</module>
     </modules>
 
@@ -35,6 +37,7 @@
         <resource.delimiter>@</resource.delimiter>
 
         <!-- dependencies -->
+        <common.version>${project.version}</common.version>
         <!-- spring dependencies -->
         <!-- spring cloud alibaba基于java 8的最后一版 -->
         <spring-boot.version>2.6.11</spring-boot.version>
@@ -131,6 +134,14 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- hutool（工具集） -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -234,7 +245,6 @@
                 <version>${jasypt.version}</version>
             </dependency>
 
-            <!-- hutool（工具集） -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>

@@ -1,11 +1,11 @@
 package org.zero.component.spring.boot.i18n;
 
+import cn.hutool.extra.spring.SpringUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.StringUtils;
-import org.zero.component.spring.SpringContextHelper;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -25,7 +25,7 @@ public class I18nHelper {
 
     public static MessageSource getMessageSource() {
         if (Objects.isNull(messageSource)) {
-            messageSource = SpringContextHelper.getBean(MessageSource.class);
+            messageSource = SpringUtil.getBean(MessageSource.class);
         }
         return messageSource;
     }

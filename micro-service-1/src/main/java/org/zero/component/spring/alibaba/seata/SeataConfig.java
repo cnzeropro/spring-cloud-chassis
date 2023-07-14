@@ -1,7 +1,10 @@
 package org.zero.component.spring.alibaba.seata;
 
 import io.seata.spring.annotation.GlobalTransactional;
+import io.seata.spring.annotation.datasource.EnableAutoDataSourceProxy;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.zero.common.core.factory.YamlPropertySourceFactory;
 
 /**
  * seata使用：
@@ -10,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
  * @author Zero (cnzeropro@qq.com)
  * @since 2021/12/1 14:41
  */
+@PropertySource(value = "classpath:seata/seata-config.yml", factory = YamlPropertySourceFactory.class)
 @Configuration(proxyBeanMethods = false)
+@EnableAutoDataSourceProxy(useJdkProxy = true)
 @GlobalTransactional
 public class SeataConfig {
 }

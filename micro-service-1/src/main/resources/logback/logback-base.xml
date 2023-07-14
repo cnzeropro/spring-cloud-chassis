@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 基础配置定义 -->
+<!-- 基础配置 -->
 <included>
-    <!-- 彩色日志支持 -->
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
-    <!-- 异常信息空白包裹支持 -->
-    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
-    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
-
     <!-- Spring配置项 -->
     <springProperty scope="context" name="LOG_APP" source="spring.application.name" defaultValue="app" />
 
@@ -25,5 +19,11 @@
     <property name="FILE_LOG_APPEND" value="${FILE_LOG_APPEND:-true}" />
 
     <!-- 其他相关 -->
-    <property name="ROOT_LOGGER_LEVEL" value="${ROOT_LOGGER_LEVEL:-ALL" />
+    <property name="ROOT_LOGGER_LEVEL" value="${ROOT_LOGGER_LEVEL:-ALL}" />
+
+    <!-- 彩色日志支持 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <!-- 异常信息空白包裹支持 -->
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
 </included>

@@ -1,6 +1,6 @@
 package org.zero.component.mybatisplus;
 
-import org.zero.model.StudentPO;
+import org.zero.model.UserPO;
 
 import javax.annotation.Resource;
 
@@ -8,7 +8,7 @@ import javax.annotation.Resource;
  * @author zero
  * @since 2023/5/16
  */
-public class CustomController extends BaseController<CustomService, StudentPO> {
+public class CustomController extends BaseController<CustomService, UserPO> {
 
     /**
      * 当有多个类型的业务类在spring容器中，重写该set方法用于注入指定类型

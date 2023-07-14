@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.experimental.UtilityClass;
-import org.zero.model.qo.BaseQO;
+import org.zero.common.data.model.common.BaseQO;
 
 import java.util.ArrayList;
 import java.util.Arrays;

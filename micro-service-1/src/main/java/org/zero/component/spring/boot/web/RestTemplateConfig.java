@@ -17,7 +17,9 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.client.RestTemplateBuilderConfigurer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -42,18 +44,26 @@ import java.util.Optional;
 
 /**
  * RestTemplate配置类
+ * <p>
+ * 相关自动装配参见：
+ * {@link org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration}
+ * {@link org.springframework.boot.test.autoconfigure.web.client.WebClientRestTemplateAutoConfiguration}
  *
  * @author Zero
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(RestTemplateProperties.class)
+@AutoConfigureAfter({RestTemplateAutoConfiguration.class})
 @RequiredArgsConstructor
 public class RestTemplateConfig {
     private final RestTemplateProperties restTemplateProperties;
 
+    /**
+     * 无需 @LoadBalanced，当spring cloud中存在负载均衡组件，自动为每个RestTemplate注入负载均衡能力
+     * 参见：{@link org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration}
+     */
     @Bean
-    // 无需，当spring cloud中存在负载均衡组件，自动为每个RestTemplate注入负载均衡能力
 //    @LoadBalanced
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();

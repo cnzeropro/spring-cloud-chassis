@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 滚动文件日志配置 -->
+<!-- 滚动日志配置 -->
 <included>
-    <property name="ROLLINGPOLICY_MAX_FILE_SIZE" value="${ROLLINGPOLICY_MAX_FILE_SIZE:-100MB}" />
-    <property name="ROLLINGPOLICY_TOTAL_SIZE_CAP" value="${ROLLINGPOLICY_TOTAL_SIZE_CAP:-10GB}" />
-    <property name="ROLLINGPOLICY_MAX_HISTORY" value="${ROLLINGPOLICY_MAX_HISTORY:-365}" />
-    <property name="ROLLINGPOLICY_CLEAN_HISTORY_ON_START" value="${log.cleanHistoryOnStart:-${ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-false}}" />
-    <property name="ROLLINGPOLICY_MIN_INDEX" value="${ROLLINGPOLICY_MIN_INDEX:-10}" />
-    <property name="ROLLINGPOLICY_MAX_INDEX" value="${ROLLINGPOLICY_MAX_INDEX:-100}" />
+    <!-- 滚动日志单个文件最大大小，默认100MB -->
+    <property name="ROLLINGPOLICY_MAX_FILE_SIZE" value="${ROLLINGPOLICY_MAX_FILE_SIZE:-100MB}"/>
+    <!-- 滚动日志文件总共最大大小，默认10GB -->
+    <property name="ROLLINGPOLICY_TOTAL_SIZE_CAP" value="${ROLLINGPOLICY_TOTAL_SIZE_CAP:-10GB}"/>
+    <!-- 滚动日志文件历史留存天数，默认365 -->
+    <property name="ROLLINGPOLICY_MAX_HISTORY" value="${ROLLINGPOLICY_MAX_HISTORY:-365}"/>
+    <!-- 应用启动时是否清空历史日志文件，默认false -->
+    <property name="ROLLINGPOLICY_CLEAN_HISTORY_ON_START"
+              value="${log.cleanHistoryOnStart:-${ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-false}}"/>
+    <!-- 滚动日志文件最小Index，默认10 -->
+    <property name="ROLLINGPOLICY_MIN_INDEX" value="${ROLLINGPOLICY_MIN_INDEX:-10}"/>
+    <!-- 滚动日志文件最大Index，默认100  -->
+    <property name="ROLLINGPOLICY_MAX_INDEX" value="${ROLLINGPOLICY_MAX_INDEX:-100}"/>
 
     <!-- error级别及其以上日志 -->
-    <property name="ERROR_LOG_FILE" value="${ERROR_LOG_FILE:-${LOG_BASE}/error.log}" />
-    <property name="ERROR_LOG_ROLLING_FILE" value="${ERROR_LOG_ROLLING_FILE:-${LOG_BASE}/error/%d{yyyy-MM}.%i.gz}" />
+    <!-- error级别日志文件名称 -->
+    <property name="ERROR_LOG_FILE" value="${ERROR_LOG_FILE:-${LOG_BASE}/error.log}"/>
+    <!-- error级别日志滚动文件名称 -->
+    <property name="ERROR_LOG_ROLLING_FILE" value="${ERROR_LOG_ROLLING_FILE:-${LOG_BASE}/error/%d{yyyy-MM}.%i.gz}"/>
     <appender name="rollingErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${ERROR_LOG_FILE}</file>
         <append>${FILE_LOG_APPEND:-true}</append>
@@ -25,14 +34,17 @@
             <fileNamePattern>${ERROR_LOG_ROLLING_FILE}</fileNamePattern>
             <cleanHistoryOnStart>${ROLLINGPOLICY_CLEAN_HISTORY_ON_START}</cleanHistoryOnStart>
             <maxFileSize>${ROLLINGPOLICY_MAX_FILE_SIZE}</maxFileSize>
-            <MaxHistory>${ROLLINGPOLICY_TOTAL_SIZE_CAP}</MaxHistory>
-            <totalSizeCap>${ROLLINGPOLICY_MAX_HISTORY}</totalSizeCap>
+            <totalSizeCap>${ROLLINGPOLICY_TOTAL_SIZE_CAP}</totalSizeCap>
+            <maxHistory>${ROLLINGPOLICY_MAX_HISTORY}</maxHistory>
         </rollingPolicy>
     </appender>
 
-    <!-- warn日志 -->
-    <property name="WARN_LOG_FILE" value="${WARN_LOG_FILE:-${LOG_BASE}/warn.log}" />
-    <property name="WARN_LOG_ROLLING_FILE" value="${WARN_LOG_ROLLING_FILE:-${LOG_BASE}/warn/%d{yyyy-MM-dd}.%i.gz}" />
+    <!-- warn级别日志 -->
+    <!-- warn级别日志文件名称 -->
+    <property name="WARN_LOG_FILE" value="${WARN_LOG_FILE:-${LOG_BASE}/warn.log}"/>
+    <!-- warn级别日志滚动文件名称 -->
+    <property name="WARN_LOG_ROLLING_FILE"
+              value="${WARN_LOG_ROLLING_FILE:-${LOG_BASE}/warn/%d{yyyy-MM}/%d{yyyy-MM-dd}.%i.gz}"/>
     <appender name="rollingWarnFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${WARN_LOG_FILE}</file>
         <append>${FILE_LOG_APPEND:-true}</append>
@@ -49,14 +61,17 @@
             <fileNamePattern>${WARN_LOG_ROLLING_FILE}</fileNamePattern>
             <cleanHistoryOnStart>${ROLLINGPOLICY_CLEAN_HISTORY_ON_START}</cleanHistoryOnStart>
             <maxFileSize>${ROLLINGPOLICY_MAX_FILE_SIZE}</maxFileSize>
-            <MaxHistory>${ROLLINGPOLICY_TOTAL_SIZE_CAP}</MaxHistory>
-            <totalSizeCap>${ROLLINGPOLICY_MAX_HISTORY}</totalSizeCap>
+            <totalSizeCap>${ROLLINGPOLICY_TOTAL_SIZE_CAP}</totalSizeCap>
+            <maxHistory>${ROLLINGPOLICY_MAX_HISTORY}</maxHistory>
         </rollingPolicy>
     </appender>
 
-    <!-- info日志 -->
-    <property name="INFO_LOG_FILE" value="${INFO_LOG_FILE:-${LOG_BASE}/info.log}" />
-    <property name="INFO_LOG_ROLLING_FILE" value="${INFO_LOG_ROLLING_FILE:-${LOG_BASE}/info/%d{yyyy-MM-dd}.%i.gz}" />
+    <!-- info级别日志 -->
+    <!-- info级别日志文件名称 -->
+    <property name="INFO_LOG_FILE" value="${INFO_LOG_FILE:-${LOG_BASE}/info.log}"/>
+    <!-- info级别日志滚动文件名称 -->
+    <property name="INFO_LOG_ROLLING_FILE"
+              value="${INFO_LOG_ROLLING_FILE:-${LOG_BASE}/info/%d{yyyy-MM}/%d{yyyy-MM-dd}.%i.gz}"/>
     <appender name="rollingInfoFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${INFO_LOG_FILE}</file>
         <append>${FILE_LOG_APPEND:-true}</append>
@@ -74,14 +89,17 @@
             <fileNamePattern>${INFO_LOG_ROLLING_FILE}</fileNamePattern>
             <cleanHistoryOnStart>${ROLLINGPOLICY_CLEAN_HISTORY_ON_START}</cleanHistoryOnStart>
             <maxFileSize>${ROLLINGPOLICY_MAX_FILE_SIZE}</maxFileSize>
-            <MaxHistory>${ROLLINGPOLICY_TOTAL_SIZE_CAP}</MaxHistory>
-            <totalSizeCap>${ROLLINGPOLICY_MAX_HISTORY}</totalSizeCap>
+            <totalSizeCap>${ROLLINGPOLICY_TOTAL_SIZE_CAP}</totalSizeCap>
+            <maxHistory>${ROLLINGPOLICY_MAX_HISTORY}</maxHistory>
         </rollingPolicy>
     </appender>
 
-    <!-- debug级别及其以下日志 -->
-    <property name="DEBUG_LOG_FILE" value="${DEBUG_LOG_FILE:-${LOG_BASE}/debug.log}" />
-    <property name="DEBUG_LOG_ROLLING_FILE" value="${DEBUG_LOG_ROLLING_FILE:-${LOG_BASE}/debug/%i.gz}" />
+    <!-- debug级别及其以下日志（注意：需要配合特定的filter使用） -->
+    <!-- debug级别日志文件名称 -->
+    <property name="DEBUG_LOG_FILE" value="${DEBUG_LOG_FILE:-${LOG_BASE}/debug.log}"/>
+    <!-- debug级别日志滚动文件名称 -->
+    <property name="DEBUG_LOG_ROLLING_FILE"
+              value="${DEBUG_LOG_ROLLING_FILE:-${LOG_BASE}/debug/%d{yyyy-MM}/%d{yyyy-MM-dd}.%i.gz}"/>
     <appender name="rollingDebugFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${DEBUG_LOG_FILE}</file>
         <append>${FILE_LOG_APPEND:-true}</append>

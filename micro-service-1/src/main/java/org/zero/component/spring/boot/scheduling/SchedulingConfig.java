@@ -10,6 +10,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
+ * 自定义或者实现{@link org.springframework.scheduling.annotation.AsyncConfigurer}
+ *
  * @author Zero (cnzeropro@qq.com)
  * @date 2022/11/30
  */
@@ -17,6 +19,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableScheduling
 @EnableAsync
 public class SchedulingConfig {
+    /**
+     * 获取当前机器的核数
+     */
+    public static final int CPU_NUM = Runtime.getRuntime().availableProcessors();
+
     /**
      * 异步方法注解@Async默认使用名称为taskExecutor的Executor执行任务
      * 详情请参见：{@link org.springframework.aop.interceptor.AsyncExecutionAspectSupport#DEFAULT_TASK_EXECUTOR_BEAN_NAME}，
@@ -27,13 +34,17 @@ public class SchedulingConfig {
         // 创建线程池对象
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         // 核心线程数
-        taskExecutor.setCorePoolSize(Runtime.getRuntime().availableProcessors() * 2);
+        taskExecutor.setCorePoolSize(CPU_NUM);
         // 线程池维护线程的最大数量，只有在缓冲队列满了之后才会申请超过核心线程数的线程
-        taskExecutor.setMaxPoolSize(100);
+        taskExecutor.setMaxPoolSize(CPU_NUM * 2);
         // 缓存队列容量
-        taskExecutor.setQueueCapacity(50);
+        taskExecutor.setQueueCapacity(CPU_NUM * 10);
         // 线程的空闲时间，当超过了核心线程出之外的线程在空闲时间到达之后会被销毁
         taskExecutor.setKeepAliveSeconds(200);
+        // 关闭连接池时等待的最大时间
+        taskExecutor.setAwaitTerminationSeconds(60);
+        // 是否等待任务完成才关闭连接池
+        taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         // 异步方法内部线程名称
         taskExecutor.setThreadNamePrefix("AsyncTask-");
         /*

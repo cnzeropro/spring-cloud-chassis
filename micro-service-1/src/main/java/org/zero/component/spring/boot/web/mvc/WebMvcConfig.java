@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -43,6 +44,7 @@ import java.util.concurrent.TimeUnit;
 @EnableWebMvc
 @ServletComponentScan({"org.zero.web"})
 @EnableConfigurationProperties({WebMvcProperties.class})
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${spring.mvc.async.request-timeout:30000}")
     private long requestTimeout;

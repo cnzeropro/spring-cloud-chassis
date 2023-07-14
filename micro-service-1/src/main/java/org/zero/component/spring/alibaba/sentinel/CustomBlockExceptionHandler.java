@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.zero.model.vo.Result;
+import org.zero.common.data.model.common.Result;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

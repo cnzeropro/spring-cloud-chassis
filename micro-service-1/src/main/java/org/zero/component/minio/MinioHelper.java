@@ -1,6 +1,7 @@
 package org.zero.component.minio;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
 import io.minio.GetPresignedObjectUrlArgs;
@@ -13,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.multipart.MultipartFile;
-import org.zero.component.spring.SpringContextHelper;
 
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +29,7 @@ public class MinioHelper {
     private static MinioClient minioClient;
 
     static {
-        MinioHelper.minioClient = SpringContextHelper.getBean(MinioClient.class);
+        MinioHelper.minioClient = SpringUtil.getBean(MinioClient.class);
     }
 
     @SneakyThrows(Exception.class)

@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.zero.model.po.BasePO;
-import org.zero.model.vo.Result;
+import org.zero.common.data.model.common.BasePO;
+import org.zero.common.data.model.common.Result;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-import static org.zero.model.dto.Page.DEFAULT_PAGE_SIZE_STR;
+import static org.zero.common.data.model.common.Page.DEFAULT_PAGE_SIZE_STR;
 
 /**
  * @author zero

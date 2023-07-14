@@ -2,7 +2,6 @@ package org.zero.component.spring.boot.redis;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -15,8 +14,6 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 忽略缓存异常，不影响业务流程
- *
  * @author Zero (cnzeropro@qq.com)
  * @since 2023/2/17
  */
@@ -35,7 +32,7 @@ public final class CustomCacheResolver implements CacheResolver {
             for (String cacheName : cacheNames) {
                 Cache cache = cacheManager.getCache(cacheName);
                 if (Objects.isNull(cache)) {
-                    throw new IllegalArgumentException(StrUtil.format("Can not find cache named[{}] for [{}]", cacheName, context.getOperation()));
+                    throw new IllegalArgumentException(String.format("Can not find cache named[%s] for [%S]", cacheName, context.getOperation()));
                 }
                 result.add(cache);
             }

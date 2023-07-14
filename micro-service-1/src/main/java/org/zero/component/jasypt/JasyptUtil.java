@@ -1,8 +1,8 @@
 package org.zero.component.jasypt;
 
+import cn.hutool.extra.spring.SpringUtil;
 import lombok.experimental.UtilityClass;
 import org.jasypt.encryption.StringEncryptor;
-import org.zero.component.spring.SpringContextHelper;
 
 /**
  * @author Zero (cnzeropro@qq.com)
@@ -13,7 +13,7 @@ public class JasyptUtil {
     private static StringEncryptor encryptor;
 
     static {
-        JasyptUtil.encryptor = SpringContextHelper.getBean(StringEncryptor.class);
+        JasyptUtil.encryptor = SpringUtil.getBean(StringEncryptor.class);
     }
 
     /**

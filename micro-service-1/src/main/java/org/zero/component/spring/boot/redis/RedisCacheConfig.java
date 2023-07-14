@@ -85,9 +85,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
-            String str = target.getClass().getName() + "#" +
-                    method.getName() + "(";
-            StringJoiner sj = new StringJoiner(",", str, ")");
+            String prefix = target.getClass().getName() + "#" + method.getName() + "(";
+            StringJoiner sj = new StringJoiner(",", prefix, ")");
             Arrays.stream(params).map(String::valueOf).forEach(sj::add);
             return sj.toString();
         };

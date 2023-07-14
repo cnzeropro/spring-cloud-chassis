@@ -1,13 +1,13 @@
 package org.zero.component.spring.boot.redis;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.zero.component.spring.SpringContextHelper;
-import org.zero.component.spring.TypeReference;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -31,9 +31,15 @@ import java.util.concurrent.TimeUnit;
 public class RedisHelper {
     private static RedisTemplate<String, Object> redisTemplate;
 
-    static {
-        RedisHelper.redisTemplate = SpringContextHelper.getBean(new TypeReference<RedisTemplate<String, Object>>() {
-        });
+    /**
+     * 延迟初始化RedisTemplate，而不是使用static代码块
+     */
+    public static RedisTemplate<String, Object> getRedisTemplate() {
+        if (Objects.isNull(redisTemplate)) {
+            redisTemplate = SpringUtil.getBean(new TypeReference<RedisTemplate<String, Object>>() {
+            });
+        }
+        return redisTemplate;
     }
 
     /**
@@ -67,7 +73,7 @@ public class RedisHelper {
             unit = TimeUnit.SECONDS;
         }
 
-        return Boolean.TRUE.equals(redisTemplate.expire(key, timeout, unit));
+        return Boolean.TRUE.equals(getRedisTemplate().expire(key, timeout, unit));
     }
 
     /**
@@ -83,7 +89,7 @@ public class RedisHelper {
         if (Objects.isNull(key) || Objects.isNull(date)) {
             return false;
         }
-        return Boolean.TRUE.equals(redisTemplate.expireAt(key, date));
+        return Boolean.TRUE.equals(getRedisTemplate().expireAt(key, date));
     }
 
     /**
@@ -98,7 +104,7 @@ public class RedisHelper {
         if (Objects.isNull(key)) {
             return false;
         }
-        return Boolean.TRUE.equals(redisTemplate.persist(key));
+        return Boolean.TRUE.equals(getRedisTemplate().persist(key));
     }
 
     /**
@@ -129,7 +135,7 @@ public class RedisHelper {
      * @return
      */
     public static long ttl(String key, TimeUnit unit) {
-        Long timeout = redisTemplate.getExpire(key, unit);
+        Long timeout = getRedisTemplate().getExpire(key, unit);
         return Objects.isNull(timeout) ? Long.MIN_VALUE : timeout;
     }
 
@@ -142,7 +148,7 @@ public class RedisHelper {
      * @return
      */
     public static boolean exists(String key) {
-        return Boolean.TRUE.equals(redisTemplate.hasKey(key));
+        return Boolean.TRUE.equals(getRedisTemplate().hasKey(key));
     }
 
     /**
@@ -157,7 +163,7 @@ public class RedisHelper {
         if (Objects.isNull(pattern)) {
             return Collections.emptySet();
         }
-        return redisTemplate.keys(pattern);
+        return getRedisTemplate().keys(pattern);
     }
 
     /**
@@ -171,9 +177,9 @@ public class RedisHelper {
         Boolean deleted = Boolean.TRUE;
         if (ArrayUtil.isNotEmpty(keys)) {
             if (keys.length == 1) {
-                deleted = redisTemplate.delete(keys[0]);
+                deleted = getRedisTemplate().delete(keys[0]);
             } else {
-                deleted = Optional.ofNullable(redisTemplate.delete(Arrays.asList(keys))).map(c -> c <= 0).orElse(Boolean.FALSE);
+                deleted = Optional.ofNullable(getRedisTemplate().delete(Arrays.asList(keys))).map(c -> c <= 0).orElse(Boolean.FALSE);
             }
         }
         return Boolean.TRUE.equals(deleted);
@@ -192,7 +198,7 @@ public class RedisHelper {
         if (Objects.isNull(oldKey) || Objects.isNull(newKey)) {
             return false;
         }
-        redisTemplate.rename(oldKey, newKey);
+        getRedisTemplate().rename(oldKey, newKey);
         return true;
     }
 
@@ -205,7 +211,7 @@ public class RedisHelper {
      * @return
      */
     public static DataType type(String key) {
-        return redisTemplate.type(key);
+        return getRedisTemplate().type(key);
     }
 
     /* ************************************************ String ************************************************ */
@@ -222,7 +228,7 @@ public class RedisHelper {
         if (Objects.isNull(key)) {
             return null;
         }
-        return redisTemplate.opsForValue().get(key);
+        return getRedisTemplate().opsForValue().get(key);
     }
 
     /**
@@ -264,7 +270,7 @@ public class RedisHelper {
         if (CollUtil.isEmpty(keys)) {
             return Collections.emptyList();
         }
-        return redisTemplate.opsForValue().multiGet(keys);
+        return getRedisTemplate().opsForValue().multiGet(keys);
     }
 
     /**
@@ -280,7 +286,7 @@ public class RedisHelper {
         if (Objects.isNull(key)) {
             return false;
         }
-        redisTemplate.opsForValue().set(key, value);
+        getRedisTemplate().opsForValue().set(key, value);
         return true;
     }
 
@@ -313,7 +319,7 @@ public class RedisHelper {
         if (Objects.isNull(key)) {
             return false;
         }
-        redisTemplate.opsForValue().set(key, value, timeout, unit);
+        getRedisTemplate().opsForValue().set(key, value, timeout, unit);
         return true;
     }
 
@@ -329,7 +335,7 @@ public class RedisHelper {
         if (CollUtil.isEmpty(map)) {
             return false;
         }
-        redisTemplate.opsForValue().multiSet(map);
+        getRedisTemplate().opsForValue().multiSet(map);
         return true;
     }
 
@@ -345,7 +351,7 @@ public class RedisHelper {
      */
     public static Object getAndSet(String key, Object value) {
         long ttl = ttl(key);
-        Object oldValue = redisTemplate.opsForValue().getAndSet(key, value);
+        Object oldValue = getRedisTemplate().opsForValue().getAndSet(key, value);
         expire(key, ttl);
         return oldValue;
     }
@@ -374,7 +380,7 @@ public class RedisHelper {
      * @return
      */
     public static Long incr(String key) {
-        return redisTemplate.opsForValue().increment(key);
+        return getRedisTemplate().opsForValue().increment(key);
     }
 
     /**
@@ -389,7 +395,7 @@ public class RedisHelper {
      * @return
      */
     public static Long incr(String key, long delta) {
-        return redisTemplate.opsForValue().increment(key, delta);
+        return getRedisTemplate().opsForValue().increment(key, delta);
     }
 
     /**
@@ -404,7 +410,7 @@ public class RedisHelper {
      * @return
      */
     public static Double incr(String key, double delta) {
-        return redisTemplate.opsForValue().increment(key, delta);
+        return getRedisTemplate().opsForValue().increment(key, delta);
     }
 
     /**
@@ -417,7 +423,7 @@ public class RedisHelper {
      * @return
      */
     public static Long decr(String key) {
-        return redisTemplate.opsForValue().decrement(key);
+        return getRedisTemplate().opsForValue().decrement(key);
     }
 
     /**
@@ -432,7 +438,7 @@ public class RedisHelper {
      * @return
      */
     public static Long decr(String key, long delta) {
-        return redisTemplate.opsForValue().decrement(key, delta);
+        return getRedisTemplate().opsForValue().decrement(key, delta);
     }
 
     /**
@@ -462,7 +468,7 @@ public class RedisHelper {
      * @return 值
      */
     public static Object hGet(String key, Object field) {
-        return redisTemplate.opsForHash().get(key, field);
+        return getRedisTemplate().opsForHash().get(key, field);
     }
 
     /**
@@ -501,7 +507,7 @@ public class RedisHelper {
      * @return 值
      */
     public static List<Object> hmGet(String key, Collection<Object> fields) {
-        return redisTemplate.opsForHash().multiGet(key, fields);
+        return getRedisTemplate().opsForHash().multiGet(key, fields);
     }
 
     /**
@@ -513,7 +519,7 @@ public class RedisHelper {
      * @return 对应的多个键值
      */
     public static Map<Object, Object> hVals(String key) {
-        return redisTemplate.opsForHash().entries(key);
+        return getRedisTemplate().opsForHash().entries(key);
     }
 
     /**
@@ -529,7 +535,7 @@ public class RedisHelper {
         if (Objects.isNull(key) || CollUtil.isEmpty(map)) {
             return false;
         }
-        redisTemplate.opsForHash().putAll(key, map);
+        getRedisTemplate().opsForHash().putAll(key, map);
         return true;
     }
 
@@ -567,7 +573,7 @@ public class RedisHelper {
         if (Objects.isNull(key) || Objects.isNull(field)) {
             return false;
         }
-        redisTemplate.opsForHash().put(key, field, value);
+        getRedisTemplate().opsForHash().put(key, field, value);
         return true;
     }
 
@@ -602,7 +608,7 @@ public class RedisHelper {
      * @return
      */
     public static long hDel(String key, Object... field) {
-        return redisTemplate.opsForHash().delete(key, field);
+        return getRedisTemplate().opsForHash().delete(key, field);
     }
 
     /**
@@ -615,7 +621,7 @@ public class RedisHelper {
      * @return
      */
     public static boolean hExists(String key, Object field) {
-        return redisTemplate.opsForHash().hasKey(key, field);
+        return getRedisTemplate().opsForHash().hasKey(key, field);
     }
 
     /**
@@ -627,7 +633,7 @@ public class RedisHelper {
      * @return
      */
     public static Long hSize(String key) {
-        return redisTemplate.opsForHash().size(key);
+        return getRedisTemplate().opsForHash().size(key);
     }
 
     /**
@@ -642,7 +648,7 @@ public class RedisHelper {
      * @return
      */
     public static long hIncr(String key, String field, long delta) {
-        return redisTemplate.opsForHash().increment(key, field, delta);
+        return getRedisTemplate().opsForHash().increment(key, field, delta);
     }
 
     /**
@@ -657,7 +663,7 @@ public class RedisHelper {
      * @return
      */
     public static double hIncr(String key, String field, double delta) {
-        return redisTemplate.opsForHash().increment(key, field, delta);
+        return getRedisTemplate().opsForHash().increment(key, field, delta);
     }
 
 
@@ -702,7 +708,7 @@ public class RedisHelper {
      * @return
      */
     public static Set<Object> sGet(String key) {
-        return redisTemplate.opsForSet().members(key);
+        return getRedisTemplate().opsForSet().members(key);
     }
 
     /**
@@ -715,7 +721,7 @@ public class RedisHelper {
      * @return
      */
     public static boolean sExists(String key, Object member) {
-        return Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, member));
+        return Boolean.TRUE.equals(getRedisTemplate().opsForSet().isMember(key, member));
     }
 
     /**
@@ -728,7 +734,7 @@ public class RedisHelper {
      * @return 成功个数
      */
     public static long sSet(String key, Object... values) {
-        Long count = redisTemplate.opsForSet().add(key, values);
+        Long count = getRedisTemplate().opsForSet().add(key, values);
         return Objects.isNull(count) ? Long.MIN_VALUE : count;
     }
 
@@ -761,7 +767,7 @@ public class RedisHelper {
      * @return
      */
     public static long sSize(String key) {
-        Long size = redisTemplate.opsForSet().size(key);
+        Long size = getRedisTemplate().opsForSet().size(key);
         return Objects.isNull(size) ? Long.MIN_VALUE : size;
     }
 
@@ -775,7 +781,7 @@ public class RedisHelper {
      * @return
      */
     public static long sDel(String key, Object... values) {
-        Long count = redisTemplate.opsForSet().remove(key, values);
+        Long count = getRedisTemplate().opsForSet().remove(key, values);
         return Objects.isNull(count) ? Long.MIN_VALUE : count;
     }
 
@@ -788,7 +794,7 @@ public class RedisHelper {
      * @return
      */
     public static Set<Object> sDiff(String... keys) {
-        return redisTemplate.opsForSet().difference(Arrays.asList(keys));
+        return getRedisTemplate().opsForSet().difference(Arrays.asList(keys));
     }
 
     /**
@@ -801,7 +807,7 @@ public class RedisHelper {
      * @return
      */
     public static Set<Object> sDiff(String key, String... otherKeys) {
-        return redisTemplate.opsForSet().difference(key, Arrays.asList(otherKeys));
+        return getRedisTemplate().opsForSet().difference(key, Arrays.asList(otherKeys));
     }
 
     /**
@@ -813,7 +819,7 @@ public class RedisHelper {
      * @return
      */
     public static Set<Object> sInter(String... keys) {
-        return redisTemplate.opsForSet().intersect(Arrays.asList(keys));
+        return getRedisTemplate().opsForSet().intersect(Arrays.asList(keys));
     }
 
     /**
@@ -826,7 +832,7 @@ public class RedisHelper {
      * @return
      */
     public static Set<Object> sInter(String key, String... otherKeys) {
-        return redisTemplate.opsForSet().intersect(key, Arrays.asList(otherKeys));
+        return getRedisTemplate().opsForSet().intersect(key, Arrays.asList(otherKeys));
     }
 
     /**
@@ -838,7 +844,7 @@ public class RedisHelper {
      * @return
      */
     public static Set<Object> sUnion(String... keys) {
-        return redisTemplate.opsForSet().union(Arrays.asList(keys));
+        return getRedisTemplate().opsForSet().union(Arrays.asList(keys));
     }
 
     /**
@@ -851,7 +857,7 @@ public class RedisHelper {
      * @return
      */
     public static Set<Object> sUnion(String key, String... otherKeys) {
-        return redisTemplate.opsForSet().union(key, Arrays.asList(otherKeys));
+        return getRedisTemplate().opsForSet().union(key, Arrays.asList(otherKeys));
     }
 
     /**
@@ -865,7 +871,7 @@ public class RedisHelper {
      * @return
      */
     public static boolean sMove(String key, String destKey, Object value) {
-        return Boolean.TRUE.equals(redisTemplate.opsForSet().move(key, value, destKey));
+        return Boolean.TRUE.equals(getRedisTemplate().opsForSet().move(key, value, destKey));
     }
 
     /**
@@ -877,7 +883,7 @@ public class RedisHelper {
      * @return
      */
     public static Object sPop(String key) {
-        return redisTemplate.opsForSet().pop(key);
+        return getRedisTemplate().opsForSet().pop(key);
     }
 
     /**
@@ -889,7 +895,7 @@ public class RedisHelper {
      * @return
      */
     public static List<Object> sPop(String key, long size) {
-        return redisTemplate.opsForSet().pop(key, size);
+        return getRedisTemplate().opsForSet().pop(key, size);
     }
 
     /* ************************************************ List ************************************************ */
@@ -904,7 +910,7 @@ public class RedisHelper {
      * @return
      */
     public static List<Object> lGet(String key) {
-        return redisTemplate.opsForList().range(key, 0L, -1L);
+        return getRedisTemplate().opsForList().range(key, 0L, -1L);
     }
 
     /**
@@ -918,7 +924,7 @@ public class RedisHelper {
      * @return
      */
     public static List<Object> lGet(String key, long start, long end) {
-        return redisTemplate.opsForList().range(key, start, end);
+        return getRedisTemplate().opsForList().range(key, start, end);
     }
 
     /**
@@ -934,7 +940,7 @@ public class RedisHelper {
      * @return
      */
     public static Object lGet(String key, long index) {
-        return redisTemplate.opsForList().index(key, index);
+        return getRedisTemplate().opsForList().index(key, index);
     }
 
     /**
@@ -946,7 +952,7 @@ public class RedisHelper {
      * @return
      */
     public static long lSize(String key) {
-        Long size = redisTemplate.opsForList().size(key);
+        Long size = getRedisTemplate().opsForList().size(key);
         return Objects.isNull(size) ? Long.MIN_VALUE : size;
     }
 
@@ -960,7 +966,7 @@ public class RedisHelper {
      * @return
      */
     public static long lRightPush(String key, Object... values) {
-        Long count = redisTemplate.opsForList().rightPushAll(key, values);
+        Long count = getRedisTemplate().opsForList().rightPushAll(key, values);
         return Objects.isNull(count) ? Long.MIN_VALUE : count;
     }
 
@@ -992,7 +998,7 @@ public class RedisHelper {
      * @return
      */
     public static Object lRightPop(String key) {
-        return redisTemplate.opsForList().rightPop(key);
+        return getRedisTemplate().opsForList().rightPop(key);
     }
 
     /**
@@ -1004,7 +1010,7 @@ public class RedisHelper {
      * @return
      */
     public static Object lRightPop(String key, long timeout) {
-        return redisTemplate.opsForList().rightPop(key, timeout, TimeUnit.SECONDS);
+        return getRedisTemplate().opsForList().rightPop(key, timeout, TimeUnit.SECONDS);
     }
 
     /**
@@ -1016,7 +1022,7 @@ public class RedisHelper {
      * @return
      */
     public static Object lRightPop(String key, long timeout, TimeUnit unit) {
-        return redisTemplate.opsForList().rightPop(key, timeout, unit);
+        return getRedisTemplate().opsForList().rightPop(key, timeout, unit);
     }
 
     /**
@@ -1029,7 +1035,7 @@ public class RedisHelper {
      * @return
      */
     public static long lLeftPush(String key, Object... values) {
-        Long count = redisTemplate.opsForList().leftPushAll(key, values);
+        Long count = getRedisTemplate().opsForList().leftPushAll(key, values);
         return Objects.isNull(count) ? Long.MIN_VALUE : count;
     }
 
@@ -1061,7 +1067,7 @@ public class RedisHelper {
      * @return
      */
     public static Object lLeftPop(String key) {
-        return redisTemplate.opsForList().leftPop(key);
+        return getRedisTemplate().opsForList().leftPop(key);
     }
 
     /**
@@ -1073,7 +1079,7 @@ public class RedisHelper {
      * @return
      */
     public static Object lLeftPop(String key, long timeout) {
-        return redisTemplate.opsForList().leftPop(key, timeout, TimeUnit.SECONDS);
+        return getRedisTemplate().opsForList().leftPop(key, timeout, TimeUnit.SECONDS);
     }
 
     /**
@@ -1085,7 +1091,7 @@ public class RedisHelper {
      * @return
      */
     public static Object lLeftPop(String key, long timeout, TimeUnit unit) {
-        return redisTemplate.opsForList().leftPop(key, timeout, unit);
+        return getRedisTemplate().opsForList().leftPop(key, timeout, unit);
     }
 
     /**
@@ -1099,7 +1105,7 @@ public class RedisHelper {
      * @return
      */
     public static boolean lSet(String key, long index, Object value) {
-        redisTemplate.opsForList().set(key, index, value);
+        getRedisTemplate().opsForList().set(key, index, value);
         return true;
     }
 
@@ -1117,7 +1123,7 @@ public class RedisHelper {
      * @return 移除的个数
      */
     public static long lDel(String key, long count, Object value) {
-        Long removed = redisTemplate.opsForList().remove(key, count, value);
+        Long removed = getRedisTemplate().opsForList().remove(key, count, value);
         return Objects.isNull(removed) ? Long.MIN_VALUE : removed;
     }
 }

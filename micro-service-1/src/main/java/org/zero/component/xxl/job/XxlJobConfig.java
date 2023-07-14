@@ -26,14 +26,17 @@ public class XxlJobConfig {
     public XxlJobSpringExecutor xxlJobExecutor() {
         log.info(">>>>>>>>>>> xxl-job config init.");
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
-        xxlJobSpringExecutor.setAdminAddresses(xxlJobProperties.getAdmin().getAddresses());
-        xxlJobSpringExecutor.setAppname(xxlJobProperties.getExecutor().getAppName());
-        xxlJobSpringExecutor.setAddress(xxlJobProperties.getExecutor().getAddress());
-        xxlJobSpringExecutor.setIp(xxlJobProperties.getExecutor().getIp());
-        xxlJobSpringExecutor.setPort(xxlJobProperties.getExecutor().getPort());
+        XxlJobProperties.Admin admin = xxlJobProperties.getAdmin();
+        XxlJobProperties.Executor executor = xxlJobProperties.getExecutor();
+
+        xxlJobSpringExecutor.setAdminAddresses(admin.getAddresses());
+        xxlJobSpringExecutor.setAppname(executor.getAppName());
+        xxlJobSpringExecutor.setAddress(executor.getAddress());
+        xxlJobSpringExecutor.setIp(executor.getIp());
+        xxlJobSpringExecutor.setPort(executor.getPort());
         xxlJobSpringExecutor.setAccessToken(xxlJobProperties.getAccessToken());
-        xxlJobSpringExecutor.setLogPath(xxlJobProperties.getExecutor().getLogPath());
-        xxlJobSpringExecutor.setLogRetentionDays(xxlJobProperties.getExecutor().getLogRetentionDays());
+        xxlJobSpringExecutor.setLogPath(executor.getLogPath());
+        xxlJobSpringExecutor.setLogRetentionDays(executor.getLogRetentionDays());
         return xxlJobSpringExecutor;
     }
 

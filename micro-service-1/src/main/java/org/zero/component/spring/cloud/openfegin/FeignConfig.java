@@ -24,6 +24,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 相关最大装配参见：{@link org.springframework.cloud.openfeign.FeignAutoConfiguration}
+ *
  * @author zero
  * @since 2021/2/14
  */
