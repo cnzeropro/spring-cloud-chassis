@@ -24,12 +24,12 @@ import java.util.concurrent.TimeUnit;
  */
 @UtilityClass
 @Slf4j
-public class MinioHelper {
+public class MinioUtils {
     public static final int PART_SIZE = 5;
     private static MinioClient minioClient;
 
     static {
-        MinioHelper.minioClient = SpringUtil.getBean(MinioClient.class);
+        MinioUtils.minioClient = SpringUtil.getBean(MinioClient.class);
     }
 
     @SneakyThrows(Exception.class)

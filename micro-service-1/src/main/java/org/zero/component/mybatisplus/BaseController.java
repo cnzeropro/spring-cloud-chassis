@@ -24,7 +24,7 @@ import static org.zero.common.data.model.common.Page.DEFAULT_PAGE_SIZE_STR;
 
 /**
  * @author zero
- * @since 2023/5/16
+ * @since 2022/5/16
  */
 @Slf4j
 public abstract class BaseController<S extends IService<T>, T extends BasePO> {

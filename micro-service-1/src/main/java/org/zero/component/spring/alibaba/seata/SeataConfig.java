@@ -13,9 +13,9 @@ import org.zero.common.core.factory.YamlPropertySourceFactory;
  * @author Zero (cnzeropro@qq.com)
  * @since 2021/12/1 14:41
  */
-@PropertySource(value = "classpath:seata/seata-config.yml", factory = YamlPropertySourceFactory.class)
+@PropertySource(name = "seata-config.yml", value = "classpath:seata/seata-config.yml", encoding = "UTF-8", factory = YamlPropertySourceFactory.class)
 @Configuration(proxyBeanMethods = false)
-@EnableAutoDataSourceProxy(useJdkProxy = true)
+@EnableAutoDataSourceProxy
 @GlobalTransactional
 public class SeataConfig {
 }

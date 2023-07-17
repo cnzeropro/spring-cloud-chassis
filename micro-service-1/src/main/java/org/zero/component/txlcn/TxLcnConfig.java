@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Zero (cnzeropro@qq.com)
  * @since 2021/12/1 14:41
+ * @deprecated tx-lcn已经很久没有更新了，建议使用Alibaba Seata：{@link org.zero.component.spring.alibaba.seata.SeataConfig}
  */
+@Deprecated
 @Configuration(proxyBeanMethods = false)
 // 注意区分两端之后再使用
-// 服务端启用注解，启用分布式事务管理器
+// 服务端使用注解，启用分布式事务管理器
 @EnableTransactionManagerServer
 // 客户端使用注解，启用分布式事务
 @EnableDistributedTransaction

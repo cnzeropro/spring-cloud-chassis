@@ -18,10 +18,6 @@ public abstract class TypeReference<T> implements Type {
         this.type = getTypeArgument(getClass());
     }
 
-    private TypeReference(Type type) {
-        this.type = type;
-    }
-
     public Type getType() {
         return this.type;
     }
@@ -31,22 +27,17 @@ public abstract class TypeReference<T> implements Type {
         return this.type.toString();
     }
 
-    public static <T> TypeReference<T> forType(Type type) {
-        return new TypeReference<T>(type) {
-        };
-    }
-
     /**
      * 获得给定类的第一个泛型参数
      */
-    public Type getTypeArgument(Type type) {
+    public static Type getTypeArgument(Type type) {
         return getTypeArgument(type, 0);
     }
 
     /**
      * 获得给定类的泛型参数
      */
-    private Type getTypeArgument(Type type, int index) {
+    public static Type getTypeArgument(Type type, int index) {
         final Type[] typeArguments = getTypeArguments(type);
         if (typeArguments.length > index) {
             return typeArguments[index];
@@ -64,7 +55,7 @@ public abstract class TypeReference<T> implements Type {
      * <p>
      * 通过此方法，传入B.class即可得到String
      */
-    private Type[] getTypeArguments(Type type) {
+    public static Type[] getTypeArguments(Type type) {
         if (Objects.isNull(type)) {
             return new Type[0];
         }
@@ -85,7 +76,7 @@ public abstract class TypeReference<T> implements Type {
      * <p>
      * 通过此方法，传入B.class即可得到B的{@link ParameterizedType}，从而获取到String
      */
-    private ParameterizedType getParameterizedType(Type type) {
+    private static ParameterizedType getParameterizedType(Type type) {
         ParameterizedType result = null;
         if (type instanceof ParameterizedType) {
             result = (ParameterizedType) type;
@@ -93,7 +84,7 @@ public abstract class TypeReference<T> implements Type {
             final Class<?> clazz = (Class<?>) type;
             Type genericSuperclass = clazz.getGenericSuperclass();
             // 如果类没有父类，而是实现一些定义好的泛型接口，则取接口的Type
-            if (null == genericSuperclass || Object.class.equals(genericSuperclass)) {
+            if (Objects.isNull(genericSuperclass) || Object.class.equals(genericSuperclass)) {
                 final Type[] genericInterfaces = clazz.getGenericInterfaces();
                 if (genericInterfaces.length > 0) {
                     // 默认取第一个实现接口的泛型Type

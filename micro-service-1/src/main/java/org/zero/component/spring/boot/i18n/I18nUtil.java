@@ -20,9 +20,12 @@ import java.util.Objects;
  */
 @Slf4j
 @UtilityClass
-public class I18nHelper {
+public class I18nUtil {
     private static MessageSource messageSource;
 
+    /**
+     * 采用懒加载都方式
+     */
     public static MessageSource getMessageSource() {
         if (Objects.isNull(messageSource)) {
             messageSource = SpringUtil.getBean(MessageSource.class);

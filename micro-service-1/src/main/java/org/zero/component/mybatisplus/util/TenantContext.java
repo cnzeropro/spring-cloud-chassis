@@ -1,5 +1,6 @@
 package org.zero.component.mybatisplus.util;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NamedInheritableThreadLocal;
 
@@ -8,12 +9,13 @@ import org.springframework.core.NamedInheritableThreadLocal;
  * @since 2023/3/9
  */
 @Slf4j
+@UtilityClass
 public class TenantContext {
-    private static final NamedInheritableThreadLocal<String> TENANT_HOLDER = new NamedInheritableThreadLocal<>("Tenant Context");
+    private static final ThreadLocal<String> TENANT_HOLDER = new NamedInheritableThreadLocal<>("Tenant Context");
 
     public static void set(String tenant) {
         if (log.isDebugEnabled()) {
-            log.debug("Set tenant to [{}].", tenant);
+            log.debug("Set tenant to [{}]", tenant);
         }
         TENANT_HOLDER.set(tenant);
     }
@@ -24,7 +26,7 @@ public class TenantContext {
 
     public static void remove() {
         if (log.isDebugEnabled()) {
-            log.debug("Remove tenant.");
+            log.debug("Remove tenant: {}", get());
         }
         TENANT_HOLDER.remove();
     }

@@ -48,8 +48,8 @@ public class RedissonConfig {
     @Bean
     public RBloomFilter<String> bloomFilter() {
         RBloomFilter<String> bloomFilter = redissonClient.getBloomFilter("bloom");
-        // 初始化布隆过滤器，预计统计元素数量为10^8，期望误差率为0.003
-        bloomFilter.tryInit((long) 1E8, 0.003);
+        // 初始化布隆过滤器，预计统计元素数量为10^9（1亿），期望误差率为0.003
+        bloomFilter.tryInit((long) 1E9, 0.003);
         return bloomFilter;
     }
 }

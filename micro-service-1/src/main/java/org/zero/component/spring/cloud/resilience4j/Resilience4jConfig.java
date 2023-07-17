@@ -2,6 +2,7 @@ package org.zero.component.spring.cloud.resilience4j;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
@@ -27,6 +28,7 @@ public class Resilience4jConfig {
      * 非响应式
      */
     @Bean
+    @ConditionalOnClass(Resilience4JCircuitBreakerFactory.class)
     public Customizer<Resilience4JCircuitBreakerFactory> customizer() {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
                 .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(DEFAULT_TIMEOUT)).build())
@@ -39,6 +41,7 @@ public class Resilience4jConfig {
      * 响应式
      */
     @Bean
+    @ConditionalOnClass(ReactiveResilience4JCircuitBreakerFactory.class)
     public Customizer<ReactiveResilience4JCircuitBreakerFactory> reactiveCustomizer() {
         return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
                 .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(DEFAULT_TIMEOUT)).build())

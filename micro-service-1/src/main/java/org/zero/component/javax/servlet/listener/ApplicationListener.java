@@ -1,7 +1,6 @@
 package org.zero.component.javax.servlet.listener;
 
 import lombok.extern.slf4j.Slf4j;
-import org.zero.common.data.util.web.JndiEnhancer;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -18,8 +17,8 @@ public class ApplicationListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
         log.info("The web app ({}) is initialized", servletContext.getContextPath());
-        JndiEnhancer jndiEnhancer = new JndiEnhancer("java:comp/env/jdbc/test");
-        servletContext.setAttribute("jndi", jndiEnhancer);
+        JndiHelper jndiHelper = new JndiHelper("java:comp/env/jdbc/test");
+        servletContext.setAttribute("jndi", jndiHelper);
     }
 
     @Override

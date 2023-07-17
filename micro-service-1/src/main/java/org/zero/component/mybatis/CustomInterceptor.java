@@ -119,12 +119,15 @@ public class CustomInterceptor implements Interceptor {
         if (log.isDebugEnabled()) {
             log.debug("Start executing SQL");
         }
+
         long start = System.nanoTime();
         Object result = invocation.proceed();
         long end = System.nanoTime();
+
         if (log.isDebugEnabled()) {
             log.debug("SQL execution complete, Time: {}", Duration.ofNanos(end - start));
         }
+
         return result;
     }
 }

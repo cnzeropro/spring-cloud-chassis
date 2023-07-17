@@ -1,6 +1,5 @@
 package org.zero.component.spring.cloud.openfegin;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.IterUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
@@ -45,6 +44,8 @@ import java.util.StringJoiner;
  */
 @Slf4j
 public class CustomQueryMapEncoder implements QueryMapEncoder {
+    private static final String BEAN_BASE_PACKAGE = "org.zero.common.data.model";
+
     @Override
     public Map<String, Object> encode(Object object) {
         return encode("", object, MapUtil.newHashMap(true));
@@ -56,9 +57,11 @@ public class CustomQueryMapEncoder implements QueryMapEncoder {
             return map;
         }
 
-        // 如果是bean
-        if (!ClassUtil.isJdkClass(object.getClass()) && BeanUtil.isBean(object.getClass())) {
-            Field[] fields = ReflectUtil.getFields(object.getClass());
+        Class<?> clazz = object.getClass();
+
+        // 如果是应用的bean
+        if (org.zero.common.data.util.ClassUtil.isSpecifiedClass(clazz, BEAN_BASE_PACKAGE)) {
+            Field[] fields = ReflectUtil.getFields(clazz);
             for (Field field : fields) {
                 encodeField(prefix, object, field, map);
             }
@@ -79,7 +82,7 @@ public class CustomQueryMapEncoder implements QueryMapEncoder {
         // 如果是首次进入该方法，则不应该出现下面的类型，所以抛出异常
         if (StrUtil.isBlank(prefix)) {
             log.warn("encode object fail: {}", object);
-            throw new EncodeException("对象编码异常，不支持此类型：" + object.getClass());
+            throw new EncodeException("对象编码异常，不支持此类型：" + clazz);
         }
 
         // 如果是数组

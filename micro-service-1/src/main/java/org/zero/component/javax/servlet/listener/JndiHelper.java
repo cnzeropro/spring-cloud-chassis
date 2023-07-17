@@ -1,4 +1,4 @@
-package org.zero.common.data.util.web;
+package org.zero.component.javax.servlet.listener;
 
 import lombok.SneakyThrows;
 
@@ -6,21 +6,23 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.util.Objects;
 
 /**
  * @author Zero (cnzeropro@qq.com)
  * @date 2021/8/10 9:15
  */
-public class JndiEnhancer {
+public class JndiHelper {
     /**
      * name like: "java:comp/env/jdbc/test"
      */
     private final String name;
     private DataSource dataSource;
 
-    public JndiEnhancer(String name) {
+    public JndiHelper(String name) {
         this.name = name;
-        createDataSource();
+        // 懒加载DataSource
+        // createDataSource();
     }
 
     @SneakyThrows
@@ -30,16 +32,16 @@ public class JndiEnhancer {
             context = new InitialContext();
             dataSource = (DataSource) context.lookup(name);
         } catch (Exception e) {
-            throw new ExceptionInInitializerError(e);
+            throw new IllegalArgumentException(e);
         } finally {
-            if (context != null) {
+            if (Objects.nonNull(context)) {
                 context.close();
             }
         }
     }
 
     public DataSource getDataSource() {
-        if (dataSource == null) {
+        if (Objects.isNull(dataSource)) {
             createDataSource();
         }
 

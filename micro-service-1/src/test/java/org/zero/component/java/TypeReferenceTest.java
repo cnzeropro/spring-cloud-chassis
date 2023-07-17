@@ -17,7 +17,7 @@ import java.util.Set;
  */
 class TypeReferenceTest {
     @Test
-    void getType() {
+    void test() {
         TypeReference<List<Map<String, Set<BigDecimal>>>> reference = new TypeReference<List<Map<String, Set<BigDecimal>>>>() {
         };
         com.fasterxml.jackson.core.type.TypeReference<Map<String, Integer>> reference1 = new com.fasterxml.jackson.core.type.TypeReference<Map<String, Integer>>() {

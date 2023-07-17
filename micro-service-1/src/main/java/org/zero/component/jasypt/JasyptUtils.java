@@ -9,18 +9,15 @@ import org.jasypt.encryption.StringEncryptor;
  * @date 2022/12/8
  */
 @UtilityClass
-public class JasyptUtil {
+public class JasyptUtils {
     private static StringEncryptor encryptor;
 
     static {
-        JasyptUtil.encryptor = SpringUtil.getBean(StringEncryptor.class);
+        JasyptUtils.encryptor = SpringUtil.getBean(StringEncryptor.class);
     }
 
     /**
      * 加密
-     *
-     * @param src
-     * @return
      */
     public String encrypt(String src) {
         return encryptor.encrypt(src);
@@ -28,9 +25,6 @@ public class JasyptUtil {
 
     /**
      * 解密
-     *
-     * @param src
-     * @return
      */
     public String decrypt(String src) {
         return encryptor.decrypt(src);

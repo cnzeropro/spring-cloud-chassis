@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 // 从 3.0.1 版本开始，Hystrix已从Spring Cloud Netflix中删除，因此@EnableCircuitBreaker也被一并移除了
-//@EnableCircuitBreaker
+// @EnableCircuitBreaker
 @EnableHystrix
 public class HystrixConfig {
 }

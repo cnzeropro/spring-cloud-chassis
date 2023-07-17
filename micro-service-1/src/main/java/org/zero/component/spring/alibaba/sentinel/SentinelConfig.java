@@ -16,8 +16,6 @@ public class SentinelConfig {
 
     /**
      * 解决流控链路不生效的问题，需要引入 sentinel-web-servlet 包
-     *
-     * @return
      */
     @Bean
     public FilterRegistrationBean<Filter> sentinelFilterRegistration() {

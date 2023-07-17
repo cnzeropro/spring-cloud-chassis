@@ -1,4 +1,4 @@
-package org.zero.component.spring.boot.interceptor;
+package org.zero.component.spring.boot.web.mvc.interceptor;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;

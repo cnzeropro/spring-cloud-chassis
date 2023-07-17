@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
+
 /**
  * @author Zero
  * @date 2021/10/20 13:36
@@ -25,7 +27,7 @@ public class MinioProperties {
      */
     private String secretKey;
     /**
-     * 桶名称，如果配置则系统启动时自动创建该桶，反之则反
+     * 数据桶，如果配置则系统启动时自动创建，反之则反
      */
-    private String bucket;
+    private List<String> buckets;
 }

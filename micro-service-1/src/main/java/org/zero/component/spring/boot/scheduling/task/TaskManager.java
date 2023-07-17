@@ -21,8 +21,8 @@ import java.util.concurrent.ScheduledFuture;
  * @author Zero (cnzeropro@qq.com)
  * @since 2022/7/20
  */
-@Service("taskManager")
 @Slf4j
+@Service("taskManager")
 public class TaskManager {
     private final ConcurrentMap<String, FutureBean> triggeredTaskMap = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, ScheduledFutureBean> scheduledTaskMap = new ConcurrentHashMap<>();

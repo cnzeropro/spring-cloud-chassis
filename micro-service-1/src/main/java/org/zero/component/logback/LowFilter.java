@@ -8,7 +8,7 @@ import ch.qos.logback.core.spi.FilterReply;
 import java.util.Objects;
 
 /**
- * 低等级过滤器：过滤出小于等于指定级别的日志，作用与<code>{@link ch.qos.logback.classic.filter.ThresholdFilter}</code>相反
+ * 低等级过滤器：过滤出小于等于指定级别的日志，作用与{@link ch.qos.logback.classic.filter.ThresholdFilter}相反
  *
  * @author Zero (cnzeropro@qq.com)
  * @date 2021/9/6

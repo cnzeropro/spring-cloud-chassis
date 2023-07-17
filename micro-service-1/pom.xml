@@ -713,6 +713,11 @@
             <artifactId>common-core</artifactId>
             <version>${common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.zero</groupId>
+            <artifactId>common-data</artifactId>
+            <version>${common.version}</version>
+        </dependency>
         <!-- commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
