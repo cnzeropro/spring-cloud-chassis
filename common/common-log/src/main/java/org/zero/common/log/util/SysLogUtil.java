@@ -34,6 +34,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.zero.common.data.model.po.SysLogPO;
+import org.zero.common.data.util.web.SpringSecurityUtil;
 import org.zero.common.log.constant.LogTypeEnum;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ import java.util.Optional;
 /**
  * 系统日志工具类
  *
- * @author L.cm
+ * @author zero
  */
 @UtilityClass
 public class SysLogUtil {
@@ -59,8 +60,9 @@ public class SysLogUtil {
         sysLog.setMethod(request.getMethod());
         sysLog.setUserAgent(request.getHeader(HttpHeaders.USER_AGENT));
         sysLog.setParams(HttpUtil.toParams(request.getParameterMap()));
-        sysLog.setCreateBy(getUsername());
-        sysLog.setUpdateBy(getUsername());
+        String username = SpringSecurityUtil.getUsername();
+        sysLog.setCreateBy(username);
+        sysLog.setUpdateBy(username);
         sysLog.setServiceId(getClientId());
         return sysLog;
     }
@@ -78,16 +80,6 @@ public class SysLogUtil {
                 .map(OAuth2AuthenticatedPrincipal.class::cast)
                 .map(OAuth2AuthenticatedPrincipal::getAttributes)
                 .map(attributes -> MapUtil.getStr(attributes, "client_id"))
-                .orElse(null);
-    }
-
-    /**
-     * 获取用户名称
-     */
-    private String getUsername() {
-        return Optional.ofNullable(SecurityContextHolder.getContext())
-                .map(SecurityContext::getAuthentication)
-                .map(Authentication::getName)
                 .orElse(null);
     }
 

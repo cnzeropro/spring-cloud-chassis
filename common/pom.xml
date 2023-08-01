@@ -17,13 +17,11 @@
         <module>common-data</module>
         <module>common-core</module>
         <module>common-log</module>
+        <module>common-swagger</module>
     </modules>
 
     <name>common</name>
     <description>Demo project for Common</description>
-
-    <properties>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -32,12 +30,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-    </dependencyManagement>
-
-    <build>
-        <plugins>
-        </plugins>
-    </build>
 </project>

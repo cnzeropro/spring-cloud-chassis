@@ -34,7 +34,7 @@ public class RequestUtil {
     /**
      * protocol :// hostname[:port] / path / [:parameters][?query]#fragment
      * 如：http://127.0.0.1:8080/demo/test?a=bbb，
-     * 取：http://127.0.0.1:8080
+     * 取：http://127.0.0.1:8080/
      */
     public static String getDomain() {
         return getHttpServletRequestOpt()
@@ -45,11 +45,11 @@ public class RequestUtil {
     /**
      * protocol :// hostname[:port] / path / [:parameters][?query]#fragment
      * 如：http://127.0.0.1:8080/demo/test?a=bbb
-     * 取：http://127.0.0.1:8080
+     * 取：http://127.0.0.1:8080/
      */
     public static String getDomain(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
-        return url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
+        return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(request.getContextPath()).toString();
     }
 
     public static String getContentType() {

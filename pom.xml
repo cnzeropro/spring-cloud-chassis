@@ -14,16 +14,16 @@
     <artifactId>cloud-demo</artifactId>
     <version>1.0.0</version>
 
-    <name>cloud-demo</name>
-    <description>微服务 Demo</description>
-
     <packaging>pom</packaging>
     <modules>
-        <module>gateway</module>
         <module>common</module>
+        <module>gateway</module>
+        <module>iam</module>
         <module>micro-service-1</module>
     </modules>
 
+    <name>cloud-demo</name>
+    <description>微服务 Demo</description>
 
     <properties>
         <!-- properties -->
@@ -62,6 +62,9 @@
         <apollo.version>2.1.0</apollo.version>
         <file-storage.version>0.7.0</file-storage.version>
         <minio.version>8.5.2</minio.version>
+        <swagger.version>2.2.15</swagger.version>
+        <springdoc-openapi-webflux.version>1.6.9</springdoc-openapi-webflux.version>
+        <springdoc-openapi-webmvc.version>2.1.0</springdoc-openapi-webmvc.version>
         <!-- util dependencies -->
         <hutool.version>5.8.20</hutool.version>
         <guava.version>31.1-jre</guava.version>
@@ -81,45 +84,29 @@
         <docker-plugin.version>0.42.0</docker-plugin.version>
     </properties>
 
+    <!-- 全局依赖 -->
+    <!-- 思来想去，感觉只有lombok全局会用，像spring-core这种在common-data模块也不一定会使用 -->
     <dependencies>
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!-- autoconfigure（自动装配） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <!-- test（测试依赖） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- configuration-processor（配置文件处理器） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <!-- devtools（热部署） -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.shell</groupId>
-                <artifactId>spring-shell-dependencies</artifactId>
-                <version>${spring-shell.version}</version>
+                <groupId>org.zero</groupId>
+                <artifactId>common-bom</artifactId>
+                <version>${common.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -134,6 +121,13 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.shell</groupId>
+                <artifactId>spring-shell-dependencies</artifactId>
+                <version>${spring-shell.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -158,6 +152,7 @@
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
             </dependency>
+            <!-- spring-file-storage（文件存储） -->
             <dependency>
                 <groupId>cn.xuyanwu</groupId>
                 <artifactId>spring-file-storage</artifactId>
@@ -244,7 +239,19 @@
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
             </dependency>
+            <!-- 接口文档 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-openapi-webmvc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-ui</artifactId>
+                <version>${springdoc-openapi-webflux.version}</version>
+            </dependency>
 
+            <!-- hutool（工具集） -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
@@ -269,7 +276,7 @@
                 <version>${fastjson2.version}</version>
             </dependency>
             <!-- transmittable-thread-local（TTL） -->
-            <!-- 处理父子线程变量不能共用的情况 -->
+            <!-- 处理线程池线程变量不能共用的情况 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>transmittable-thread-local</artifactId>

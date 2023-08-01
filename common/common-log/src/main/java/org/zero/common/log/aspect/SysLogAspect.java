@@ -23,11 +23,10 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.util.StringUtils;
 import org.zero.common.data.model.po.SysLogPO;
 import org.zero.common.log.annotation.SysLog;
-import org.zero.common.log.event.SysLogEvent;
 import org.zero.common.log.constant.LogTypeEnum;
+import org.zero.common.log.event.SysLogEvent;
 import org.zero.common.log.util.SysLogUtil;
 
 /**
@@ -48,15 +47,11 @@ public class SysLogAspect {
         log.debug("ClassName: {}, MethodName: {}", className, methodName);
 
         String value = sysLog.value();
-        String expression = sysLog.expression();
-        // 当前 SpEL 存在，会覆盖 value 的值
-        if (StringUtils.hasText(expression)) {
-            MethodSignature signature = (MethodSignature) point.getSignature();
-            try {
-                value = SysLogUtil.getValue(signature.getMethod(), point.getArgs(), expression, String.class);
-            } catch (Exception e) {
-                log.error(String.format("@SysLog parse SpEL[%s] error", expression), e);
-            }
+        MethodSignature signature = (MethodSignature) point.getSignature();
+        try {
+            value = SysLogUtil.getValue(signature.getMethod(), point.getArgs(), value, String.class);
+        } catch (Exception e) {
+            log.error(String.format("@SysLog parse SpEL[%s] error", value), e);
         }
 
         SysLogPO log = SysLogUtil.getSysLog();

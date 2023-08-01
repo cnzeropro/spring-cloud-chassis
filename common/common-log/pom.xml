@@ -12,17 +12,19 @@
     <artifactId>common-log</artifactId>
     <version>1.0.0</version>
 
+    <packaging>jar</packaging>
+
     <name>common-log</name>
     <description>Demo project for Common Log</description>
-
-    <properties>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.zero</groupId>
             <artifactId>common-core</artifactId>
-            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zero</groupId>
+            <artifactId>common-data</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -57,13 +59,4 @@
             <artifactId>spring-security-oauth2-core</artifactId>
         </dependency>
     </dependencies>
-
-    <dependencyManagement>
-    </dependencyManagement>
-
-    <build>
-        <plugins>
-        </plugins>
-    </build>
-
 </project>

@@ -1,6 +1,5 @@
 package org.zero.component.spring.boot.web.mvc;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReflectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +12,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.async.TimeoutCallableProcessingInterceptor;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Zero
@@ -60,7 +59,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         WebMvcProperties.InterceptorProperties interceptProperties = webMvcProperties.getIntercept();
         if (Objects.nonNull(interceptProperties) && interceptProperties.isEnabled()) {
             Map<String, WebMvcProperties.InterceptorProperties.Config> configs = interceptProperties.getConfigs();
-            if (CollUtil.isNotEmpty(configs)) {
+            if (!CollectionUtils.isEmpty(configs)) {
                 configs.forEach((clazz, config) -> {
                     try {
                         HandlerInterceptor interceptor = ReflectUtil.newInstance(clazz);
@@ -83,7 +82,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         WebMvcProperties.CorsProperties corsProperties = webMvcProperties.getCors();
         if (Objects.nonNull(corsProperties) && corsProperties.isEnabled()) {
             Map<String, WebMvcProperties.CorsProperties.Config> configs = corsProperties.getConfigs();
-            if (CollUtil.isNotEmpty(configs)) {
+            if (!CollectionUtils.isEmpty(configs)) {
                 configs.forEach((path, config) -> registry.addMapping(path)
                         .allowedOriginPatterns(config.getAllowedOrigins())
                         .allowedMethods(config.getAllowedMethods())
@@ -103,14 +102,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
         WebMvcProperties.ResourceHandlerProperties resourceHandlerProperties = webMvcProperties.getResource();
         if (Objects.nonNull(resourceHandlerProperties) && resourceHandlerProperties.isEnabled()) {
             Map<String, WebMvcProperties.ResourceHandlerProperties.Config> configs = resourceHandlerProperties.getConfigs();
-            if (CollUtil.isNotEmpty(configs)) {
+            if (!CollectionUtils.isEmpty(configs)) {
                 configs.forEach((path, config) -> {
                     ResourceHandlerRegistration registration = registry.addResourceHandler(path)
                             .addResourceLocations(config.getLocations());
-                    if (config.getCacheMaxAge() < 0) {
+                    if (config.getCacheMaxAge() <= 0) {
                         registration.setCacheControl(CacheControl.noCache());
                     } else {
-                        registration.setCacheControl(CacheControl.maxAge(config.getCacheMaxAge(), TimeUnit.HOURS));
+                        registration.setCacheControl(CacheControl.maxAge(config.getCacheMaxAge(), config.getTimeUnit()));
                     }
                 });
             }
@@ -125,15 +124,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
         WebMvcProperties.ViewControllerProperties viewControllerProperties = webMvcProperties.getView();
         if (Objects.nonNull(viewControllerProperties) && viewControllerProperties.isEnabled()) {
             List<WebMvcProperties.ViewControllerProperties.Config> configs = viewControllerProperties.getConfigs();
-            if (CollUtil.isNotEmpty(configs)) {
+            if (!CollectionUtils.isEmpty(configs)) {
                 configs.forEach(config -> {
                     try {
-                        if (WebMvcProperties.ViewControllerProperties.MappingType.View.equals(config.getType())) {
+                        if (WebMvcProperties.ViewControllerProperties.MappingType.VIEW.equals(config.getType())) {
                             registry.addViewController(config.getSrc()).setViewName(config.getDest());
-                        } else if (WebMvcProperties.ViewControllerProperties.MappingType.Redirect.equals(config.getType())) {
+                        } else if (WebMvcProperties.ViewControllerProperties.MappingType.REDIRECT.equals(config.getType())) {
                             registry.addRedirectViewController(config.getSrc(), config.getDest());
-                        } else if (WebMvcProperties.ViewControllerProperties.MappingType.Status.equals(config.getType())) {
-                            registry.addStatusController(config.getSrc(), HttpStatus.valueOf(Integer.parseInt(config.getDest())));
+                        } else if (WebMvcProperties.ViewControllerProperties.MappingType.STATUS.equals(config.getType())) {
+                            registry.addStatusController(config.getDest(), HttpStatus.valueOf(Integer.parseInt(config.getSrc())));
                         }
                     } catch (Exception e) {
                         log.warn(String.format("Add ViewController error: %s", config), e);

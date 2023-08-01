@@ -4,9 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.convert.DurationUnit;
+import org.springframework.context.annotation.PropertySource;
+import org.zero.common.core.factory.YamlPropertySourceFactory;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Zero
@@ -14,6 +20,7 @@ import java.util.Map;
  */
 @Setter
 @Getter
+@PropertySource(name = "sysWeb", value = "classpath:/web/web.yml", encoding = "UTF-8", factory = YamlPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "sys.web")
 public class WebMvcProperties {
     private InterceptorProperties intercept;
@@ -40,7 +47,7 @@ public class WebMvcProperties {
         /**
          * 默认排除的路径
          */
-        public static final String[] DEFAULT_EXCLUDE_PATHS = new String[]{
+        protected static final String[] DEFAULT_EXCLUDE_PATHS = new String[]{
                 "/**.html", "/**.htm",
                 "/**.js", "/**.css",
                 "/**.jpg", "/**.png", "/**.gif",
@@ -147,7 +154,8 @@ public class WebMvcProperties {
      *           locations:
      *             - "file:///C:/Users/Zero/Data/Upload/"
      *             - "file:/home/zero/data/upload/"
-     *           cache-max-age: 3600
+     *           cache-max-age: 12
+     *           time-unit: HOURS
      * </pre>
      */
     @Setter
@@ -156,7 +164,7 @@ public class WebMvcProperties {
         /**
          * 默认本地资源位置
          */
-        public static final String[] DEFAULT_LOCATIONS = new String[]{
+        protected static final String[] DEFAULT_LOCATIONS = new String[]{
                 "classpath:/static/", "classpath:/public/",
         };
 
@@ -172,10 +180,19 @@ public class WebMvcProperties {
         @Setter
         @Getter
         public static class Config {
+            @DurationUnit(ChronoUnit.SECONDS)
+            private Duration timeout = Duration.ofHours(1);
+
             /**
-             * 最大缓存时间，如果为负数表示不缓存，单位：h，默认：1h
+             * 最大缓存时间，如果为负数表示不缓存，默认：1
              */
             private long cacheMaxAge = 1L;
+
+            /**
+             * 时间单位，默认：h
+             */
+            private TimeUnit timeUnit = TimeUnit.HOURS;
+
             /**
              * 资源位置，默认：{@link ResourceHandlerProperties#DEFAULT_LOCATIONS}
              */
@@ -191,15 +208,15 @@ public class WebMvcProperties {
      *     view:
      *       enabled: true
      *       configs:
-     *         - type: View
+     *         - type: view
      *           src: "/"
      *           dest: index
-     *         - type: Redirect
+     *         - type: redirect
      *           src: "/test"
      *           dest: "/api/test"
-     *         - type: Status
-     *           src: "/no-found"
-     *           dest: 404
+     *         - type: status
+     *           src: 404
+     *           dest: "/no-found"
      * </pre>
      */
     @Setter
@@ -221,9 +238,9 @@ public class WebMvcProperties {
             /**
              * 映射类型，默认：简单视图映射
              */
-            private MappingType type = MappingType.View;
+            private MappingType type = MappingType.VIEW;
             /**
-             * 原始URL
+             * 原始目标
              */
             private String src;
 
@@ -237,15 +254,15 @@ public class WebMvcProperties {
             /**
              * 简单视图映射
              */
-            View,
+            VIEW,
             /**
              * 重定向映射
              */
-            Redirect,
+            REDIRECT,
             /**
              * Http状态码映射
              */
-            Status,
+            STATUS,
             ;
         }
     }

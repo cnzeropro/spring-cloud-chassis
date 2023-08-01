@@ -57,7 +57,7 @@ public class CaptchaUtil {
      */
     public static final Base64.Encoder base64Encoder = Base64.getEncoder();
     /**
-     * 随机数生成器，默认采用强随机数生成器，除非该jvm没有该 SecureRandom 实现
+     * 随机数生成器，默认采用强随机数生成器，除非该 jvm 没有该 SecureRandom 实现（基本不可能）
      */
     private static final Random random;
 

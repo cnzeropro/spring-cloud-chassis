@@ -64,7 +64,7 @@ public abstract class BaseController<S extends IService<T>, T extends BasePO> {
         return getById(id);
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/getById/{id:\\d+}")
     public Result<T> getByIdWithPathVariable(@PathVariable Serializable id) {
         return getById(id);
     }

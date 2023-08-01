@@ -34,12 +34,37 @@ import java.lang.annotation.Target;
 public @interface SysLog {
 
     /**
-     * 日志描述
+     * 日志描述（可使用SpEL）
      */
     String value() default "";
 
     /**
-     * 日志描述（SpEL），存在时优先使用
+     * 日志所属模块
      */
-    String expression() default "";
+    String module() default "";
+
+    /**
+     * 日志类型
+     */
+    LogType type() default LogType.OTHER;
+
+    /**
+     * 日志操作类型
+     */
+    OperateType operateType() default OperateType.OTHER;
+
+    /**
+     * 是否保存请求的参数
+     */
+    boolean isSaveRequestData() default true;
+
+    /**
+     * 是否保存响应的参数
+     */
+    boolean isSaveResponseData() default true;
+
+    /**
+     * 排除指定的请求参数
+     */
+    String[] excludeParamNames() default {};
 }

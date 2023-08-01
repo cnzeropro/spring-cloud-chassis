@@ -29,11 +29,12 @@ public class TaskManager {
 
     @Resource
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;
+    // private ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
 
     /**
      * 启动任务
      */
-    public synchronized boolean startTask(String cron, Runnable task, String taskId) {
+    public synchronized boolean startTask(String taskId, String cron, Runnable task) {
         // 如果存在该任务先停止
         if (Objects.nonNull(getTaskType(taskId))) {
             stopTask(taskId);

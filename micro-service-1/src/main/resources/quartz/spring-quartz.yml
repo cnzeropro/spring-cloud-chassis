@@ -1,0 +1,55 @@
+spring:
+  # Quartz 配置
+  quartz:
+    # 调度器名称
+    scheduler-name: QuartzScheduler
+    # 数据持久化方式，可选值：MEMORY、JDBC，默认：MEMORY
+    job-store-type: jdbc
+    # 初始化后是否自动启动计划程序，默认：true
+    auto-startup: true
+    # 配置的作业是否应覆盖现有的作业定义，默认：false
+    overwrite-existing-jobs: true
+    # 初始化完成后启动计划程序的延迟时间，默认：0s
+    startup-delay: 10s
+    # 关闭时是否等待正在运行的作业完成，默认：false
+    wait-for-jobs-to-complete-on-shutdown: false
+    jdbc:
+      # 初始化 Quartz 表结构，可选值：ALWAYS、EMBEDDED、NEVER，默认：EMBEDDED
+      initialize-schema: never
+    # Quartz 自带的配置
+    properties:
+      org:
+        quartz:
+          jobStore:
+            # JobStore 实现类，详情参见：org.quartz.spi.JobStore及其子类
+            # Quartz 主要提供了以下几种：
+            # org.quartz.simpl.RAMJobStore：内存存储机制实现类
+            # org.quartz.impl.jdbcjobstore.JobStoreCMT：受应用容器管理事务的数据库存储实现类
+            # org.quartz.impl.jdbcjobstore.JobStoreTX：不受应用容器事务管理的数据库存储实现类
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            # 数据库驱动代理，Quartz 也提供了很多，常见数据库的都有，详情参见：org.quartz.impl.jdbcjobstore.DriverDelegate及其子类
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            # 表前缀，默认：QRTZ_
+            tablePrefix: quartz_
+            # 最大能忍受的触发超时时间，单位毫秒
+            misfireThreshold: 12000
+            # 是否加入集群
+            isClustered: true
+            # 调度实例失效的检查时间间隔，单位毫秒
+            clusterCheckinInterval: 20000
+            maxMisfiresToHandleAtATime: 1
+            txIsolationLevelSerializable: false
+          threadPool:
+            # 线程池实现类，详情参见：org.quartz.spi.ThreadPool及其子类
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            # 线程优先级，默认：Thread.NORM_PRIORITY（5）
+            threadPriority: 5
+            # 线程继承初始化线程的上下文类加载器
+            threadsInheritContextClassLoaderOfInitializingThread: true
+          scheduler:
+            # 调度器实例名称
+            # 如果指定了 spring.quartz.scheduler-name 属性，则优先以它为准，此时 instanceName 不会生效
+            instanceName: QuartzScheduler
+            # 实例id，集群下的所有调度器实例id必须为唯一
+            instanceId: AUTO
