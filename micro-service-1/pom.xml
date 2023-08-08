@@ -695,6 +695,10 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+        </dependency>
         <!-- transmittable-thread-local（TTL） -->
         <!-- 处理父子线程变量不能共用的情况 -->
         <dependency>

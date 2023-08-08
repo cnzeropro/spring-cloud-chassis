@@ -16,37 +16,38 @@ import org.springframework.web.socket.handler.AbstractWebSocketHandler;
  */
 @Slf4j
 public class CustomWebSocketHandler extends AbstractWebSocketHandler {
+    private static final SpringWsSessionManager WS_SESSION_MANAGER = SpringWsSessionManager.INSTANCE;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("建立ws连接");
-        WsSessionManager.add(session.getId(), session);
+        log.info("ws session established");
+        WS_SESSION_MANAGER.add(session.getId(), session);
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        log.info("处理文本消息");
+        log.info("handle text message");
     }
 
     @Override
     protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
-        log.info("处理二进制消息");
+        log.info("handle binary message");
     }
 
     @Override
     protected void handlePongMessage(WebSocketSession session, PongMessage message) throws Exception {
-        log.info("处理Pong消息");
+        log.info("handle pong message");
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        log.warn("异常", exception);
-        WsSessionManager.removeAndClose(session.getId());
+        log.warn("ws session error", exception);
+        WS_SESSION_MANAGER.removeAndClose(session.getId());
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        log.info("关闭ws连接，CloseStatus：{}", status);
-        WsSessionManager.removeAndClose(session.getId());
+        log.info("ws session closed: {}", status);
+        WS_SESSION_MANAGER.delete(session.getId());
     }
 }

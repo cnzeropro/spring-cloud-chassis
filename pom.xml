@@ -68,6 +68,8 @@
         <!-- util dependencies -->
         <hutool.version>5.8.20</hutool.version>
         <guava.version>31.1-jre</guava.version>
+        <gson.version>2.10.1</gson.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
         <fastjson.version>1.2.83</fastjson.version>
         <fastjson2.version>2.0.26</fastjson2.version>
         <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
@@ -262,6 +264,25 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <!-- google kaptcha（图形验证码） -->
+            <dependency>
+                <groupId>com.google.code</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+            <!-- penggle kaptcha（图形验证码） -->
+            <!-- 因为 google-kaptcha 不在 maven 中央仓库，所以使用三方包 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+            <!-- gson（json解析） -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
             </dependency>
             <!-- fastjson（json解析） -->
             <dependency>

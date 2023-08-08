@@ -5,25 +5,22 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.messaging.support.NativeMessageHeaderAccessor;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 import org.springframework.web.socket.messaging.StompSubProtocolErrorHandler;
-import org.springframework.web.socket.server.HandshakeFailureException;
-import org.springframework.web.socket.server.HandshakeHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
+import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
-import java.util.List;
+import java.security.Principal;
 import java.util.Map;
 import java.util.Objects;
 
@@ -42,10 +39,10 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/stomp")
                 // 允许跨域
                 .setAllowedOrigins("*")
-                // 握手处理
-                .setHandshakeHandler(new CustomHandshakeHandler())
                 // 握手拦截
                 .addInterceptors(new CustomHandshakeInterceptor())
+                // 握手处理
+                .setHandshakeHandler(new CustomHandshakeHandler())
                 // 启用 SockJS
                 .withSockJS();
         registry.setErrorHandler(new StompSubProtocolErrorHandler());
@@ -61,7 +58,7 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
         registry.enableSimpleBroker("/queue/", "/topic")
                 // 心跳频率：10分钟
                 .setHeartbeatValue(new long[]{10 * 60 * 1000L, 10 * 60 * 1000L});
-        // 三方中间件模：如mq
+        // 三方中间件模式：如mq
         // registry.enableStompBrokerRelay("/queue/", "/topic/")
         //         .setRelayHost()
         //         .setRelayPort()
@@ -108,10 +105,13 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
 
     /* *************************************************** 内部类 *************************************************** */
 
-    public static class CustomHandshakeHandler implements HandshakeHandler {
+    public static class CustomHandshakeHandler extends DefaultHandshakeHandler {
         @Override
-        public boolean doHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws HandshakeFailureException {
-            return true;
+        protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+            String token = request.getHeaders().getFirst("token");
+            // todo: 从token中获取用户消息
+            // 构建Principal
+            return new WsUserPrincipal("");
         }
     }
 
@@ -131,30 +131,20 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
         @Override
         public Message<?> preSend(Message<?> message, MessageChannel channel) {
             StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-            if (Objects.nonNull(accessor) && StompCommand.CONNECT.equals(accessor.getCommand())) {
-                MessageHeaders headers = message.getHeaders();
-                Object raw = headers.get(NativeMessageHeaderAccessor.NATIVE_HEADERS);
-                String token = null;
-                if (raw instanceof Map) {
-                    // 这里就是token
-                    Object name = ((Map<?, ?>) raw).get("token");
-                    if (name instanceof List) {
-                        // 设置当前访问器的认证用户
-                        token = String.valueOf(((List<?>) name).get(0));
-                    }
-                } else if (raw instanceof CharSequence) {
-                    token = ((CharSequence) raw).toString();
-                } else {
-                    return message;
+            if (Objects.nonNull(accessor)) {
+                // 在http阶段，websocket之前就做了认证的封装，所以这里直接取信息
+                // 当然在此处也可以封装认证用户的信息
+                Principal principal = accessor.getUser();
+                String token = accessor.getFirstNativeHeader("token");
+                StompCommand command = accessor.getCommand();
+                if (StompCommand.CONNECT.equals(command)) {
+                    // 连接
+
+                } else if (StompCommand.DISCONNECT.equals(command)) {
+                    // 断开连接
+
                 }
-
-                // todo:
-                // 从token获取用户信息
-                // 构建 Principal
-                // User user = new User();
-                // accessor.setUser(user);
             }
-
             return message;
         }
     }
