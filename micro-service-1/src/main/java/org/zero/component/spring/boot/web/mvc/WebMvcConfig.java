@@ -89,7 +89,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         .allowedHeaders(config.getAllowedHeaders())
                         .allowCredentials(config.isAllowCredentials())
                         .exposedHeaders(config.getExposedHeaders())
-                        .maxAge(config.getMaxAge()));
+                        .maxAge(config.getMaxAge().getSeconds()));
             }
         }
     }

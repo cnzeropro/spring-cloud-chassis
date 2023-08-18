@@ -49,7 +49,7 @@ class IpUtilTest {
 
     @Test
     void isIpv4() {
-        String ip = "0.120.234.0";
+        String ip = "1.120.234.0";
         System.out.println(IpUtil.isIpv4(ip));
     }
 }

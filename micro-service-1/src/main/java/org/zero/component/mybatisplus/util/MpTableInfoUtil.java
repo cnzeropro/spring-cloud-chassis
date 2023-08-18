@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.zero.common.data.model.common.BaseQO;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * @author Zero (cnzeropro@qq.com)
  * @date 2021/03/10
  */
+@Slf4j
 @UtilityClass
 public class MpTableInfoUtil {
     /**

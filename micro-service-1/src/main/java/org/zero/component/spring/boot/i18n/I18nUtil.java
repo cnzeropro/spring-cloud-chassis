@@ -21,14 +21,18 @@ import java.util.Objects;
 @Slf4j
 @UtilityClass
 public class I18nUtil {
-    private static MessageSource messageSource;
+    private static volatile MessageSource messageSource;
 
     /**
-     * 采用懒加载都方式
+     * 采用懒加载的方式
      */
     public static MessageSource getMessageSource() {
-        if (Objects.isNull(messageSource)) {
-            messageSource = SpringUtil.getBean(MessageSource.class);
+        if (messageSource == null) {
+            synchronized (I18nUtil.class) {
+                if (messageSource == null) {
+                    messageSource = SpringUtil.getBean(MessageSource.class);
+                }
+            }
         }
         return messageSource;
     }

@@ -38,6 +38,7 @@ public class EnumDeserializer extends JsonDeserializer<Enum<?>> implements Conte
         if (Objects.isNull(clazz) || !clazz.isEnum()) {
             throw new IllegalArgumentException(String.format("Class[%s] is not enum class", clazz));
         }
+        @SuppressWarnings("unchecked")
         Class<? extends Enum<?>> enumType = (Class<? extends Enum<?>>) clazz;
         Method method = MpEnumUtil.getMethod(enumType);
         Enum<?>[] enums = enumType.getEnumConstants();

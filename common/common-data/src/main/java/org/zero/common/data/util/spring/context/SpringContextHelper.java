@@ -1,4 +1,4 @@
-package org.zero.common.data.util.spring;
+package org.zero.common.data.util.spring.context;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -12,7 +12,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 import org.zero.common.data.exception.UtilException;
 
 import java.lang.reflect.Type;
@@ -21,9 +20,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
+ * 通过注解使用注册器方式注入该类
+ * <p>
+ * 为什么不使用@Component直接注入呢？因为考虑到三方引用可能并没有该包的ComponentScan
+ *
  * @author Zero (cnzeropro@qq.com)
  */
-@Component
+// @Component
 public class SpringContextHelper implements BeanFactoryPostProcessor, ApplicationContextAware {
     /**
      * Spring 可配置的Bean工厂

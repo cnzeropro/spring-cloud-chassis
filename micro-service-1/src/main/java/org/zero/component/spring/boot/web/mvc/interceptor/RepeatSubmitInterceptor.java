@@ -3,7 +3,7 @@ package org.zero.component.spring.boot.web.mvc.interceptor;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.zero.common.data.model.common.Result;
-import org.zero.common.data.util.JacksonUtils;
+import org.zero.common.data.util.spring.JacksonUtils;
 import org.zero.common.data.util.web.ResponseUtil;
 
 import javax.servlet.http.HttpServletRequest;

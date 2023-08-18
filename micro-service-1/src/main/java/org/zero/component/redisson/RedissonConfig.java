@@ -3,12 +3,13 @@ package org.zero.component.redisson;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.redisson.spring.cache.RedissonSpringCacheManager;
+import org.redisson.spring.starter.RedissonAutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 
 /**
  * Redisson主要作用：
@@ -20,16 +21,17 @@ import java.io.IOException;
  * 6、分布式集合（RMap，RMultimap，RSet，RList，RDeque，...）
  * 7、分布式对象（RAtomicLong，RAtomicDouble，RTopic，...）
  * <p>
- * redisson-spring-boot-starter已自动装配了部分bean
+ * 自动装配参见：{@link RedissonAutoConfiguration}
  * 具体配置请使用：spring.redis.redisson.file=classpath:redisson.yml
  *
  * @author zero
  * @since 2022/2/16
  */
+@AutoConfigureBefore(RedissonAutoConfiguration.class)
 @Configuration(proxyBeanMethods = false)
 public class RedissonConfig {
     @Resource
-    private RedissonClient redissonClient;
+    private RedissonClient redisson;
 
     /**
      * Redisson和Spring Cache框架整合使用
@@ -37,9 +39,9 @@ public class RedissonConfig {
      * 详情配置参见：classpath:/redisson/cache-config.json或者yml
      */
     @Bean
-    public CacheManager cacheManager() throws IOException {
+    public CacheManager cacheManager() {
         // RedissonSpringClusteredLocalCachedCacheManager仅限于Redisson PRO版本
-        return new RedissonSpringCacheManager(redissonClient, "classpath:/cache-config.json");
+        return new RedissonSpringCacheManager(redisson, "classpath:/cache-config.json");
     }
 
     /**
@@ -47,7 +49,7 @@ public class RedissonConfig {
      */
     @Bean
     public RBloomFilter<String> bloomFilter() {
-        RBloomFilter<String> bloomFilter = redissonClient.getBloomFilter("bloom");
+        RBloomFilter<String> bloomFilter = redisson.getBloomFilter("bloom");
         // 初始化布隆过滤器，预计统计元素数量为10^9（1亿），期望误差率为0.003
         bloomFilter.tryInit((long) 1E9, 0.003);
         return bloomFilter;

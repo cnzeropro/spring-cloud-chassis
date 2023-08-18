@@ -2,7 +2,6 @@ package org.zero.common.data.util.web;
 
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import java.util.Objects;
  * @since 2022/6/17
  */
 @UtilityClass
-@Slf4j
 public class IpUtil {
     public final String LOCAL_IPV4 = "127.0.0.1";
     public final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";

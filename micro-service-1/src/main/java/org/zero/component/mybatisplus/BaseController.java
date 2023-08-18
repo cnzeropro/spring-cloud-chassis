@@ -54,7 +54,7 @@ public abstract class BaseController<S extends IService<T>, T extends BasePO> {
     public Result<T> getById(@RequestParam Serializable id) {
         T dataRecord = baseService.getById(id);
         if (Objects.isNull(dataRecord)) {
-            return Result.error("无指定数据！");
+            return Result.error("暂无数据！");
         }
         return Result.ok(dataRecord);
     }

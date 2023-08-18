@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Configuration(proxyBeanMethods = false)
 public class ShiroConfig {
-    @Value("${sys.shiro.excludeUrls:}")
+    @Value("${sys.web.shiro.excludeUrls:}")
     private List<String> excludeUrls;
 
     @Bean

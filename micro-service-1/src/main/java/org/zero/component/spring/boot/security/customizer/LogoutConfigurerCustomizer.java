@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.util.StringUtils;
 import org.zero.common.data.model.common.Result;
-import org.zero.common.data.util.JacksonUtils;
+import org.zero.common.data.util.spring.JacksonUtils;
 import org.zero.common.data.util.web.ResponseUtil;
 
 import javax.servlet.ServletException;

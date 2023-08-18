@@ -1,4 +1,4 @@
-package org.zero.common.data.util;
+package org.zero.common.data.util.spring;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -18,7 +18,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 /**
  * 建议采用配置文件设置，无需自定义注入ObjectMapper
  * <p>
- * 自动装配参见：{@link org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration.JacksonObjectMapperConfiguration#jacksonObjectMapper(Jackson2ObjectMapperBuilder)}
+ * 自动装配参见：{@link org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration}
  *
  * @author zero
  * @since 2023/2/20

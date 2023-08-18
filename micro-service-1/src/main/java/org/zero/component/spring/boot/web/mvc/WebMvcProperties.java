@@ -115,9 +115,10 @@ public class WebMvcProperties {
         @Getter
         public static class Config {
             /**
-             * 缓存预检请求响应的时间，单位：秒（s），默认：30m
+             * 缓存预检请求响应的时间，默认：30m
              */
-            private long maxAge = 30 * 60L;
+            @DurationUnit(ChronoUnit.SECONDS)
+            private Duration maxAge = Duration.ofMinutes(30);
             /**
              * 是否允许凭据，默认：true
              */
@@ -180,9 +181,6 @@ public class WebMvcProperties {
         @Setter
         @Getter
         public static class Config {
-            @DurationUnit(ChronoUnit.SECONDS)
-            private Duration timeout = Duration.ofHours(1);
-
             /**
              * 最大缓存时间，如果为负数表示不缓存，默认：1
              */

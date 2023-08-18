@@ -1,7 +1,7 @@
 package org.zero.component.spring.boot.web.socket.tomcat;
 
 import org.zero.common.data.model.common.Result;
-import org.zero.common.data.util.JacksonUtils;
+import org.zero.common.data.util.spring.JacksonUtils;
 
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;

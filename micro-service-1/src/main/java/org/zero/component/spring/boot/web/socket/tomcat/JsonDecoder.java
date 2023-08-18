@@ -1,6 +1,6 @@
 package org.zero.component.spring.boot.web.socket.tomcat;
 
-import org.zero.common.data.util.JacksonUtils;
+import org.zero.common.data.util.spring.JacksonUtils;
 
 import javax.websocket.DecodeException;
 import javax.websocket.Decoder;

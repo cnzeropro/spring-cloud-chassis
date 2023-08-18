@@ -7,7 +7,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.zero.common.data.model.common.Result;
-import org.zero.common.data.util.JacksonUtils;
+import org.zero.common.data.util.spring.JacksonUtils;
 import org.zero.common.data.util.web.ResponseUtil;
 
 import javax.servlet.ServletException;
