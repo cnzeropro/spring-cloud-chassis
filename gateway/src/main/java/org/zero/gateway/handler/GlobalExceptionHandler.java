@@ -12,7 +12,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
-import org.zero.common.data.model.common.Result;
+import org.zero.common.data.model.Result;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;

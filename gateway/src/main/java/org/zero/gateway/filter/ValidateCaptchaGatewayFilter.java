@@ -32,7 +32,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.zero.common.data.model.common.Result;
+import org.zero.common.data.model.Result;
 import org.zero.gateway.config.property.GatewayProperties;
 import reactor.core.publisher.Mono;
 

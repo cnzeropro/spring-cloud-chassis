@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.zero.common.core.feign.RemoteLogService;
 import org.zero.common.log.aspect.SysLogAspect;
 import org.zero.common.log.event.SysLogListener;
+import org.zero.common.log.feign.RemoteLogService;
 
 /**
  * 日志自动装配

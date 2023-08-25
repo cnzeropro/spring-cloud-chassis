@@ -17,7 +17,7 @@
 package org.zero.common.log.event;
 
 import org.springframework.context.ApplicationEvent;
-import org.zero.common.data.model.po.SysLogPO;
+import org.zero.common.log.model.SysLogPO;
 
 /**
  * 系统日志事件

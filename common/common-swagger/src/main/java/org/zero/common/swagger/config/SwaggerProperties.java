@@ -28,7 +28,7 @@ import java.util.Map;
  * @date 2022/7/25
  */
 @Data
-@ConfigurationProperties("swagger")
+@ConfigurationProperties("sys.swagger")
 public class SwaggerProperties {
     /**
      * 是否开启swagger

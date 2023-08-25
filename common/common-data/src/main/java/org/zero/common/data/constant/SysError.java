@@ -1,17 +1,13 @@
 package org.zero.common.data.constant;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * @author Zero (cnzeropro@qq.com)
  * @date 2022/12/1
  */
-@Getter
 @AllArgsConstructor
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum SysError {
+public enum SysError implements BaseSysMessage {
     /**
      * 一切ok
      */
@@ -23,5 +19,15 @@ public enum SysError {
     ;
 
     private final String code;
-    private final String msg;
+    private final String message;
+
+    @Override
+    public String getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

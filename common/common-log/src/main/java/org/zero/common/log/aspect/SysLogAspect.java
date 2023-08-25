@@ -23,11 +23,11 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.zero.common.data.model.po.SysLogPO;
 import org.zero.common.log.annotation.SysLog;
 import org.zero.common.log.constant.LogTypeEnum;
 import org.zero.common.log.event.SysLogEvent;
 import org.zero.common.log.util.SysLogUtil;
+import org.zero.common.log.model.SysLogPO;
 
 /**
  * 操作日志使用spring event异步入库

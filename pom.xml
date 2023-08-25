@@ -19,7 +19,8 @@
         <module>common</module>
         <module>gateway</module>
         <module>iam</module>
-        <module>micro-service-1</module>
+        <module>log</module>
+        <module>demo</module>
     </modules>
 
     <name>cloud-demo</name>
@@ -54,13 +55,15 @@
         <mybatis-flex.version>1.2.4</mybatis-flex.version>
         <shiro.version>1.9.1</shiro.version>
         <redisson.version>3.19.3</redisson.version>
-        <jasypt.version>3.0.4</jasypt.version>
+        <jasypt.version>1.9.3</jasypt.version>
+        <jasypt-starter.version>3.0.5</jasypt-starter.version>
         <powerjob.version>4.3.0</powerjob.version>
         <!-- component dependencies -->
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <xxl-job.version>2.3.1</xxl-job.version>
         <apollo.version>2.1.0</apollo.version>
         <file-storage.version>0.7.0</file-storage.version>
+        <jetcache.version>2.7.3</jetcache.version>
         <minio.version>8.5.2</minio.version>
         <swagger.version>2.2.15</swagger.version>
         <springdoc-openapi-webflux.version>1.6.9</springdoc-openapi-webflux.version>
@@ -87,7 +90,7 @@
     </properties>
 
     <!-- 全局依赖 -->
-    <!-- 思来想去，感觉只有lombok全局会用，像spring-core这种在common-data模块也不一定会使用 -->
+    <!-- 思来想去，感觉只有lombok全局会用 -->
     <dependencies>
         <!-- lombok -->
         <dependency>
@@ -143,9 +146,10 @@
             </dependency>
 
             <!-- apollo（配置中心） -->
+            <!-- 支持 Config Data Loader 模式（Spring Framework 5.4） -->
             <dependency>
                 <groupId>com.ctrip.framework.apollo</groupId>
-                <artifactId>apollo-client</artifactId>
+                <artifactId>apollo-client-config-data</artifactId>
                 <version>${apollo.version}</version>
             </dependency>
             <!-- xxl-job（分布式任务调度） -->
@@ -159,6 +163,32 @@
                 <groupId>cn.xuyanwu</groupId>
                 <artifactId>spring-file-storage</artifactId>
                 <version>${file-storage.version}</version>
+            </dependency>
+            <!-- jetcache（缓存） -->
+            <!-- alibaba 推出的新一代缓存框架 -->
+            <!-- jetcache-starter-redis（jedis） -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- jetcache-starter-redis-lettuce -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis-lettuce</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- jetcache-starter-redisson -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redisson</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- jetcache-starter-redis-springdata -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis-springdata</artifactId>
+                <version>${jetcache.version}</version>
             </dependency>
             <!-- minio（分布式存储） -->
             <dependency>
@@ -239,7 +269,7 @@
             <dependency>
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>${jasypt.version}</version>
+                <version>${jasypt-starter.version}</version>
             </dependency>
             <!-- 接口文档 -->
             <dependency>

@@ -1,6 +1,6 @@
 package org.zero.common.data.exception;
 
-import lombok.Getter;
+import org.zero.common.data.constant.BaseSysMessage;
 import org.zero.common.data.constant.SysError;
 
 /**
@@ -8,24 +8,33 @@ import org.zero.common.data.constant.SysError;
  * @since 2022/6/20
  */
 public class BaseException extends RuntimeException {
-    @Getter
-    private final SysError sysError;
+    private final String promptMessage;
+    private final BaseSysMessage sysMessage;
 
     public BaseException() {
-        this(SysError.ERROR);
+        this((String) null);
     }
 
     public BaseException(String message) {
-        this(message, SysError.ERROR);
+        this(message, message);
     }
 
-    public BaseException(SysError sysError) {
-        this(sysError.getMsg(), sysError);
+    public BaseException(BaseSysMessage sysMessage) {
+        this(sysMessage.getMessage(), sysMessage);
     }
 
-    public BaseException(String message, SysError sysError) {
+    public BaseException(String message, String promptMessage) {
+        this(message, promptMessage, SysError.ERROR);
+    }
+
+    public BaseException(String message, BaseSysMessage sysMessage) {
+        this(message, message, sysMessage);
+    }
+
+    public BaseException(String message, String promptMessage, BaseSysMessage sysMessage) {
         super(message);
-        this.sysError = sysError;
+        this.promptMessage = promptMessage;
+        this.sysMessage = sysMessage;
     }
 
     public BaseException(Throwable cause) {
@@ -36,25 +45,43 @@ public class BaseException extends RuntimeException {
         this(message, SysError.ERROR, cause);
     }
 
-    public BaseException(SysError sysError, Throwable cause) {
-        this(sysError.getMsg(), sysError, cause);
+    public BaseException(BaseSysMessage sysMessage, Throwable cause) {
+        this(sysMessage.getMessage(), sysMessage, cause);
     }
 
-    public BaseException(String message, SysError sysError, Throwable cause) {
+    public BaseException(String message, String promptMessage, Throwable cause) {
+        this(message, promptMessage, SysError.ERROR, cause);
+    }
+
+    public BaseException(String message, BaseSysMessage sysMessage, Throwable cause) {
+        this(message, message, sysMessage, cause);
+    }
+
+    public BaseException(String message, String promptMessage, BaseSysMessage sysMessage, Throwable cause) {
         super(message, cause);
-        this.sysError = sysError;
+        this.promptMessage = promptMessage;
+        this.sysMessage = sysMessage;
     }
 
-    protected BaseException(String message, SysError sysError, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    protected BaseException(String message, String promptMessage, BaseSysMessage sysMessage, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
-        this.sysError = sysError;
+        this.promptMessage = promptMessage;
+        this.sysMessage = sysMessage;
+    }
+
+    public String getPromptMessage() {
+        return promptMessage;
+    }
+
+    public BaseSysMessage getSysMessage() {
+        return sysMessage;
     }
 
     public String getErrorCode() {
-        return sysError.getCode();
+        return sysMessage.getCode();
     }
 
-    public String getErrorMsg() {
-        return sysError.getMsg();
+    public String getErrorMessage() {
+        return sysMessage.getMessage();
     }
 }

@@ -21,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
-import org.zero.common.core.feign.RemoteLogService;
-import org.zero.common.data.model.po.SysLogPO;
+import org.zero.common.log.feign.RemoteLogService;
+import org.zero.common.log.model.SysLogPO;
 
 /**
  * 异步监听日志事件

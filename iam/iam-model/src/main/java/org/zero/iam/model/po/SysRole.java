@@ -1,14 +1,17 @@
 package org.zero.iam.model.po;
 
 import lombok.Data;
-
-import java.io.Serializable;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.zero.common.data.model.BasePO;
 
 /**
  * @author zero
  * @date 2019/2/10
  */
 @Data
-public class SysRole implements Serializable {
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class SysRole extends BasePO {
     private String name;
 }

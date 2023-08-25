@@ -15,11 +15,7 @@ import java.lang.reflect.Type;
  */
 @UtilityClass
 public class JacksonUtils {
-    private static final ObjectMapper objectMapper;
-
-    static {
-        objectMapper = SpringUtil.getBean(ObjectMapper.class);
-    }
+    private static final ObjectMapper objectMapper = SpringUtil.getBean(ObjectMapper.class);
 
     @SneakyThrows
     public static String toJsonStr(Object value) {

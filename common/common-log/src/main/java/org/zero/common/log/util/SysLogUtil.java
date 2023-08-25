@@ -33,9 +33,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.zero.common.data.model.po.SysLogPO;
-import org.zero.common.data.util.web.SpringSecurityUtil;
 import org.zero.common.log.constant.LogTypeEnum;
+import org.zero.common.log.model.SysLogPO;
+import org.zero.iam.util.SpringSecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
