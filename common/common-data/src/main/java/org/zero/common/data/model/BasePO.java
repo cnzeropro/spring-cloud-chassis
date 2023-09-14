@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  * 基础实体类
  *
  * @author Zero (cnzeropro@qq.com)
- * @since 2023/1/5
+ * @since 2019/1/5
  */
 @Setter
 @Getter

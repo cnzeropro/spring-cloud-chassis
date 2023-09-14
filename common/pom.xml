@@ -16,8 +16,8 @@
     <modules>
         <module>common-data</module>
         <module>common-core</module>
-        <module>common-log</module>
         <module>common-swagger</module>
+        <module>common-api</module>
     </modules>
 
     <name>common</name>

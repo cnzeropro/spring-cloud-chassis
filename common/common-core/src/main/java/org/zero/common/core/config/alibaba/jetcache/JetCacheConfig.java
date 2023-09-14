@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @author zero
  * @since 2023/8/21
  */
-@EnableMethodCache(basePackages = "org.zero.cache")
+@EnableMethodCache(basePackages = "org.zero.**.cache")
 // Deprecated，请使用CacheManager相关api
 // @EnableCreateCacheAnnotation
 @Configuration(proxyBeanMethods = false)

@@ -3,7 +3,7 @@ package org.zero.demo.mybatisplus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.zero.iam.model.po.SysUser;
+import org.zero.iam.model.po.SysUserPO;
 
 import javax.annotation.Resource;
 
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/custom")
-public class CustomController extends BaseController<CustomService, SysUser> {
+public class CustomController extends BaseController<CustomService, SysUserPO> {
 
     /**
      * 当有多个类型的业务类在spring容器中，重写该set方法用于注入指定类型

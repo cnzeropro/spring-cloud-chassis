@@ -17,9 +17,9 @@
 package org.zero.iam.model.dto;
 
 import lombok.Data;
-import org.zero.iam.model.po.SysPermission;
-import org.zero.iam.model.po.SysRole;
-import org.zero.iam.model.po.SysUser;
+import org.zero.iam.model.po.SysPermissionPO;
+import org.zero.iam.model.po.SysRolePO;
+import org.zero.iam.model.po.SysUserPO;
 
 import java.io.Serializable;
 
@@ -32,13 +32,13 @@ public class SysUserInfoDTO implements Serializable {
     /**
      * 用户基本信息
      */
-    private SysUser sysUser;
+    private SysUserPO sysUser;
     /**
      * 用户权限
      */
-    private SysPermission[] sysPermissions;
+    private SysPermissionPO[] sysPermissions;
     /**
      * 用户角色
      */
-    private SysRole[] sysRoles;
+    private SysRolePO[] sysRoles;
 }

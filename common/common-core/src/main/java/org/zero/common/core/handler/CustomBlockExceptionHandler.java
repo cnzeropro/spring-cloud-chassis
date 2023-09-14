@@ -9,15 +9,14 @@ import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowException;
 import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.zero.common.data.model.Result;
+import org.zero.common.data.util.javax.web.ResponseUtil;
+import org.zero.common.data.util.spring.JacksonUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.charset.StandardCharsets;
 
 /**
  * 默认实现：{@link com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.DefaultBlockExceptionHandler}
@@ -51,9 +50,6 @@ public class CustomBlockExceptionHandler implements BlockExceptionHandler {
             result = Result.error("未被授权，请稍后再试", e.getMessage());
         }
 
-        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        objectMapper.writeValue(response.getWriter(), result);
+        ResponseUtil.writeErrorJson(response, JacksonUtils.toJsonStr(result));
     }
 }

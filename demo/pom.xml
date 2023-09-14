@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>org.zero</groupId>
-            <artifactId>iam-model</artifactId>
+            <artifactId>iam-common</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

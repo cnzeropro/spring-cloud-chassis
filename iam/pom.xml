@@ -15,13 +15,19 @@
     <packaging>pom</packaging>
     <modules>
         <module>iam-model</module>
+        <module>iam-common</module>
         <module>iam-service</module>
+        <module>iam-api</module>
     </modules>
 
     <name>iam</name>
     <description>iam</description>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

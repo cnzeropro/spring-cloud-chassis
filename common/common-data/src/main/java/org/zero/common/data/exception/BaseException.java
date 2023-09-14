@@ -8,7 +8,13 @@ import org.zero.common.data.constant.SysError;
  * @since 2022/6/20
  */
 public class BaseException extends RuntimeException {
+    /**
+     * 用户提示消息
+     */
     private final String promptMessage;
+    /**
+     * 系统错误信息
+     */
     private final BaseSysMessage sysMessage;
 
     public BaseException() {

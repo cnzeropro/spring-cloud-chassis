@@ -3,7 +3,7 @@ package org.zero.demo.mybatisplus.handler;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.zero.iam.util.SpringSecurityUtil;
+import org.zero.iam.common.util.SpringSecurityUtil;
 
 import java.time.LocalDateTime;
 
