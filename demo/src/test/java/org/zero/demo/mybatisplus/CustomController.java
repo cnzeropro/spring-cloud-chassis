@@ -21,8 +21,8 @@ public class CustomController extends BaseController<CustomService, SysUserPO> {
      */
     @Override
     @Resource
-    public void setBaseService(CustomService baseService) {
-        super.setBaseService(baseService);
+    public void setBaseService(CustomService customService) {
+        super.setBaseService(customService);
     }
 
     @GetMapping("/test")

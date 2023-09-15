@@ -2,7 +2,6 @@ package org.zero.demo.mybatisplus;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.zero.common.data.model.BasePO;
 import org.zero.common.data.model.PageDTO;
 import org.zero.common.data.model.Result;
+import org.zero.demo.mybatisplus.service.BaseService;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -24,7 +24,7 @@ import java.util.Objects;
  * @author zero
  * @since 2022/5/16
  */
-public abstract class BaseController<S extends IService<T>, T extends BasePO> {
+public abstract class BaseController<S extends BaseService<T>, T extends BasePO> {
     protected S baseService;
 
     /**

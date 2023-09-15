@@ -1,12 +1,12 @@
 package org.zero.demo.mybatisplus;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import org.zero.demo.mybatisplus.service.BaseService;
 import org.zero.iam.model.po.SysUserPO;
 
 /**
  * @author zero
- * @since 2023-03-07 09:07:48
+ * @since 2023/9/14
  */
-public interface CustomService extends IService<SysUserPO> {
+public interface CustomService extends BaseService<SysUserPO> {
     void test();
 }
