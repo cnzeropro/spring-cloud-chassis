@@ -19,7 +19,6 @@ package org.zero.gateway.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
@@ -37,8 +36,6 @@ import org.zero.gateway.function.CaptchaHandlerFunction;
 public class RouterFunctionConfig {
     @Bean
     public RouterFunction<ServerResponse> routerFunction(CaptchaHandlerFunction captchaHandlerFunction) {
-        return RouterFunctions.route(RequestPredicates.path("/captcha")
-                        .and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
-                captchaHandlerFunction);
+        return RouterFunctions.route(RequestPredicates.GET("/captcha"), captchaHandlerFunction);
     }
 }

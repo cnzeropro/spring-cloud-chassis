@@ -1,4 +1,4 @@
-package org.zero.common.core.aspect;
+package org.zero.common.core.aop.aspect;
 
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.core.util.StrUtil;
@@ -33,7 +33,7 @@ import java.util.Objects;
 public class TraceLogAspect implements InitializingBean {
     private ObjectMapper objectMapper;
 
-    @Around("org.zero.common.core.pointcut.Pointcuts.allMethod()")
+    @Around("org.zero.common.core.aop.pointcut.Pointcuts.allMethod()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

@@ -44,6 +44,7 @@
         <spring-boot.version>2.6.11</spring-boot.version>
         <spring-cloud.version>2021.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+        <spring-cloud-huawei.version>1.11.0-2021.0.x</spring-cloud-huawei.version>
         <!-- spring other dependencies -->
         <spring-shell.version>2.1.7</spring-shell.version>
         <!-- starter dependencies -->
@@ -126,6 +127,14 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring cloud huawei -->
+            <dependency>
+                <groupId>com.huaweicloud</groupId>
+                <artifactId>spring-cloud-huawei-bom</artifactId>
+                <version>${spring-cloud-huawei.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

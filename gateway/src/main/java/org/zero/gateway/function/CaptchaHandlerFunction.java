@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -50,15 +51,14 @@ public class CaptchaHandlerFunction implements HandlerFunction<ServerResponse> {
     @Override
     public Mono<ServerResponse> handle(ServerRequest request) {
         MediaType imageJpeg = MediaType.IMAGE_JPEG;
-        // 生成验证码，并将验证码图片存入OutputStream
         FastByteArrayOutputStream byteArrayOutputStream = new FastByteArrayOutputStream();
         String code = CaptchaUtil.math(imageJpeg.getSubtype(), byteArrayOutputStream);
-        // 拿取参数：验证码key
-        String key = request.queryParam("key").orElse("default");
-        // 保存验证码到redis，
-        redisTemplate.opsForValue().set("captcha:" + key, code, 3 * 60L, TimeUnit.SECONDS);
+        request.queryParam("key")
+                .ifPresent(key -> redisTemplate.opsForValue().set("captcha:" + key, code, 3 * 60L, TimeUnit.SECONDS));
         return ServerResponse.status(HttpStatus.OK)
+                .contentLength(byteArrayOutputStream.size())
                 .contentType(imageJpeg)
+                .cacheControl(CacheControl.noStore())
                 .body(BodyInserters.fromResource(new ByteArrayResource(byteArrayOutputStream.toByteArray())));
     }
 
