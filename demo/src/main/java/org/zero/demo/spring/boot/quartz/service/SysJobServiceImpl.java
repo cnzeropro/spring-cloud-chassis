@@ -12,10 +12,8 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.zero.demo.spring.boot.quartz.job.NoParallelJob;
-import org.zero.demo.spring.boot.quartz.job.NormalJob;
-import org.zero.demo.spring.boot.quartz.job.UpdateDataAndNoParallelJob;
-import org.zero.demo.spring.boot.quartz.job.UpdateDataJob;
+import org.zero.demo.spring.boot.quartz.constant.JobStatus;
+import org.zero.demo.spring.boot.quartz.constant.JobType;
 import org.zero.demo.spring.boot.quartz.model.SysJob;
 import org.zero.demo.spring.boot.quartz.model.SysJobGroup;
 
@@ -58,7 +56,7 @@ public class SysJobServiceImpl implements SysJobService {
         SysJobGroup sysJobGroup = SysJobGroup.builder().id(groupId).build();
         // todo: 保存任务到数据库
 
-        if (sysJob.getStatus() == 1) {
+        if (JobStatus.ENABLE.getStatus().equals(sysJob.getStatus())) {
             addScheduleJob(sysJob, sysJobGroup);
         }
 
@@ -67,18 +65,8 @@ public class SysJobServiceImpl implements SysJobService {
 
     private boolean addScheduleJob(SysJob sysJob, SysJobGroup sysJobGroup) {
         try {
-            Integer type = sysJob.getType();
-            Class<? extends Job> jobClass = null;
-            if (type == 0) {
-                jobClass = NormalJob.class;
-            } else if (type == 1) {
-                jobClass = NoParallelJob.class;
-            } else if (type == 2) {
-                jobClass = UpdateDataJob.class;
-            } else if (type == 3) {
-                jobClass = UpdateDataAndNoParallelJob.class;
-            }
-
+            Class<? extends Job> jobClass = JobType.getJobClass(sysJob.getType());
+            // 构建job
             JobKey jobKey = new JobKey(sysJob.getKey() + JOB_SUFFIX, sysJobGroup.getKey() + JOB_SUFFIX);
             JobDetail jobDetail = JobBuilder.newJob(jobClass)
                     .withIdentity(jobKey)
@@ -91,7 +79,7 @@ public class SysJobServiceImpl implements SysJobService {
                     // 没有触发器也不删除该任务
                     // .storeDurably()
                     .build();
-
+            // 构建trigger
             TriggerKey triggerKey = new TriggerKey(sysJob.getKey() + TRIGGER_SUFFIX, sysJobGroup.getKey() + TRIGGER_SUFFIX);
             CronTrigger trigger = TriggerBuilder.newTrigger()
                     // .forJob(jobKey)
@@ -99,13 +87,10 @@ public class SysJobServiceImpl implements SysJobService {
                     .withSchedule(CronScheduleBuilder.cronSchedule(sysJob.getExpression()))
                     .startNow()
                     .build();
-
             // 开始任务调度
             scheduler.scheduleJob(jobDetail, trigger);
-
             return true;
         } catch (Exception e) {
-            // Handle exception
             log.warn("Error in scheduling job", e);
             return false;
         }

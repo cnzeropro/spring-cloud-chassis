@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.zero.iam.model.dto.shiro.ShiroLoginUser;
+import org.zero.iam.common.model.dto.shiro.ShiroLoginUser;
 
 import java.util.Optional;
 
@@ -19,6 +19,7 @@ public class ShiroUtil {
     public Optional<ShiroLoginUser> getUserOptWithEx() {
         return Optional.ofNullable(SecurityUtils.getSubject())
                 .map(Subject::getPrincipal)
+                .filter(ShiroLoginUser.class::isInstance)
                 .map(ShiroLoginUser.class::cast);
     }
 

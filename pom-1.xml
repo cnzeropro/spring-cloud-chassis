@@ -12,7 +12,8 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>micro-service-1</module>
+        <module>common</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
@@ -86,11 +87,24 @@
     </properties>
 
     <dependencies>
-
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
+            <!-- common -->
+            <dependency>
+                <groupId>org.zero</groupId>
+                <artifactId>common-bom</artifactId>
+                <version>${common.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -98,6 +112,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring cloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -105,12 +120,232 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring cloud alibaba -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- spring cloud huawei -->
+            <dependency>
+                <groupId>com.huaweicloud</groupId>
+                <artifactId>spring-cloud-huawei-bom</artifactId>
+                <version>${spring-cloud-huawei.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- spring shell -->
+            <dependency>
+                <groupId>org.springframework.shell</groupId>
+                <artifactId>spring-shell-dependencies</artifactId>
+                <version>${spring-shell.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- hutool（工具集） -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- apollo（配置中心） -->
+            <!-- 支持 Config Data Loader 模式（Spring Framework 5.4） -->
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-client-config-data</artifactId>
+                <version>${apollo.version}</version>
+            </dependency>
+            <!-- xxl-job（分布式任务调度） -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
+            <!-- spring-file-storage（文件存储） -->
+            <dependency>
+                <groupId>cn.xuyanwu</groupId>
+                <artifactId>spring-file-storage</artifactId>
+                <version>${file-storage.version}</version>
+            </dependency>
+            <!-- jetcache（缓存） -->
+            <!-- alibaba 推出的新一代缓存框架 -->
+            <!-- jetcache-starter-redis（jedis） -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- jetcache-starter-redis-lettuce -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis-lettuce</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- jetcache-starter-redisson -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redisson</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- jetcache-starter-redis-springdata -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis-springdata</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <!-- minio（分布式存储） -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+            <!-- tx-lcn（分布式事务） -->
+            <!-- 事务管理器（服务端） -->
+            <dependency>
+                <groupId>com.codingapi.txlcn</groupId>
+                <artifactId>txlcn-tm</artifactId>
+                <version>${txlcn.version}</version>
+            </dependency>
+            <!-- 事务参与方（客户端） -->
+            <dependency>
+                <groupId>com.codingapi.txlcn</groupId>
+                <artifactId>txlcn-tc</artifactId>
+                <version>${txlcn.version}</version>
+            </dependency>
+            <!-- power-job（分布式任务调度） -->
+            <dependency>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-worker-spring-boot-starter</artifactId>
+                <version>${powerjob.version}</version>
+            </dependency>
+            <!-- redisson（分布式锁） -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <!-- druid（数据源） -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!-- arthas（线上监控诊断） -->
+            <dependency>
+                <groupId>com.taobao.arthas</groupId>
+                <artifactId>arthas-spring-boot-starter</artifactId>
+                <version>${arthas.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!-- dynamic-datasource（动态数据源） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
+            </dependency>
+            <!-- mybatis（数据持久层（ORM）框架） -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!-- MP（mybatis（数据持久层（ORM）框架）增强组件） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- mybatis-flex（mybatis（数据持久层（ORM）框架）增强组件） -->
+            <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+                <version>${mybatis-flex.version}</version>
+            </dependency>
+            <!-- shiro（安全框架） -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring-boot-starter</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <!-- jasypt（配置加密解密） -->
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt-starter.version}</version>
+            </dependency>
+            <!-- 接口文档 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-openapi-webmvc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-ui</artifactId>
+                <version>${springdoc-openapi-webflux.version}</version>
+            </dependency>
+
+            <!-- hutool（工具集） -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- guava（工具集） -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- google kaptcha（图形验证码） -->
+            <dependency>
+                <groupId>com.google.code</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+            <!-- penggle kaptcha（图形验证码） -->
+            <!-- 因为 google-kaptcha 不在 maven 中央仓库，所以使用三方包 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+            <!-- gson（json解析） -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+            <!-- fastjson（json解析） -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!-- fastjson2（json解析） -->
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
+            </dependency>
+            <!-- transmittable-thread-local（TTL） -->
+            <!-- 处理线程池线程变量不能共用的情况 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
+            <!-- log4j2异步日志依赖 -->
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -121,11 +356,11 @@
             <resource>
                 <directory>${basedir}/src/main/java</directory>
                 <includes>
+                    <include>**/*.json</include>
                     <!-- 针对mapper.xml文件放置于src下的子级目录的情况 -->
                     <include>**/*.xml</include>
                     <include>**/*.dtd</include>
                     <include>**/*.ftl</include>
-                    <include>**/*.json</include>
                 </includes>
             </resource>
             <!-- 需要进行预编译的资源文件 -->
@@ -138,7 +373,7 @@
                     <include>**/application*.properties</include>
                 </includes>
             </resource>
-            <!-- 排除需要预编译的资源文件，再包含其他文件 -->
+            <!-- 排除预编译的资源文件后需要包含的文件 -->
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
                 <excludes>

@@ -21,7 +21,6 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
@@ -37,15 +36,18 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 自动装配：{@link org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration}
- *
+ * <p>
+ * 继承 {@link org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport} 会使SpringBoot的MVC自动装配失效，所以使用实现 {@link WebMvcConfigurer} 的方式。
+ * 具体原因参见 {@link org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration} 的 @ConditionalOnMissingBean(WebMvcConfigurationSupport.class) 注解
  * @author Zero
  */
 @Slf4j
 @RequiredArgsConstructor
-@EnableWebMvc
+// 使用@EnableWebMvc同样也会SpringBoot的MVC自动装配失效，因为其导入了DelegatingWebMvcConfiguration，该类继承自WebMvcConfigurationSupport
+// @EnableWebMvc
 @ServletComponentScan({"org.zero.**.web"})
-@EnableConfigurationProperties({WebMvcProperties.class})
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@EnableConfigurationProperties({WebMvcProperties.class})
 @Configuration(proxyBeanMethods = false)
 public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${spring.mvc.async.request-timeout:30000}")

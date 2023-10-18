@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.zero.iam.model.dto.security.SecurityLoginUser;
+import org.zero.iam.common.model.dto.security.SecurityLoginUser;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  */
 @UtilityClass
 public class SpringSecurityUtil {
+    public static final String ROLE_PREFIX = "ROLE_";
 
     /**
      * 获取Authentication
@@ -66,8 +67,8 @@ public class SpringSecurityUtil {
     public Set<String> getRoles() {
         return getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .filter(authority -> CharSequenceUtil.startWith(authority, "ROLE_"))
-                .map(authority -> CharSequenceUtil.removePrefix(authority, "ROLE_"))
+                .filter(authority -> CharSequenceUtil.startWith(authority, ROLE_PREFIX))
+                .map(authority -> CharSequenceUtil.removePrefix(authority, ROLE_PREFIX))
                 .collect(Collectors.toSet());
     }
 
@@ -77,7 +78,7 @@ public class SpringSecurityUtil {
     public Set<String> getPermissions() {
         return getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .filter(authority -> !CharSequenceUtil.startWith(authority, "ROLE_"))
+                .filter(authority -> !CharSequenceUtil.startWith(authority, ROLE_PREFIX))
                 .collect(Collectors.toSet());
     }
 

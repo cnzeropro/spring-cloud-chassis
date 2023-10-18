@@ -19,7 +19,6 @@
         <module>common</module>
         <module>gateway</module>
         <module>iam</module>
-        <module>log</module>
         <module>demo</module>
     </modules>
 
@@ -40,7 +39,7 @@
         <!-- dependencies -->
         <common.version>${project.version}</common.version>
         <!-- spring dependencies -->
-        <!-- spring cloud alibaba基于java 8的最后一版 -->
+        <!-- 基于java 8的最后一版 -->
         <spring-boot.version>2.6.11</spring-boot.version>
         <spring-cloud.version>2021.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
@@ -102,6 +101,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- common -->
             <dependency>
                 <groupId>org.zero</groupId>
                 <artifactId>common-bom</artifactId>
@@ -109,6 +109,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -116,6 +117,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring cloud -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -123,6 +125,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring cloud alibaba -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -138,6 +141,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- spring shell -->
             <dependency>
                 <groupId>org.springframework.shell</groupId>
                 <artifactId>spring-shell-dependencies</artifactId>
@@ -388,6 +392,41 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <!-- spring boot fat jar 瘦身 - 方式2 -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.springframework.boot.experimental</groupId>
+                            <artifactId>spring-boot-thin-layout</artifactId>
+                            <version>1.0.31.RELEASE</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <!-- spring boot fat jar 瘦身 - 方式1 -->
+                <plugin>
+                    <groupId>org.springframework.boot.experimental</groupId>
+                    <artifactId>spring-boot-thin-maven-plugin</artifactId>
+                    <version>1.0.31.RELEASE</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.springframework.boot.experimental</groupId>
+                            <artifactId>spring-boot-thin-launcher</artifactId>
+                            <version>1.0.31.RELEASE</version>
+                            <classifier>exec</classifier>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <id>resolve</id>
+                            <goals>
+                                <goal>resolve</goal>
+                            </goals>
+                            <inherited>false</inherited>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>

@@ -12,6 +12,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +29,10 @@ import java.util.Objects;
  * @date 2022/1/3
  */
 @Slf4j
-@Order(0)
 @Aspect
+@Order(0)
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class TraceLogAspect implements InitializingBean {
     private ObjectMapper objectMapper;
 

@@ -20,10 +20,8 @@
     <dependencies>
         <dependency>
             <groupId>org.zero</groupId>
-            <artifactId>iam-model</artifactId>
-            <version>1.0.0</version>
+            <artifactId>common-data</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>

@@ -1,21 +1,16 @@
 package org.zero.demo.spring.boot.quartz.job;
 
-import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
-import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.lang.Nullable;
 import org.zero.demo.spring.boot.quartz.context.JobContext;
-import org.zero.demo.spring.boot.quartz.context.JobInfo;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -44,24 +39,17 @@ public abstract class BaseJob implements Job {
             log.debug("job start");
         }
         timeHolder.set(System.nanoTime());
+        JobContext.set(context);
     }
 
     /**
      * 任务执行
      */
     protected void doExecute(JobExecutionContext context) throws Exception {
-        JobDataMap jobDataMap = context.getMergedJobDataMap();
         // 目标调用类
-        Class<?> invokeTarget = ClassUtil.loadClass(jobDataMap.getString("invokeTarget"));
+        Class<?> invokeTarget = ClassUtil.loadClass(JobContext.getTarget());
         // 目标调用类方法
-        Method invokeMethod = ReflectUtil.getMethodByNameIgnoreCase(invokeTarget, jobDataMap.getString("invokeMethod"));
-
-        JobInfo jobInfo = JobInfo.builder()
-                .parma(JSONUtil.toBean(jobDataMap.getString("param"), new TypeReference<Map<String, Object>>() {
-                }, true))
-                .build();
-        JobContext.set(jobInfo);
-
+        Method invokeMethod = ReflectUtil.getMethod(invokeTarget, JobContext.getMethod());
         ReflectUtil.invoke(ReflectUtil.newInstance(invokeTarget), invokeMethod);
     }
 

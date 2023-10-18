@@ -12,7 +12,10 @@ import org.springframework.core.type.AnnotationMetadata;
 public class SpringContextHelperRegistrar implements ImportBeanDefinitionRegistrar {
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(SpringContextHelper.class);
-        registry.registerBeanDefinition("springContextHelper", beanDefinitionBuilder.getBeanDefinition());
+        String name = SpringContextHelper.class.getName();
+        if (!registry.containsBeanDefinition(name)) {
+            BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(SpringContextHelper.class);
+            registry.registerBeanDefinition(name, builder.getBeanDefinition());
+        }
     }
 }

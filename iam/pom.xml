@@ -14,10 +14,8 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>iam-model</module>
         <module>iam-common</module>
         <module>iam-service</module>
-        <module>iam-api</module>
     </modules>
 
     <name>iam</name>

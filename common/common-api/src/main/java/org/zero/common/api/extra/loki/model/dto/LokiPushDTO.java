@@ -12,10 +12,12 @@ import java.util.List;
 public class LokiPushDTO {
     private List<Stream> streams;
 
+    @Data
     public static class Stream {
         private StreamIn stream;
         private List<List<String>> values;
 
+        @Data
         public static class StreamIn {
             private String label;
         }

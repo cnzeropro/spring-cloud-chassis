@@ -3,7 +3,7 @@ package org.zero.demo.mybatisplus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.zero.iam.model.po.SysUserPO;
+import org.zero.iam.common.model.po.SysUserPO;
 
 import javax.annotation.Resource;
 

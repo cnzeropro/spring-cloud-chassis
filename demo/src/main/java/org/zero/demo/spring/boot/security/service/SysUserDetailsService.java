@@ -6,11 +6,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.zero.iam.model.dto.security.SecurityLoginUser;
-import org.zero.iam.model.dto.SysUserInfoDTO;
-import org.zero.iam.model.po.SysPermissionPO;
-import org.zero.iam.model.po.SysRolePO;
-import org.zero.iam.model.po.SysUserPO;
+import org.zero.iam.common.model.dto.security.SecurityLoginUser;
+import org.zero.iam.common.model.dto.SysUserInfoDTO;
+import org.zero.iam.common.model.po.SysPermissionPO;
+import org.zero.iam.common.model.po.SysRolePO;
+import org.zero.iam.common.model.po.SysUserPO;
 
 import java.util.Arrays;
 import java.util.Collection;

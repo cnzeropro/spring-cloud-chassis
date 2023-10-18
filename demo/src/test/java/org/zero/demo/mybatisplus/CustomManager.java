@@ -1,7 +1,7 @@
 package org.zero.demo.mybatisplus;
 
 import org.zero.demo.mybatisplus.manager.BaseManager;
-import org.zero.iam.model.po.SysUserPO;
+import org.zero.iam.common.model.po.SysUserPO;
 
 /**
  * @author zero

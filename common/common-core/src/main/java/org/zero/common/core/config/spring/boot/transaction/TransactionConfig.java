@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @since 2023/2/27
  */
 @Configuration(proxyBeanMethods = false)
-@EnableTransactionManagement(proxyTargetClass = true)
+@EnableTransactionManagement
 public class TransactionConfig {
 }
