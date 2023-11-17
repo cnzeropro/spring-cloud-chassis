@@ -1,0 +1,54 @@
+# https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.mail.spring.mail.default-encoding
+spring:
+  # 电子邮件配置
+  # org.springframework.boot.autoconfigure.mail.MailProperties
+  mail:
+    # SMTP服务器主机
+    host:
+    # SMTP服务器端口
+    port:
+    # SMTP服务器的登录用户
+    username:
+    # SMTP服务器的密码
+    password:
+    # SMTP服务器使用的协议。默认：smtp
+    protocol: smtp
+    # 默认的MimeMessage编码。默认：UTF-8
+    default-encoding: UTF-8
+    # 会话JNDI名称
+    jndi-name:
+    # 是否在启动时测试邮件服务器连接。默认：false
+    test-connection: false
+    # JavaMail属性
+    properties:
+      mail:
+        debug: true
+        protocol: ${spring.mail.protocol}
+        smtp:
+          auth: true
+          connectionTimeout: 5000
+          timeout: 5000
+          writeTimeout: 5000
+          ssl:
+            enable: true
+            trust:
+            socketFactory:
+              fallback: false
+              class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+            required: true
+        tls: true
+        mime:
+          splitLongParameters: false
+  # SendGrid配置
+  # org.springframework.boot.autoconfigure.sendgrid.SendGridProperties
+  sendgrid:
+    # SendGrid API密钥
+    api-key:
+    # SendGrid代理配置
+    proxy:
+      # SendGrid代理主机
+      host:
+      # SendGrid代理端口
+      port:

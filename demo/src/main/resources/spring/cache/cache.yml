@@ -1,0 +1,44 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.cache.spring.cache.cache-names
+  # org.springframework.boot.autoconfigure.cache.CacheProperties
+  # 缓存配置
+  cache:
+    # 缓存类型。默认情况下，根据环境自动检测。可选：generic、jcache、ehcache、hazelcast、infinispan、couchbase、redis、cache2k、caffeine、simple、none
+    type:
+    # 要创建的缓存名称
+    cache-names:
+      - default
+    # redis（以下配置任选一）
+    redis:
+      # 缓存条目过期时间。默认情况下，条目永不过期。
+      time-to-live:
+      # 允许缓存null值。默认：true
+      cache-null-values: true
+      # 写入Redis时是否使用key前缀。默认：true
+      use-key-prefix: true
+      # key前缀
+      key-prefix:
+      # 是否启用缓存统计信息。默认：false
+      enable-statistics: false
+    # caffeine（配置任选一）
+    caffeine:
+      # 创建缓存的规范
+      spec:
+    # jcache（配置任选一）
+    jcache:
+      # 初始化JCache的配置文件的位置
+      config:
+      # 缓存管理器的CachingProvider实现的完全限定名称
+      provider:
+    # couchbase（配置任选一）
+    couchbase:
+      # 缓存条目过期时间。默认情况下，条目永不过期。
+      expiration:
+    # ehcache（配置任选一）
+    ehcache:
+      # 初始化EhCache的配置文件的位置
+      config:
+    # infinispan（配置任选一）
+    infinispan:
+      # 初始化Infinispan的配置文件的位置
+      config:

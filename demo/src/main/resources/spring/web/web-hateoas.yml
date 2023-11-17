@@ -1,0 +1,6 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.web.spring.hateoas.use-hal-as-default-json-media-type
+  # org.springframework.boot.autoconfigure.hateoas.HateoasProperties
+  # Spring HATEOAS配置
+  hateoas:
+    use-hal-as-default-json-media-type: true

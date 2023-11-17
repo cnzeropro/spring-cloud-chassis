@@ -1,0 +1,16 @@
+management:
+  # org.springframework.boot.actuate.autoconfigure.info.InfoContributorProperties
+  info:
+    git:
+      enabled:
+      mode:
+    os:
+      enabled:
+    env:
+      enabled:
+    java:
+      enabled:
+    build:
+      enabled:
+    defaults:
+      enabled:

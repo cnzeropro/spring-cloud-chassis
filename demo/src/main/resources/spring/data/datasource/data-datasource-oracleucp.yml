@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.datasource.oracleucp
+    # oracle.ucp.jdbc.PoolDataSourceImpl
+    # Oracle UCP配置
+    oracleucp:
+      u-r-l:
+      user:
+      port-number:
+      server-name:
+      database-name:
+      data-source-name:
+      connection-pool-name:
+      connection-factory-class-name:
+      description:
+      network-protocol:
+      initial-pool-size:
+      max-pool-size:
+      min-pool-size:
+      max-statements:
+      max-idle-time:
+      abandoned-connection-timeout:
+      connection-validation-timeout:
+      connection-wait-timeout:
+      login-timeout:
+      query-timeout:
+      inactive-connection-timeout:
+      time-to-live-connection-timeout:
+      max-connection-reuse-time:
+      timeout-check-interval:
+      connection-harvest-max-count:
+      connection-harvest-trigger-count:
+      connection-labeling-high-cost:
+      connection-repurpose-threshold:
+      fast-connection-failover-enabled:
+      high-cost-connection-reuse-threshold:
+      max-connection-reuse-count:
+      max-connections-per-shard:
+      read-only-instance-allowed:
+      validate-connection-on-borrow:
+      s-q-l-for-validate-connection:
+      seconds-to-trust-idle-connection:
+      sharding-mode:
+      role-name:
+      property-cycle:
+      o-n-s-configuration:
+      connection-properties:
+      connection-factory-properties:
+      pdb-roles:

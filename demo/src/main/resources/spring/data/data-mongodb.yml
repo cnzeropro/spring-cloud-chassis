@@ -1,0 +1,49 @@
+spring:
+  # Mongo配置
+  mongodb:
+    # org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties
+    # 嵌入式Mongo配置
+    embedded:
+      # 要使用的Mongo版本
+      version:
+      # 存储配置
+      storage:
+        # oplog 的最大大小
+        oplog-size:
+        # 副本集的名称
+        repl-set-name:
+        # 数据存储的目录
+        database-dir:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.data.mongodb.additional-hosts
+  data:
+    # org.springframework.boot.autoconfigure.mongo.MongoProperties
+    # Mongo配置
+    mongodb:
+      # Mongo数据库URI。默认：mongodb://localhost/test
+      uri: mongodb://localhost/test
+      # Mongo服务器主机
+      host:
+      # Mongo服务器端口
+      port:
+      # 数据库名称
+      database:
+      # 身份验证数据库名称
+      authentication-database:
+      # Mongo服务器的登录用户
+      username:
+      # Mongo服务器的登录密码
+      password:
+      # 群集所需的副本集名称
+      replica-set-name:
+      # 字段命名策略
+      field-naming-strategy:
+      # 将UUID转换为BSON二进制值时要使用的表示形式。默认：java-legacy。可选：java-legacy、unspecified、standard、c_sharp_legacy、python_legacy
+      uuid-representation: java_legacy
+      # 是否启用自动索引创建
+      auto-index-creation:
+      # GridFS配置
+      gridfs:
+        # GridFS数据库名称
+        database:
+        # GridFS存储桶名称
+        bucket:

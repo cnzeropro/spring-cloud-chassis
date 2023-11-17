@@ -1,0 +1,56 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.neo4j.authentication.kerberos-ticket
+  # org.springframework.boot.autoconfigure.neo4j.Neo4jProperties
+  # Neo4j配置
+  neo4j:
+    # Neo4j URI。默认：bolt://localhost:7687
+    uri: bolt://localhost:7687
+    # 连接超时。默认：30s
+    connection-timeout: 30s
+    # 允许事务重试的最长时间。默认：30s
+    max-transaction-retry-time: 30s
+    # 认证配置
+    authentication:
+      # 服务器的登录用户
+      username:
+      # 服务器的登录密码
+      password:
+      # 连接的realm
+      realm:
+      # 连接到数据库的Kerberos票证。与给定用户名互斥
+      kerberos-ticket:
+    # 连接池配置
+    pool:
+      # 是否启用指标。默认：false
+      metrics-enabled: false
+      # 是否记录泄露的会话。默认：false
+      log-leaked-sessions: false
+      # 连接池中与单个数据库的最大连接数。默认：100
+      max-connection-pool-size: 100
+      # 连接最大存活时间。默认：1h
+      max-connection-lifetime: 1h
+      # 连接检测之前的空闲时间
+      idle-time-before-connection-test:
+      # 连接销毁时间。默认：60s
+      connection-acquisition-timeout: 60s
+    # 安全配置
+    security:
+      # 驱动程序是否应使用加密流量。默认：false
+      encrypted: false
+      # 信任策略。默认：trust_system_ca_signed_certificates。可选：trust_system_ca_signed_certificates、trust_all_certificates、trust_custom_ca_signed_certificates
+      trust-strategy: trust_system_ca_signed_certificates
+      # 受信任证书的文件的路径
+      cert-file:
+      # 是否需要主机名验证。默认：true
+      hostname-verification-enabled: true
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.data.neo4j.database
+  data:
+    # org.springframework.boot.autoconfigure.data.neo4j.Neo4jDataProperties
+    # Neo4j配置
+    neo4j:
+      # 数据库名称。默认情况下，服务器决定要使用的默认数据库
+      database:
+      # Neo4j存储库配置
+      repositories:
+        # 要启用的Neo4j存储库的类型。默认：auto。可选：auto、imperative、none、reactive
+        type: auto

@@ -1,0 +1,47 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.ldap.anonymous-read-only
+  # org.springframework.boot.autoconfigure.ldap.LdapProperties
+  # LDAP配置
+  ldap:
+    # 连接地址
+    urls:
+      - ldap://localhost:389
+    # 登录用户名
+    username:
+    # 登录密码
+    password:
+    # 请求基本后缀
+    base:
+    # 只读操作是否使用匿名环境
+    anonymous-read-only:
+    # 模板设置
+    template:
+      # 是否忽略NameNotFoundException。默认：false
+      ignore-name-not-found-exception: false
+      # 是否忽略PartialResultException。默认：false
+      ignore-partial-result-exception: false
+      # 是否忽略SizeLimitExceededException。默认：true
+      ignore-size-limit-exceeded-exception: true
+    # org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapProperties
+    # 嵌入式LDAP配置
+    embedded:
+      # 嵌入式LDAP端口。默认：0
+      port: 0
+      # LDIF脚本资源。默认：classpath:schema.ldif
+      ldif: classpath:schema.ldif
+      # 基本DN列表
+      base-dn:
+      # 凭证配置
+      credential:
+        # 用户名
+        username:
+        # 密码
+        password:
+      # 验证配置
+      validation:
+        # 是否启用LDAP架构验证。默认：true
+        enabled: true
+        # 自定义schema路径
+        schema:
+    # LDAP规范设置
+    base-environment:

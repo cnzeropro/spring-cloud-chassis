@@ -1,0 +1,90 @@
+spring:
+  datasource:
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.datasource.dbcp2
+    # org.apache.commons.dbcp2.BasicDataSource
+    # dbcp2配置
+    dbcp2:
+      # 数据库URL
+      url:
+      # 数据库用户名
+      username:
+      # 数据库密码
+      password:
+      # 驱动类名称
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      # 连接源初始化大小
+      initial-size:
+      # 最大活动连接数。负数表示无限制。默认：8
+      max-total: 8
+      # 保持空闲状态的最大连接数。默认：8
+      max-idle: 8
+      # 保持空闲状态的最小连接数。默认：0
+      min-idle: 0
+      # 最大连接超时时间。默认：-1
+      max-wait-millis: -1
+      # 是否池化Statements（PreparedStatements和CallableStatements）
+      pool-prepared-statements:
+      # 回收连接时清除该连接的Statements缓存池
+      clear-statement-pool-on-return:
+      # 最大开启的PreparedStatements数。默认：-1
+      max-open-prepared-statements: -1
+      # 验证池中连接的SQL语句
+      validation-query:
+      # 验证查询的超时，单位秒。默认：-1
+      validation-query-timeout: -1
+      # 创建连接后是否立即进行验证
+      test-on-create:
+      # 归还连接后是否进行验证。默认：true
+      test-on-borrow: true
+      # 回收连接后是否进行验证
+      test-on-return:
+      # 空闲时是否进行验证
+      test-while-idle: false
+      # 空闲对象清除线程运行之间休眠的毫秒数。默认：-1
+      time-between-eviction-runs-millis: -1
+      # 每次运行空闲对象逐出线程期间要检查的对象数。默认：3
+      num-tests-per-eviction-run: 3
+      # 连接在池中闲置的最短时间。默认：1800000
+      min-evictable-idle-time-millis: 1800000
+      # 至少保留“minIdle”个连接在池中后，闲置的最短时间。请注意，minEvictableIdleTimeMillis参数优先。默认：-1
+      soft-min-evictable-idle-time-millis: -1
+      # 逐出策略类名称。
+      eviction-policy-class-name: org.apache.commons.pool2.impl.DefaultEvictionPolicy
+      # 连接工厂类名称
+      connection-factory-class-name:
+      # 在创建Connection后运行一次的SQL语句
+      connection-init-sqls:
+      # 是否控制对基础连接的访问
+      access-to-underlying-connection-allowed:
+      # 连接允许的最长生存期。默认：-1
+      max-conn-lifetime-millis: -1
+      # 当池因超过最大生存期而关闭连接时是否生成日志消息。需要保证maxConnLifetimeMillis参数启用。默认：true
+      log-expired-connections: true
+      # JMX名称
+      jmx-name:
+      # 归还连接时是否自动提交。与autoCommitOnReturn互斥。默认：true
+      auto-commit-on-return: true
+      # 归还连接时是否回滚。与rollbackOnReturn互斥。默认：true
+      rollback-on-return: true
+      # 发出致命条件信号的SQL_STATE代码集
+      disconnection-sql-codes:
+      # 连接是否支持快速失败验证
+      fast-fail-validation:
+      # 是否默认自动提交
+      default-auto-commit:
+      # 默认“catalog”
+      default-catalog:
+      # 默认查询超时时间。单位秒
+      default-query-timeout:
+      # 是否默认只读。默认：false
+      default-read-only: false
+      # 默认模式名
+      default-schema:
+      # 默认TransactionIsolation状态。默认：-1
+      default-transaction-isolation: -1
+      # 是否放弃使用记录堆栈跟踪。默认：false
+      abandoned-usage-tracking: false
+      # 是否缓存某些状态。默认：true
+      cache-state: true
+      # 是否“后入先出”，反之则“先入先出”。默认：true
+      lifo: true

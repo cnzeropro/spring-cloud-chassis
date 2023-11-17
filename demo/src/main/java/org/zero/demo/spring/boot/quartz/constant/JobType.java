@@ -24,12 +24,12 @@ public enum JobType {
     private final Integer type;
     private final Class<? extends Job> clazz;
 
-    public static Class<? extends Job> getJobClass(Integer type) {
+    public static JobType getJobType(Integer type) {
         for (JobType jobType : values()) {
             if (jobType.getType().equals(type)) {
-                return jobType.getClazz();
+                return jobType;
             }
         }
-        return null;
+        return NORMAL_JOB;
     }
 }

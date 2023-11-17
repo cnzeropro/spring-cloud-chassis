@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.11</version>
+        <version>2.7.17</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -40,36 +40,41 @@
         <common.version>${project.version}</common.version>
         <!-- spring dependencies -->
         <!-- 基于java 8的最后一版 -->
-        <spring-boot.version>2.6.11</spring-boot.version>
-        <spring-cloud.version>2021.0.4</spring-cloud.version>
-        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+        <spring-boot.version>2.7.17</spring-boot.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
         <spring-cloud-huawei.version>1.11.0-2021.0.x</spring-cloud-huawei.version>
         <!-- spring other dependencies -->
         <spring-shell.version>2.1.7</spring-shell.version>
         <!-- starter dependencies -->
         <arthas.version>3.4.8</arthas.version>
         <druid.version>1.2.16</druid.version>
-        <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
+        <dynamic-datasource.version>4.2.0</dynamic-datasource.version>
         <mybatis.version>2.3.0</mybatis.version>
         <mybatis-plus.version>3.5.3</mybatis-plus.version>
-        <mybatis-flex.version>1.2.4</mybatis-flex.version>
+        <mybatis-flex.version>1.7.3</mybatis-flex.version>
         <shiro.version>1.9.1</shiro.version>
         <redisson.version>3.19.3</redisson.version>
         <jasypt.version>1.9.3</jasypt.version>
         <jasypt-starter.version>3.0.5</jasypt-starter.version>
         <powerjob.version>4.3.0</powerjob.version>
+        <elasticjob.version>3.0.4</elasticjob.version>
+        <devh-grpc.version>2.15.0.RELEASE</devh-grpc.version>
+        <lock4j.version>2.2.5</lock4j.version>
+        <sa-token.version>1.37.0</sa-token.version>
+        <dynamic-tp.verison>1.1.4.1</dynamic-tp.verison>
         <!-- component dependencies -->
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <xxl-job.version>2.3.1</xxl-job.version>
         <apollo.version>2.1.0</apollo.version>
-        <file-storage.version>0.7.0</file-storage.version>
+        <x-file-storage.version>2.0.0</x-file-storage.version>
         <jetcache.version>2.7.3</jetcache.version>
         <minio.version>8.5.2</minio.version>
         <swagger.version>2.2.15</swagger.version>
         <springdoc-openapi-webflux.version>1.6.9</springdoc-openapi-webflux.version>
         <springdoc-openapi-webmvc.version>2.1.0</springdoc-openapi-webmvc.version>
         <!-- util dependencies -->
-        <hutool.version>5.8.20</hutool.version>
+        <hutool.version>5.8.22</hutool.version>
         <guava.version>31.1-jre</guava.version>
         <gson.version>2.10.1</gson.version>
         <kaptcha.version>2.3.2</kaptcha.version>
@@ -81,18 +86,22 @@
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <!-- other dependencies -->
         <mysql.version>8.0.32</mysql.version>
+        <grpc.version>1.59.0</grpc.version>
+        <protobuf.version>3.24.4</protobuf.version>
 
         <!-- plugins -->
         <!-- spring plugins -->
         <spring-javaformat-plugin.version>0.0.35</spring-javaformat-plugin.version>
         <!-- other plugins -->
+        <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
         <docker-plugin.version>0.42.0</docker-plugin.version>
+        <os-plugin.version>1.7.1</os-plugin.version>
     </properties>
 
     <!-- 全局依赖 -->
-    <!-- 思来想去，感觉只有lombok全局会用 -->
     <dependencies>
         <!-- lombok -->
+        <!-- 思来想去，感觉只有lombok全局会用😅 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -109,7 +118,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- spring boot -->
+            <!-- Spring Boot -->
+            <!-- https://docs.spring.io/spring-boot/docs/2.7.17/reference/html/ -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -117,7 +127,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- spring cloud -->
+            <!-- Spring Cloud -->
+            <!-- https://docs.spring.io/spring-cloud/docs/2021.0.8/reference/html/ -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -125,7 +136,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- spring cloud alibaba -->
+            <!-- Spring Cloud Alibaba -->
+            <!-- https://sca.aliyun.com/zh-cn/docs/next/overview/what-is-sca -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -133,7 +145,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- spring cloud huawei -->
+            <!-- Spring Cloud Huawei -->
+            <!-- https://github.com/huaweicloud/spring-cloud-huawei/wiki -->
             <dependency>
                 <groupId>com.huaweicloud</groupId>
                 <artifactId>spring-cloud-huawei-bom</artifactId>
@@ -141,7 +154,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- spring shell -->
+            <!-- Spring Shell -->
+            <!-- https://docs.spring.io/spring-shell/docs/2.1.13/site/reference/htmlsingle/ -->
             <dependency>
                 <groupId>org.springframework.shell</groupId>
                 <artifactId>spring-shell-dependencies</artifactId>
@@ -149,7 +163,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- hutool（工具集） -->
+            <!-- Hutool（工具集） -->
+            <!-- https://doc.hutool.cn/pages/index/ -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-bom</artifactId>
@@ -158,27 +173,46 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- apollo（配置中心） -->
-            <!-- 支持 Config Data Loader 模式（Spring Framework 5.4） -->
+            <!-- Apollo（配置中心） -->
+            <!-- https://www.apolloconfig.com/#/zh/usage/java-sdk-user-guide?id=_3213-spring-boot%e9%9b%86%e6%88%90%e6%96%b9%e5%bc%8f%ef%bc%88%e6%8e%a8%e8%8d%90%ef%bc%89 -->
+            <!-- 支持 Config Data Loader 模式（Spring Boot 2.4+） -->
             <dependency>
                 <groupId>com.ctrip.framework.apollo</groupId>
                 <artifactId>apollo-client-config-data</artifactId>
                 <version>${apollo.version}</version>
             </dependency>
-            <!-- xxl-job（分布式任务调度） -->
+            <!-- ElasticJob （分布式调度）-->
+            <!-- https://shardingsphere.apache.org/elasticjob/current/cn/user-manual/configuration/spring-boot-starter/ -->
+            <dependency>
+                <groupId>org.apache.shardingsphere.elasticjob</groupId>
+                <artifactId>elasticjob-spring-boot-starter</artifactId>
+                <version>${elasticjob.version}</version>
+            </dependency>
+            <!-- PowerJob（分布式调度） -->
+            <!-- https://www.yuque.com/powerjob/guidence/intro -->
+            <dependency>
+                <groupId>tech.powerjob</groupId>
+                <artifactId>powerjob-worker-spring-boot-starter</artifactId>
+                <version>${powerjob.version}</version>
+            </dependency>
+            <!-- XXL-JOB（分布式调度） -->
+            <!-- https://www.xuxueli.com/xxl-job/#%E4%BA%8C%E3%80%81%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8 -->
             <dependency>
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
             </dependency>
-            <!-- spring-file-storage（文件存储） -->
+            <!-- redisson（分布式缓存+分布式锁） -->
+            <!-- https://github.com/redisson/redisson/blob/master/redisson-spring-boot-starter/README.md -->
             <dependency>
-                <groupId>cn.xuyanwu</groupId>
-                <artifactId>spring-file-storage</artifactId>
-                <version>${file-storage.version}</version>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
-            <!-- jetcache（缓存） -->
+            <!-- JetCache（分布式缓存） -->
             <!-- alibaba 推出的新一代缓存框架 -->
+            <!-- https://github.com/alibaba/jetcache/blob/master/docs/CN/Readme.md -->
+            <!-- 以下实现四选一即可 -->
             <!-- jetcache-starter-redis（jedis） -->
             <dependency>
                 <groupId>com.alicp.jetcache</groupId>
@@ -203,13 +237,22 @@
                 <artifactId>jetcache-starter-redis-springdata</artifactId>
                 <version>${jetcache.version}</version>
             </dependency>
-            <!-- minio（分布式存储） -->
+            <!-- X File Storage（分布式存储） -->
+            <!-- https://x-file-storage.xuyanwu.cn/#/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8 -->
+            <dependency>
+                <groupId>org.dromara.x-file-storage</groupId>
+                <artifactId>x-file-storage-spring</artifactId>
+                <version>${x-file-storage.version}</version>
+            </dependency>
+            <!-- MinIO（分布式存储） -->
+            <!-- https://min.io/docs/minio/linux/developers/java/minio-java.html -->
             <dependency>
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
             </dependency>
-            <!-- tx-lcn（分布式事务） -->
+            <!-- tx-lcn（分布式事务）（已过时，建议使用Alibaba Seata） -->
+            <!-- https://github.com/codingapi/tx-lcn -->
             <!-- 事务管理器（服务端） -->
             <dependency>
                 <groupId>com.codingapi.txlcn</groupId>
@@ -222,124 +265,254 @@
                 <artifactId>txlcn-tc</artifactId>
                 <version>${txlcn.version}</version>
             </dependency>
-            <!-- power-job（分布式任务调度） -->
+            <!-- lock4j（分布式锁） -->
+            <!-- https://github.com/baomidou/lock4j -->
+            <!-- 以下实现三选一即可 -->
+            <!-- 基于redisson的实现 -->
             <dependency>
-                <groupId>tech.powerjob</groupId>
-                <artifactId>powerjob-worker-spring-boot-starter</artifactId>
-                <version>${powerjob.version}</version>
+                <groupId>com.baomidou</groupId>
+                <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
+                <version>${lock4j.version}</version>
             </dependency>
-            <!-- redisson（分布式锁） -->
+            <!-- 基于redis-template的实现 -->
             <dependency>
-                <groupId>org.redisson</groupId>
-                <artifactId>redisson-spring-boot-starter</artifactId>
-                <version>${redisson.version}</version>
+                <groupId>com.baomidou</groupId>
+                <artifactId>lock4j-redis-template-spring-boot-starter</artifactId>
+                <version>${lock4j.version}</version>
+            </dependency>
+            <!-- 基于zookeeper的实现 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>lock4j-zookeeper-spring-boot-starter</artifactId>
+                <version>${lock4j.version}</version>
+            </dependency>
+            <!-- gRPC（Google RPC - Google的开源高性能RPC框架） -->
+            <!-- https://yidongnan.github.io/grpc-spring-boot-starter/zh-CN/ -->
+            <!-- 非官方，将gRPC框架与Spring Boot进行整合，简化gRPC服务端/客户端的设置，提供易用封装 -->
+            <!-- 以下实现三选一即可 -->
+            <!-- 服务端和客户端 -->
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-spring-boot-starter</artifactId>
+                <version>${devh-grpc.version}</version>
+            </dependency>
+            <!-- 服务端（三选一） -->
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-server-spring-boot-starter</artifactId>
+                <version>${devh-grpc.version}</version>
+            </dependency>
+            <!-- 客户端（三选一） -->
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-client-spring-boot-starter</artifactId>
+                <version>${devh-grpc.version}</version>
             </dependency>
 
-            <!-- druid（数据源） -->
+            <!-- Druid（数据源） -->
+            <!-- https://github.com/alibaba/druid/wiki/%E9%A6%96%E9%A1%B5 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
-            <!-- arthas（线上监控诊断） -->
+            <!-- dynamic datasource（动态数据源） -->
+            <!-- https://www.kancloud.cn/tracy5546/dynamic-datasource/2264611 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource.version}</version>
+            </dependency>
+            <!-- Arthas（线上监控诊断） -->
+            <!-- https://arthas.aliyun.com/doc/ -->
             <dependency>
                 <groupId>com.taobao.arthas</groupId>
                 <artifactId>arthas-spring-boot-starter</artifactId>
                 <version>${arthas.version}</version>
                 <scope>runtime</scope>
             </dependency>
-            <!-- dynamic-datasource（动态数据源） -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>${dynamic-datasource.version}</version>
-            </dependency>
-            <!-- mybatis（数据持久层（ORM）框架） -->
+            <!-- mybatis（数据持久层ORM框架） -->
+            <!-- https://mybatis.org/spring-boot-starter/mybatis-spring-boot-starter/index.html -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
             </dependency>
-            <!-- MP（mybatis（数据持久层（ORM）框架）增强组件） -->
+            <!-- MyBatis-Plus（mybatis（数据持久层ORM框架）增强组件） -->
+            <!-- https://baomidou.com/pages/226c21/ -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
-            <!-- mybatis-flex（mybatis（数据持久层（ORM）框架）增强组件） -->
+            <!-- MyBatis-Flex（mybatis（数据持久层ORM框架）增强组件） -->
+            <!-- https://mybatis-flex.com/zh/intro/getting-started.html -->
             <dependency>
                 <groupId>com.mybatis-flex</groupId>
                 <artifactId>mybatis-flex-spring-boot-starter</artifactId>
                 <version>${mybatis-flex.version}</version>
             </dependency>
-            <!-- shiro（安全框架） -->
+            <!-- Shiro（权限认证） -->
+            <!-- https://shiro.apache.org/spring-boot.html -->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-spring-boot-starter</artifactId>
                 <version>${shiro.version}</version>
             </dependency>
-            <!-- jasypt（配置加密解密） -->
+            <!-- Sa-Token（权限认证） -->
+            <!-- https://sa-token.cc -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <!-- jasypt-spring-boot（配置加密解密） -->
+            <!-- https://github.com/ulisesbocchio/jasypt-spring-boot/blob/master/README.md -->
             <dependency>
                 <groupId>com.github.ulisesbocchio</groupId>
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt-starter.version}</version>
             </dependency>
             <!-- 接口文档 -->
+            <!-- https://springdoc.org/index.html -->
+            <!-- 根据项目类型选择 -->
+            <!-- Spring WebMvc 支持，需要API文档页面 -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-openapi-webmvc.version}</version>
             </dependency>
+            <!-- Spring WebMvc 支持，无需页面，只需要提供API文档接口即可 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+                <version>${springdoc-openapi-webmvc.version}</version>
+            </dependency>
+            <!-- Spring WebFlux 支持，需要API文档页面 -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-webflux-ui</artifactId>
                 <version>${springdoc-openapi-webflux.version}</version>
             </dependency>
+            <!-- Spring WebFlux 支持，无需页面，只需要提供API文档接口即可 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-api</artifactId>
+                <version>${springdoc-openapi-webflux.version}</version>
+            </dependency>
+            <!-- DynamicTp（动态线程池） -->
+            <!-- https://dynamictp.cn/guide/use/quick-start.html -->
+            <!-- 以下实现根据项目选择 -->
+            <!-- 无配置中心支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-boot-starter-common</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- apollo支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-boot-starter-apollo</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- nacos支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-boot-starter-nacos</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- nacos-cloud支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-cloud-starter-nacos</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- zookeeper支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-boot-starter-zookeeper</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- zookeeper-cloud支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-cloud-starter-zookeeper</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- consul-cloud支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-cloud-starter-consul</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- etcd支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-boot-starter-etcd</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- polaris支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-cloud-starter-polaris</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
+            <!-- huawei-cloud支持 -->
+            <dependency>
+                <groupId>org.dromara.dynamictp</groupId>
+                <artifactId>dynamic-tp-spring-cloud-starter-huawei</artifactId>
+                <version>${dynamic-tp.verison}</version>
+            </dependency>
 
-            <!-- hutool（工具集） -->
+            <!-- Hutool（工具集） -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <!-- guava（工具集） -->
+            <!-- Guava（工具集） -->
+            <!-- https://github.com/google/guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
-            <!-- google kaptcha（图形验证码） -->
+            <!-- Kaptcha（图形验证码） -->
             <dependency>
                 <groupId>com.google.code</groupId>
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
             </dependency>
-            <!-- penggle kaptcha（图形验证码） -->
-            <!-- 因为 google-kaptcha 不在 maven 中央仓库，所以使用三方包 -->
+            <!-- Kaptcha（图形验证码） -->
+            <!-- 因为google-kaptcha不在maven中央仓库，所以使用三方包 -->
             <dependency>
                 <groupId>com.github.penggle</groupId>
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
             </dependency>
-            <!-- gson（json解析） -->
+            <!-- gson（json） -->
+            <!-- https://github.com/google/gson/blob/main/UserGuide.md -->
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
             </dependency>
-            <!-- fastjson（json解析） -->
+            <!-- fastjson（json） -->
+            <!-- https://github.com/alibaba/fastjson/wiki/Quick-Start-CN -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!-- fastjson2（json解析） -->
+            <!-- fastjson2（json） -->
+            <!-- https://github.com/alibaba/fastjson2/blob/main/README.md -->
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson2.version}</version>
             </dependency>
             <!-- transmittable-thread-local（TTL） -->
+            <!-- https://github.com/alibaba/transmittable-thread-local#-user-guide -->
             <!-- 处理线程池线程变量不能共用的情况 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -347,6 +520,7 @@
                 <version>${transmittable-thread-local.version}</version>
             </dependency>
             <!-- log4j2异步日志依赖 -->
+            <!-- https://lmax-exchange.github.io/disruptor/ -->
             <dependency>
                 <groupId>com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
@@ -356,8 +530,9 @@
     </dependencyManagement>
 
     <build>
+        <!-- 资源 -->
         <resources>
-            <!-- classpath下需要引用的资源文件 -->
+            <!-- 定义classpath下需要引用的资源文件 -->
             <resource>
                 <directory>${basedir}/src/main/java</directory>
                 <includes>
@@ -369,8 +544,21 @@
             </resource>
         </resources>
 
+        <!-- 扩展 -->
+        <extensions>
+            <!-- 获取与平台相关的项目属性 -->
+            <!-- https://github.com/trustin/os-maven-plugin -->
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>${os-plugin.version}</version>
+            </extension>
+        </extensions>
+
+        <!-- 插件 -->
         <plugins>
-            <!-- 父子模块版本管理 -->
+            <!-- 项目版本管理 -->
+            <!-- https://www.mojohaus.org/versions/versions-maven-plugin/index.html -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -380,6 +568,7 @@
                 </configuration>
             </plugin>
             <!-- 单元测试 -->
+            <!-- https://maven.apache.org/surefire/maven-surefire-plugin/ -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -390,33 +579,38 @@
             </plugin>
         </plugins>
 
+        <!-- 插件管理 -->
         <pluginManagement>
             <plugins>
+                <!-- spring boot项目打包 -->
+                <!-- https://docs.spring.io/spring-boot/docs/current/maven-plugin/reference/htmlsingle/ -->
+                <!-- ！去除该插件spring boot项目打包后无法运行-->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
-                    <!-- spring boot fat jar 瘦身 - 方式2 -->
-                    <dependencies>
+                    <configuration>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
+                    <!-- spring boot fat jar 瘦身 - 方式2（不建议使用） -->
+                    <!--<dependencies>
                         <dependency>
                             <groupId>org.springframework.boot.experimental</groupId>
                             <artifactId>spring-boot-thin-layout</artifactId>
                             <version>1.0.31.RELEASE</version>
                         </dependency>
-                    </dependencies>
+                    </dependencies>-->
                 </plugin>
                 <!-- spring boot fat jar 瘦身 - 方式1 -->
+                <!-- https://github.com/spring-projects-experimental/spring-boot-thin-launcher/blob/main/README.md -->
                 <plugin>
                     <groupId>org.springframework.boot.experimental</groupId>
                     <artifactId>spring-boot-thin-maven-plugin</artifactId>
                     <version>1.0.31.RELEASE</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.springframework.boot.experimental</groupId>
-                            <artifactId>spring-boot-thin-launcher</artifactId>
-                            <version>1.0.31.RELEASE</version>
-                            <classifier>exec</classifier>
-                        </dependency>
-                    </dependencies>
                     <executions>
                         <execution>
                             <id>resolve</id>
@@ -427,10 +621,45 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- 编译proto文件 -->
+                <!-- https://www.xolstice.org/protobuf-maven-plugin/index.html -->
+                <plugin>
+                    <groupId>org.xolstice.maven.plugins</groupId>
+                    <artifactId>protobuf-maven-plugin</artifactId>
+                    <version>${protobuf-plugin.version}</version>
+                    <configuration>
+                        <pluginId>grpc-java</pluginId>
+                        <!-- 工具 -->
+                        <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}
+                        </protocArtifact>
+                        <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
+                        </pluginArtifact>
+                        <!-- proto源文件路径 -->
+                        <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+                        <!-- proto目标java文件路径 -->
+                        <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                        <!-- 设置是否在生成java文件之前清空outputDirectory的文件，默认值为true。设置为false时也会覆盖同名文件 -->
+                        <clearOutputDirectory>false</clearOutputDirectory>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <!-- 生成OuterClass类 -->
+                                <goal>compile</goal>
+                                <!-- 生成Grpc类 -->
+                                <goal>compile-custom</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 编译项目源码 -->
+                <!-- https://maven.apache.org/plugins/maven-compiler-plugin/ -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
+                        <!-- 预编译 -->
                         <annotationProcessorPaths>
                             <path>
                                 <groupId>org.projectlombok</groupId>
@@ -456,7 +685,8 @@
                         </annotationProcessorPaths>
                     </configuration>
                 </plugin>
-                <!-- docker镜像推送 -->
+                <!-- Docker构建集成 -->
+                <!-- https://dmp.fabric8.io/ -->
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
@@ -484,7 +714,9 @@
                         </images>
                     </configuration>
                 </plugin>
-                <!-- 代码格式插件，默认使用spring规则，可运行命令进行项目格式化 -->
+                <!-- 代码格式插件，默认使用spring规则，可运行maven命令进行项目格式化 -->
+                <!-- https://github.com/spring-io/spring-javaformat/ -->
+                <!-- 使用时需要添加一个【.springjavaformatconfig】文件到项目根目录 -->
                 <plugin>
                     <groupId>io.spring.javaformat</groupId>
                     <artifactId>spring-javaformat-maven-plugin</artifactId>

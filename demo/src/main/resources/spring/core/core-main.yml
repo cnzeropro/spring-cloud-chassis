@@ -1,0 +1,26 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.main.allow-bean-definition-overriding
+  # 主要配置
+  main:
+    # 是否允许通过注册与现有定义同名的定义来覆盖Bean定义。默认：false
+    allow-bean-definition-overriding: false
+    # 是否允许Bean之间的循环引用并自动尝试解析它们。默认：false
+    allow-circular-references: false
+    # 应用程序运行时显示banner的模式。默认：off、console、log
+    banner-mode: console
+    # 在应用程序运行时显示banner。默认：true（已弃用，使用spring.main.banner-mode代替）
+    show-banner: true
+    # 覆盖云平台自动检测
+    cloud-platform:
+    # 是否延迟执行初始化。默认：false
+    lazy-initialization: false
+    # 是否在应用程序启动时记录有关应用程序的信息。默认：true
+    log-startup-info: true
+    # 应用程序是否应注册关闭挂钩。默认：true
+    register-shutdown-hook: true
+    # 要包含在ApplicationContext中的源（类名、包名或XML资源位置）
+    sources:
+    # 显式请求特定类型的Web应用程序的标志。如果未设置，则根据类路径自动检测。可选：none、servlet、reactive
+    web-application-type:
+    # 在Web环境中运行应用程序（默认自动检测）。（已弃用，使用spring.main.web-application-type代替）
+    web-environment:

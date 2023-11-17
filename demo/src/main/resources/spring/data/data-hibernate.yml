@@ -1,0 +1,17 @@
+spring:
+  # JPA配置
+  jpa:
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.jpa.hibernate.ddl-auto
+    # org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties
+    # Hibernate配置
+    hibernate:
+      # DDL模式
+      ddl-auto:
+      # 是否将Hibernate较新的IdentifierGenerator用于AUTO、TABLE和SEQUENCE。默认：true
+      use-new-id-generator-mappings: true
+      # 命名配置
+      naming:
+        # 隐式命名策略的完全限定名称
+        implicit-strategy:
+        # 物理命名策略的完全限定名称
+        physical-strategy:

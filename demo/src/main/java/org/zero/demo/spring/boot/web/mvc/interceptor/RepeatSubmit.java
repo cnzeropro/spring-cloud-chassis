@@ -13,10 +13,10 @@ import java.util.concurrent.TimeUnit;
  *
  * @author zero
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface RepeatSubmit {
 
     /**

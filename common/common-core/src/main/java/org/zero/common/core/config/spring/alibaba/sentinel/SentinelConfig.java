@@ -9,7 +9,11 @@ import javax.servlet.Filter;
 
 /**
  * 官网：<a href="https://sentinelguard.io/zh-cn/index.html">Sentinel</a>
- * 自动装配：{@link com.alibaba.cloud.sentinel.SentinelWebAutoConfiguration}
+ * 自动装配：
+ * {@link com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration}
+ * {@link com.alibaba.cloud.sentinel.SentinelWebAutoConfiguration}
+ * {@link com.alibaba.cloud.sentinel.SentinelWebFluxAutoConfiguration}
+ *
  * @author Zero
  * @since 2022/7/16
  */

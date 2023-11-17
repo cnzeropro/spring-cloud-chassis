@@ -1,0 +1,47 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.integration.spring.jms.cache.consumers
+  # org.springframework.boot.autoconfigure.jms.JmsProperties
+  # JMS配置
+  jms:
+    # 默认目标类型是否为主题。默认：false
+    pub-sub-domain: false
+    # 连接工厂JNDI名称。设置后，优先于其他连接工厂自动配置
+    jndi-name:
+    # JMS缓存配置
+    cache:
+      # 是否缓存会话。默认：true
+      enabled: true
+      # 是否缓存消息使用者。默认：false
+      consumers: false
+      # 是否缓存消息生产者。
+      producers: true
+      # 会话缓存的大小（每个JMS会话类型）。默认：1
+      session-cache-size: 1
+    # JMS监听器配置
+    listener:
+      # 是否在系统启动时自动启动。默认：true
+      auto-startup: true
+      # 容器的确认模式。默认情况下，侦听器使用自动确认进行处理。可选：auto、client、dups_ok
+      acknowledge-mode:
+      # 最小并发使用者数。如果未指定max-concurrency，则最小值也将用作最大值
+      concurrency:
+      # 最大并发使用者数
+      max-concurrency:
+      # 接收呼叫的超时。使用-1表示无等待接收，使用0表示完全没有超时。后者只有在不在事务管理器中运行时才可行，并且通常不鼓励这样做，因为它会阻止干净关闭。默认：1s
+      receive-timeout: 1s
+    # JMS模板配置
+    template:
+      # 用于没有目标参数的发送和接收操作的默认目标
+      default-destination:
+      # 用于发送呼叫的传递延迟
+      delivery-delay:
+      # 可选：non_persistent、persistent
+      delivery-mode:
+      # 发送时消息的优先级。设置后启用QoS（Quality of Service）
+      priority:
+      # 发送时消息的生存时间。设置后启用QoS（Quality of Service）
+      time-to-live:
+      # 是否在发送消息时启用显式QoS
+      qos-enabled:
+      # 用于接收呼叫的超时。
+      receive-timeout:

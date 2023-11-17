@@ -219,11 +219,10 @@
             <artifactId>xxl-job-core</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- spring-file-storage（文件存储）  -->
+        <!-- spring-file-storage（文件存储） -->
         <dependency>
-            <groupId>cn.xuyanwu</groupId>
-            <artifactId>spring-file-storage</artifactId>
-            <scope>provided</scope>
+            <groupId>org.dromara.x-file-storage</groupId>
+            <artifactId>x-file-storage-spring</artifactId>
         </dependency>
         <!-- jetchache（缓存）-->
         <dependency>

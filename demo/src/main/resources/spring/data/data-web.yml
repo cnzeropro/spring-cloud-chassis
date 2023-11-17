@@ -1,0 +1,26 @@
+spring:
+  data:
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.data.web.pageable.default-page-size
+    # org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties
+    # Spring Data WEB配置
+    web:
+      # 分页配置
+      pageable:
+        # 页码参数名。默认：page
+        page-parameter: page
+        # 每页显示数参数名。默认：size
+        size-parameter: size
+        # 是否使用1表示第一页。默认：false
+        one-indexed-parameters: false
+        # 要附加到页码和页面大小参数前面的前缀
+        prefix:
+        # 限定符与实际页码和大小属性之间的分隔符。默认：_
+        qualifier-delimiter: _
+        # 默认每页显示数。默认：20
+        default-page-size: 20
+        # 最大每页显示数。默认：2000
+        max-page-size: 2000
+      # 排序配置
+      sort:
+        # 排序参数名。默认：sort
+        sort-parameter: sort

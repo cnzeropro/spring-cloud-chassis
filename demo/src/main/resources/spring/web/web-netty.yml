@@ -1,0 +1,7 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.web.spring.netty.leak-detection
+  # org.springframework.boot.autoconfigure.netty.NettyProperties
+  # Netty配置
+  netty:
+    # 引用计数缓冲区的泄漏检测级别。如果未通过"ResourceLeakDetector.setLevel"或"io.netty.leakDetection.level"系统属性进行配置，则默认为 "simple"。可选：simple、disabled、advanced、paranoid
+    leak-detection:

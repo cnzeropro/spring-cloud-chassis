@@ -1,10 +1,9 @@
 package org.zero.demo.spring.boot.web.mvc.interceptor;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.server.NotAcceptableStatusException;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * 访问源拦截
+ *
  * @author zero
- * @since 2023/6/23
+ * @since 2022/6/23
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -22,25 +23,27 @@ public class RefererInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (CollUtil.isEmpty(allowedAddresses)) {
+        if (CollectionUtils.isEmpty(allowedAddresses)) {
             return true;
         }
+
+        String origin = request.getHeader("Origin");
+        String referer = request.getHeader("Referer");
         for (String allowedAddress : allowedAddresses) {
             if ("*".equals(allowedAddress)) {
                 return true;
             }
-
-            String origin = request.getHeader("Origin");
-            if (StrUtil.contains(allowedAddress, origin)) {
+            if (CharSequenceUtil.contains(origin, allowedAddress)) {
                 return true;
             }
-
-            String referer = request.getHeader("Referer");
-            if (StrUtil.contains(allowedAddress, referer)) {
+            if (CharSequenceUtil.contains(referer, allowedAddress)) {
                 return true;
             }
         }
 
-        throw new NotAcceptableStatusException("非法源访问");
+        log.warn("Prohibited Request  Origin: {}", CharSequenceUtil.isNotBlank(origin) ? origin : referer);
+        // 拦截器中抛出的异常能被统一异常处理捕获到
+        // throw new NotAcceptableStatusException("非法源访问");
+        return false;
     }
 }

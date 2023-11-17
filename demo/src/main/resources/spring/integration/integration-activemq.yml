@@ -1,0 +1,24 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.integration.spring.activemq.broker-url
+  # org.springframework.boot.autoconfigure.jms.activemq.ActiveMQProperties
+  # ActiveMQ配置
+  activemq:
+    broker-url:
+    user:
+    password:
+    in-memory: true
+    close-timeout: 15s
+    non-blocking-redelivery: false
+    send-timeout: 0ms
+    pool:
+      enabled: false
+      block-if-full: true
+      block-if-full-timeout: -1
+      idle-timeout: 30s
+      max-connections: 1
+      max-sessions-per-connection: 500
+      time-between-expiration-check: -1
+      use-anonymous-producers: true
+    packages:
+      trust-all:
+      trusted:

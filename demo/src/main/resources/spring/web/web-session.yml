@@ -1,0 +1,37 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.web.spring.session.hazelcast.flush-mode
+  # org.springframework.boot.autoconfigure.session.SessionProperties
+  # Spring Session配置
+  session:
+    timeout:
+    store-type:
+    servlet:
+      filter-order:
+      filter-dispatcher-types:
+        - async
+        - error
+        - request
+    # org.springframework.boot.autoconfigure.session.RedisSessionProperties
+    redis:
+      namespace: 'spring:session'
+      flush-mode: on_save
+      save-mode: on_set_attribute
+      configure-action: notify_keyspace_events
+      cleanup-cron: '0 * * * * *'
+    # org.springframework.boot.autoconfigure.session.JdbcSessionProperties
+    jdbc:
+      schema: classpath:org/springframework/session/jdbc/schema-@@platform@@.sql
+      platform:
+      table-name: SPRING_SESSION
+      cleanup-cron: '0 * * * * *'
+      initialize-schema: embedded
+      flush-mode: on_save
+      save-mode: on_set_attribute
+    # org.springframework.boot.autoconfigure.session.MongoSessionProperties
+    mongodb:
+      collection-name: sessions
+    # org.springframework.boot.autoconfigure.session.HazelcastSessionProperties
+    hazelcast:
+      map-name: 'spring:session:sessions'
+      flush-mode: on_save
+      save-mode: on_set_attribute

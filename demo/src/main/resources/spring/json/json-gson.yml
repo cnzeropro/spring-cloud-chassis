@@ -1,0 +1,27 @@
+# https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.json.spring.gson.date-format
+spring:
+  # Gson配置
+  # org.springframework.boot.autoconfigure.gson.GsonProperties
+  gson:
+    # 序列化Date对象时要使用的格式
+    date-format:
+    # 是否序列化null字段
+    serialize-nulls:
+    # 是否通过在输出前加上一些特殊文本来生成不可执行的JSON
+    generate-non-executable-json:
+    # 是否从序列化或反序列化中排除所有没有“Expose”注解的字段
+    exclude-fields-without-expose-annotation:
+    # 是否启用复杂映射键（即非基元）的序列化
+    enable-complex-map-key-serialization:
+    # 是否在序列化过程中排除内部类
+    disable-inner-class-serialization:
+    # Long和long型序列化策略。可选：default、string
+    long-serialization-policy:
+    # 对象字段的命名策略。可选：identity、upper_camel_case、upper_camel_case_with_spaces、upper_case_with_underscores、lower_case_with_dashes、lower_case_with_dots、lower_case_with_underscores
+    field-naming-policy:
+    # 是否输出格式化JSON
+    pretty-printing:
+    # 是否对解析不符合RFC 4627的JSON持宽容态度
+    lenient:
+    # 是否禁用HTML字符（如“<”、“>”等）的转义
+    disable-html-escaping:

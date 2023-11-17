@@ -1,0 +1,23 @@
+management:
+  # org.springframework.boot.actuate.autoconfigure.web.server.ManagementServerProperties
+  server:
+    address:
+    port:
+    base-path:
+    add-application-context-header:
+    ssl:
+      enabled: true
+      protocol: TLS
+      client-auth:
+      enabled-protocols:
+      ciphers:
+      key-alias:
+      key-password:
+      key-store:
+      key-store-password:
+      key-store-type:
+      key-store-provider:
+      certificate:
+      certificate-private-key:
+      trust-certificate:
+      trust-certificate-private-key:

@@ -50,6 +50,7 @@ public abstract class BaseJob implements Job {
         Class<?> invokeTarget = ClassUtil.loadClass(JobContext.getTarget());
         // 目标调用类方法
         Method invokeMethod = ReflectUtil.getMethod(invokeTarget, JobContext.getMethod());
+        // 调用指定方法
         ReflectUtil.invoke(ReflectUtil.newInstance(invokeTarget), invokeMethod);
     }
 

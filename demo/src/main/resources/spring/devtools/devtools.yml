@@ -1,0 +1,35 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.devtools.spring.devtools.add-properties
+  devtools:
+    add-properties: true
+    restart:
+      enabled: true
+      additional-exclude:
+      additional-paths:
+      log-condition-evaluation-delta: true
+      poll-interval: 1s
+      quiet-period: 400ms
+      trigger-file:
+      exclude:
+        - META-INF/maven/**
+        - META-INF/resources/**
+        - resources/**
+        - static/**
+        - public/**
+        - templates/**
+        - '**/*Test.class'
+        - '**/*Tests.class'
+        - git.properties
+        - META-INF/build-info.properties
+    livereload:
+      enabled: true
+      port: 35729
+    remote:
+      context-path: '/.~~spring-boot!~'
+      secret:
+      secret-header-name: 'X-AUTH-TOKEN'
+      proxy:
+        host:
+        port:
+      restart:
+        enabled: true

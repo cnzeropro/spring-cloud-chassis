@@ -1,12 +1,12 @@
 package org.zero.demo.spring.boot.quartz.context;
 
-import cn.hutool.core.lang.TypeReference;
-import cn.hutool.json.JSONUtil;
 import lombok.experimental.UtilityClass;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author zero
@@ -14,14 +14,18 @@ import java.util.Map;
  */
 @UtilityClass
 public class JobContext {
-    private static final ThreadLocal<JobExecutionContext> jobHolder = new InheritableThreadLocal<>();
+    public static final String INVOKE_TARGET = "invokeTarget";
+    public static final String INVOKE_METHOD = "invokeMethod";
+    public static final String PARAM = "param";
+
+    private static final ThreadLocal<JobExecutionContext> holder = new InheritableThreadLocal<>();
 
     public static void set(JobExecutionContext context) {
-        jobHolder.set(context);
+        holder.set(context);
     }
 
     public static JobExecutionContext get() {
-        return jobHolder.get();
+        return holder.get();
     }
 
     public static JobDataMap getMergedJobDataMap() {
@@ -31,21 +35,48 @@ public class JobContext {
 
     public static String getTarget() {
         JobDataMap jobDataMap = getMergedJobDataMap();
-        return jobDataMap.getString("invokeTarget");
+        return jobDataMap.getString(INVOKE_TARGET);
     }
 
     public static String getMethod() {
         JobDataMap jobDataMap = getMergedJobDataMap();
-        return jobDataMap.getString("invokeMethod");
+        return jobDataMap.getString(INVOKE_METHOD);
     }
 
+    @SuppressWarnings("unchecked")
     public static Map<String, Object> getParam() {
         JobDataMap jobDataMap = getMergedJobDataMap();
-        return JSONUtil.toBean(jobDataMap.getString("param"), new TypeReference<Map<String, Object>>() {
-        }, true);
+        return Optional.ofNullable(jobDataMap.get(PARAM))
+                .filter(Map.class::isInstance)
+                .map(Map.class::cast)
+                .orElseGet(HashMap::new);
+    }
+
+    public static Object getParam(String key) {
+        Map<String, Object> param = getParam();
+        return param.get(key);
+    }
+
+    public static Object getParam(String key, Object defaultVal) {
+        Map<String, Object> param = getParam();
+        return param.getOrDefault(key, defaultVal);
+    }
+
+    public static <T> T getParam(String key, Class<T> clazz) {
+        return Optional.ofNullable(getParam(key))
+                .filter(clazz::isInstance)
+                .map(clazz::cast)
+                .orElse(null);
+    }
+
+    public static <T> T getParam(String key, Class<T> clazz, T defaultVal) {
+        return Optional.ofNullable(getParam(key))
+                .filter(clazz::isInstance)
+                .map(clazz::cast)
+                .orElse(defaultVal);
     }
 
     public static void remove() {
-        jobHolder.remove();
+        holder.remove();
     }
 }

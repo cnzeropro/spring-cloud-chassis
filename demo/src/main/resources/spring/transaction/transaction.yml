@@ -1,0 +1,9 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.transaction.spring.transaction.default-timeout
+  # org.springframework.boot.autoconfigure.transaction.TransactionProperties
+  # 事务配置
+  transaction:
+    # 默认事务超时
+    default-timeout:
+    # 是否在提交失败时回滚
+    rollback-on-commit-failure:

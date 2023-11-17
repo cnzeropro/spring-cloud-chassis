@@ -1,0 +1,23 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.integration.spring.batch.jdbc.initialize-schema
+  # org.springframework.boot.autoconfigure.batch.BatchProperties
+  # Spring Batch配置
+  batch:
+    # 作业配置
+    job:
+      # 启动时在上下文中执行所有Spring Batch作业
+      enabled: true
+      # 启动时要执行的作业名称。默认情况下查询执行在上下文中所有的作业
+      names:
+    # JDBC配置
+    jdbc:
+      # 初始化数据库模式的SQL文件的路径。默认：classpath:org/springframework/batch/core/schema-@@platform@@.sql
+      schema: classpath:org/springframework/batch/core/schema-@@platform@@.sql
+      # @@platform@@占位符的值。默认自动检测
+      platform:
+      # 所有批处理元数据表的表前缀
+      table-prefix:
+      # 为新作业创建作业元数据时要使用的事务隔离级别。根据是否正在使用JPA自动检测。可选：default、read_committed、read_uncommitted、repeatable_read、serializable
+      isolation-level-for-create:
+      # 数据库schema初始化模式。默认：embedded。可选：embedded、never、always
+      initialize-schema: embedded

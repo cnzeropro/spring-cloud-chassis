@@ -1,0 +1,7 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.jooq.sql-dialect
+  # org.springframework.boot.autoconfigure.jooq.JooqProperties
+  # JOOQ配置
+  jooq:
+    # 要使用的SQL方言。默认情况下自动检测。可选：sql99、default、cubrid、derby、firebird、h2、hsqldb、mariadb、mysql、postgres、sqlite
+    sql-dialect:

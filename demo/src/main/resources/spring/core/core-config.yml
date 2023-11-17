@@ -1,0 +1,19 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.config.activate.on-cloud-platform
+  # 配置
+  config:
+    # 配置文件名称。默认：application
+    name: application
+    # 替换默认配置的文件位置
+    location:
+    # 除默认外要使用的配置文件的位置
+    additional-location:
+    # 导入其他配置
+    import:
+    # 激活配置
+    activate:
+      # 要包含的文档匹配的配置文件表达式
+      on-profile:
+        - dev
+      # 要包含文档所需的云平台。可选：none、cloud_foundry、heroku、sap、kubernetes、azure_app_service
+      on-cloud-platform:

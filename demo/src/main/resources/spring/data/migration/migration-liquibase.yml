@@ -1,0 +1,43 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data-migration.spring.liquibase.change-log
+  # org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties
+  # SpringLiquibase配置
+  liquibase:
+    # 是否开启Liquibase支持。默认true
+    enabled: true
+    # 要迁移的数据库的JDBC URL。如果未设置，则使用主配置的数据源。
+    url:
+    # 数据库的登录用户
+    user:
+    # 数据库的登录密码
+    password:
+    # JDBC驱动程序的完全限定类名。默认情况下，根据URL自动检测。
+    driver-class-name:
+    # 更改日志配置的路径。默认：classpath:/db/changelog/db.changelog-master.yaml
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    # 是否清除当前更新日志中的所有校验和，以便在下次更新时重新计算它们。默认：false
+    clear-checksums: false
+    # 要使用的运行时的上下文
+    contexts:
+    # 要使用的运行时的标签
+    labels:
+    # 应用数据库更改时要使用的标记名称
+    tag:
+    # 默认数据库模式
+    default-schema:
+    # Liquibase使用的模式
+    liquibase-schema:
+    # Liquibase使用的表空间
+    liquibase-tablespace:
+    # 跟踪更改历史记录的表名称。默认：DATABASECHANGELOG
+    database-change-log-table: DATABASECHANGELOG
+    # 跟踪并发Liquibase使用情况的表名称。默认：DATABASECHANGELOGLOCK
+    database-change-log-lock-table: DATABASECHANGELOGLOCK
+    # 是否先删除数据库模式。默认：false
+    drop-first: false
+    # 执行更新时将回滚SQL写入的文件
+    rollback-file:
+    # 是否应在执行更新之前测试回滚。默认：false
+    test-rollback-on-update: false
+    # 更改日志参数
+    parameters:

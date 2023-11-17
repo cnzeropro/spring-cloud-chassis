@@ -1,0 +1,83 @@
+spring:
+  datasource:
+    # Druid数据源配置
+    # com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper
+    druid:
+      enable: true
+      # 数据库用户名
+      username: root
+      # 数据库密码
+      password: mysql
+      # 数据库URL
+      url: 'jdbc:mysql://192.168.0.100:3306/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false'
+      # 数据库驱动，可以不用配置，自动根据url自动识别dbType
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      # 数据源名称
+      name: 'DataSource-MySQL'
+      # 连接池初始化大小
+      initial-size: 10
+      # 最小连接池数量
+      min-idle: 5
+      # 最大连接池数量
+      max-active: 15
+      async-init: true
+      # 获取连接的等待超时时间，单位毫秒
+      max-wait: 6000
+      keep-alive: true
+      # 连接保持空闲而不被驱逐的最小时间
+      min-evictable-idle-time-millis: 600000
+      # 连接保持空闲而不被驱逐的最大时间
+      max-evictable-idle-time-millis: 900000
+      # 检测需要关闭的连接的间隔，默认1分钟
+      time-between-eviction-runs-millis: 60000
+      # 用来检测连接是否有效的SQL。不为空时，testOnBorrow、testOnReturn、testWhileIdle才会起作用
+      validation-query: "SELECT 'x'"
+      # 检测连接是否有效的超时时间，单位秒
+      validation-query-timeout: 2
+      # 空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-while-idle: true
+      # 申请连接时执行validationQuery检测连接是否有效（影响性能）
+      test-on-borrow: true
+      # 归还连接时执行validationQuery检测连接是否有效（影响性能）
+      test-on-return: false
+      # 扩展插件。stat：监控；wall：防火墙；slf4j：日志
+      filters: stat,wall,slf4j
+      # 是否开启PSCache
+      # PSCache对支持游标的数据库性能提升巨大，比如说Oracle。但在mysql下建议关闭
+      pool-prepared-statements: false
+      # 每个连接上PSCache的大小。当大于0时，poolPreparedStatements自动触发修改为true
+      max-pool-prepared-statement-per-connection-size: -1
+      connect-properties:
+        # 是否开启SQL合并功能
+        druid.stat.mergeSql: true
+        # 慢SQL记录时限
+        druid.stat.slowSqlMillis: 5000
+      filter:
+        wall:
+          enabled: true
+          config:
+            # 是否允许创建表
+            create-table-allow: false
+            # 是否允许通过jdbc的call语法调用存储过程
+            call-allow: false
+            # 是否允许truncate语句
+            truncate-allow: false
+      # 监控平台
+      stat-view-servlet:
+        enabled: true
+        url-pattern: '/druid/*'
+        # 允许的源
+        allow: 127.0.0.1,192.168.0.100
+        # 页面用户名
+        login-username: admin
+        # 页面密码
+        login-password: druid
+        # 是否允许重置记录
+        reset-enable: true
+      web-stat-filter:
+        enabled: true
+        url-pattern: '/*'
+        exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+        # 是否启用session统计
+        session-stat-enable: true
+        session-stat-max-count: 1000

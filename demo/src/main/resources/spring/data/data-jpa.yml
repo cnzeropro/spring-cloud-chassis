@@ -1,0 +1,30 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.jpa.database
+  # org.springframework.boot.autoconfigure.orm.jpa.JpaProperties
+  # JPA配置
+  jpa:
+    # 要操作的目标数据库。默认自动检测。也可以使用“databasePlatform”属性进行设置。可选：default、db2、derby、h2、hana、hsql、informix、mysql、oracle、postgresql、sql_server、sybase
+    database:
+    # 要操作的目标数据库的名称，默认自动检测。也可以使用“数据库”枚举进行设置。
+    database-platform:
+    # 映射的资源
+    mapping-resources:
+    # 是否在启动时初始化架构。默认：false
+    generate-ddl: false
+    # 是否开启SQL语句的日志记录。默认：false
+    show-sql: false
+    # 注册OpenEntityManagerInViewInterceptor。默认：true
+    open-in-view: true
+    # 是否推迟初始化。默认：false
+    defer-datasource-initialization: false
+    # 其他配置
+    properties:
+  data:
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.data.jpa.repositories.bootstrap-mode
+    # JPA配置
+    jpa:
+      repositories:
+        # 是否启用JPA存储库。默认：true
+        enabled: true
+        # JPA存储库的引导方式。默认：default。可选：default、deferred、lazy
+        bootstrap-mode: default

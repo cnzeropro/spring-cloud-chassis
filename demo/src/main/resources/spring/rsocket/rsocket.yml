@@ -1,0 +1,27 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.rsocket.spring.rsocket.server.address
+  # org.springframework.boot.autoconfigure.rsocket.RSocketProperties
+  # RSocket配置
+  rsocket:
+    server:
+      address:
+      port:
+      transport: tcp
+      mapping-path:
+      fragment-size:
+      ssl:
+        enabled: true
+        protocol: TLS
+        client-auth:
+        enabled-protocols:
+        ciphers:
+        key-alias:
+        key-password:
+        key-store:
+        key-store-password:
+        key-store-type:
+        key-store-provider:
+        certificate:
+        certificate-private-key:
+        trust-certificate:
+        trust-certificate-private-key:

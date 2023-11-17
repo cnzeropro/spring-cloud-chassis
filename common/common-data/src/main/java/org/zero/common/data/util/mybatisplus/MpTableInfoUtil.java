@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,6 @@ import org.zero.common.data.model.PageQO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,14 +26,14 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class MpTableInfoUtil {
     /**
-     * 属性名（实体-驼峰命名法）转化为字段名（数据库-蛇形命名法）
+     * 属性名（实体-驼峰命名法，如：createTime）转化为字段名（数据库-蛇形命名法，如：create_time）
      */
     public static String toColumn(final String property) {
         return StringUtils.camelToUnderline(property);
     }
 
     /**
-     * 属性名（实体-驼峰命名法）转化为MP保存的字段名（数据库-蛇形命名法）
+     * 属性名（实体-驼峰命名法，如：createTime）转化为MP缓存的字段名（数据库-蛇形命名法，如：create_time）
      */
     public static String toColumn(final Class<?> clazz, final String property) {
         return getTableFieldInfos(clazz).stream()
@@ -44,7 +44,7 @@ public class MpTableInfoUtil {
     }
 
     /**
-     * 属性名（实体-驼峰命名法）转化为MP保存的字段名（数据库-蛇形命名法）
+     * 属性名（实体-驼峰命名法，如：createTime）转化为MP缓存的字段名（数据库-蛇形命名法，如：create_time）
      */
     public static List<String> toColumns(final Class<?> clazz, final String[] properties) {
         if (ArrayUtils.isEmpty(properties)) {
@@ -58,81 +58,137 @@ public class MpTableInfoUtil {
     }
 
     /**
-     * 获取MP保存的表字段信息
+     * 获取MP缓存的表字段信息
      */
     public static List<TableFieldInfo> getTableFieldInfos(final Class<?> clazz) {
-        return Optional.ofNullable(TableInfoHelper.getTableInfo(clazz)).map(TableInfo::getFieldList).orElse(Collections.emptyList());
+        return Optional.ofNullable(TableInfoHelper.getTableInfo(clazz)).map(TableInfo::getFieldList).orElseGet(ArrayList::new);
     }
 
+    /**
+     * 使用属性名称（如：createTime）填充QueryWrapper
+     */
     public static void setSelect(final QueryWrapper<?> queryWrapper, final Class<?> clazz, final String[] properties) {
-        setSelect(queryWrapper, toColumns(clazz, properties));
+        if (isSelectAll(properties)) {
+            return;
+        }
+        queryWrapper.select(toColumns(clazz, properties));
     }
 
+    /**
+     * 使用字段名称（如：create_time）填充QueryWrapper
+     */
     public static void setSelect(final QueryWrapper<?> queryWrapper, final String[] columns) {
-        setSelect(queryWrapper, Arrays.asList(columns));
-    }
-
-    public static void setSelect(final QueryWrapper<?> queryWrapper, final List<String> columns) {
+        if (isSelectAll(columns)) {
+            return;
+        }
         queryWrapper.select(columns);
     }
 
+    /**
+     * 使用字段名称（如：create_time）填充QueryWrapper
+     */
+    public static void setSelect(final QueryWrapper<?> queryWrapper, final List<String> columns) {
+        if (isSelectAll(columns)) {
+            return;
+        }
+        queryWrapper.select(columns);
+    }
+
+    /**
+     * 使用属性名称（如：createTime）填充QueryWrapper
+     */
     public static void setGroup(final QueryWrapper<?> queryWrapper, final Class<?> clazz, final String[] properties) {
         setGroup(queryWrapper, toColumns(clazz, properties));
     }
 
+    /**
+     * 使用字段名称（如：create_time）填充QueryWrapper
+     */
     public static void setGroup(final QueryWrapper<?> queryWrapper, final String[] columns) {
         setGroup(queryWrapper, Arrays.asList(columns));
     }
 
+    /**
+     * 使用字段名称（如：create_time）填充QueryWrapper
+     */
     public static void setGroup(final QueryWrapper<?> queryWrapper, final List<String> columns) {
-        queryWrapper.groupBy(columns);
+        queryWrapper.groupBy(CollectionUtils.isNotEmpty(columns), columns);
     }
 
+    /**
+     * 使用属性名称（如：createTime）填充QueryWrapper
+     */
     public static void setOrder(final QueryWrapper<?> queryWrapper, final Class<?> clazz, final PageQO.Collation[] collations) {
         setOrder(queryWrapper, Arrays.stream(collations)
-                // 可替换为 'peek'
-                .map(collation -> {
-                    String column = toColumn(clazz, collation.getColumn());
-                    collation.setColumn(column);
-                    return collation;
-                })
+                .peek(collation -> collation.setColumn(toColumn(clazz, collation.getColumn())))
                 .toArray(PageQO.Collation[]::new));
     }
 
+    /**
+     * 使用字段名称（如：create_time）填充QueryWrapper
+     */
     public static void setOrder(final QueryWrapper<?> queryWrapper, final PageQO.Collation[] collations) {
         for (PageQO.Collation collation : collations) {
             queryWrapper.orderBy(StringUtils.isNotBlank(collation.getColumn()), collation.isAsc(), collation.getColumn());
         }
     }
 
+    /**
+     * 使用属性名称（如：createTime）填充QueryWrapper
+     */
     public static void setIn(final QueryWrapper<?> queryWrapper, Class<?> clazz, final PageQO.MultiVal[] multiVals) {
         setIn(queryWrapper, Arrays.stream(multiVals)
-                .map(multiVal -> {
-                    String column = toColumn(clazz, multiVal.getColumn());
-                    multiVal.setColumn(column);
-                    return multiVal;
-                })
+                .peek(multiVal -> multiVal.setColumn(toColumn(clazz, multiVal.getColumn())))
                 .toArray(PageQO.MultiVal[]::new));
     }
 
+    /**
+     * 使用字段名称（如：create_time）填充QueryWrapper
+     */
     public static void setIn(final QueryWrapper<?> queryWrapper, final PageQO.MultiVal[] multiVals) {
         for (PageQO.MultiVal multiVal : multiVals) {
             queryWrapper.in(StringUtils.isNotBlank(multiVal.getColumn()) && ArrayUtils.isNotEmpty(multiVal.getValues()), multiVal.getColumn(), multiVal.getValues());
         }
     }
 
+    /**
+     * 使用属性名称（如：createTime）填充QueryWrapper
+     */
     public static void setBetween(final QueryWrapper<?> queryWrapper, Class<?> clazz, final PageQO.Range[] ranges) {
         setBetween(queryWrapper, Arrays.stream(ranges)
-                .peek(range -> {
-                    String column = toColumn(clazz, range.getColumn());
-                    range.setColumn(column);
-                })
+                .peek(range -> range.setColumn(toColumn(clazz, range.getColumn())))
                 .toArray(PageQO.Range[]::new));
     }
 
+    /**
+     * 使用字段名称（如：create_time）填充QueryWrapper
+     */
     public static void setBetween(final QueryWrapper<?> queryWrapper, final PageQO.Range[] ranges) {
         for (PageQO.Range range : ranges) {
             queryWrapper.between(StringUtils.isNotBlank(range.getColumn()), range.getColumn(), range.getStartVal(), range.getEndVal());
         }
+    }
+
+    private static boolean isSelectAll(final List<String> fields) {
+        if (CollectionUtils.isEmpty(fields)) {
+            return true;
+        }
+        return fields.stream().anyMatch(MpTableInfoUtil::isSelectAll);
+    }
+
+    private static boolean isSelectAll(final String[] fields) {
+        if (ArrayUtils.isEmpty(fields)) {
+            return true;
+        }
+        for (String field : fields) {
+            if (isSelectAll(field)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isSelectAll(final String field) {
+        return "*".equals(field);
     }
 }

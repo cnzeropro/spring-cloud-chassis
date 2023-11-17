@@ -1,0 +1,36 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.integration.spring.integration.channel.auto-create
+  # org.springframework.boot.autoconfigure.integration.IntegrationProperties
+  # Spring Integration配置
+  integration:
+    jdbc:
+      schema: classpath:org/springframework/integration/jdbc/schema-@@platform@@.sql
+      platform:
+      initialize-schema: embedded
+    rsocket:
+      server:
+        message-mapping-enabled: false
+      client:
+        host:
+        port:
+        uri:
+    poller:
+      max-messages-per-poll:
+      receive-timeout: 1s
+      fixed-delay:
+      fixed-rate:
+      initial-delay:
+      cron:
+    management:
+      default-logging-enabled: true
+    channel:
+      auto-create: true
+      max-broadcast-subscribers:
+      max-unicast-subscribers:
+    endpoint:
+      throw-exception-on-late-reply: false
+      read-only-headers:
+      no-auto-startup:
+    error:
+      require-subscribers: true
+      ignore-failures: true

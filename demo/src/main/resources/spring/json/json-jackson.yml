@@ -1,0 +1,39 @@
+# https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.json.spring.jackson.constructor-detector
+spring:
+  # Jackson配置
+  # org.springframework.boot.autoconfigure.jackson.JacksonProperties
+  jackson:
+    # 序列化日期对象时要使用的格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 设置日期格式时使用的时区
+    time-zone:
+    # 格式设置的区域设置
+    locale:
+    # 属性的命名策略
+    property-naming-strategy:
+    # 控制序列化过程中包含的属性。可选：always、non_null、non_empty、non_absent、non_default、custom、use_defaults
+    default-property-inclusion: non_null
+    # 是否宽大处理
+    default-leniency:
+    # 自动检测构造函数的策略。默认：default。可选：default、use_delegating、use_properties_based、explicit_only
+    constructor-detector: default
+    # Jackson可见性阈值
+    visibility:
+      all: any
+    # Java对象的序列化方式
+    serialization:
+      fail_on_empty_beans: false
+      write_dates_as_timestamps: false
+    # Java对象的反序列化方式
+    deserialization:
+      accept_empty_string_as_null_object: true
+      fail_on_unknown_properties: false
+    # Jackson通用配置
+    mapper:
+      can_override_access_modifiers: true
+    # Jackson解析器配置
+    parser:
+      auto_close_source: true
+    # Jackson生成器配置
+    generator:
+      write_bigdecimal_as_plain: true

@@ -1,0 +1,67 @@
+spring:
+  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.transaction.spring.jta.atomikos.connectionfactory.borrow-connection-timeout
+  # org.springframework.boot.autoconfigure.transaction.jta.JtaProperties
+  # jta配置
+  jta:
+    # 是否启用JTA支持。默认：true
+    enabled: true
+    # 事务日志目录
+    log-dir:
+    # 事务管理器唯一标识符
+    transaction-manager-id:
+    # atomikos配置
+    atomikos:
+      # org.springframework.boot.jta.atomikos.AtomikosConnectionFactoryBean
+      # 连接工厂配置
+      connectionfactory:
+        unique-resource-name: jmsConnectionFactory
+        min-pool-size: 1
+        max-pool-size: 1
+        max-idle-time: 60
+        max-lifetime: 0
+        borrow-connection-timeout: 30s
+        maintenance-interval: 60
+        reap-timeout: 0
+        local-transaction-mode: false
+        ignore-session-transacted-flag: true
+        xa-connection-factory-class-name:
+        xa-properties:
+      # org.springframework.boot.jta.atomikos.AtomikosDataSourceBean
+      # 数据源配置
+      datasource:
+        min-pool-size: 1
+        max-pool-size: 1
+        max-lifetime: 0
+        max-idle-time: 60
+        maintenance-interval: 60
+        borrow-connection-timeout: 30
+        reap-timeout: 0
+        login-timeout: 0
+        default-isolation-level:
+        test-query:
+        unique-resource-name: dataSource
+        concurrent-connection-validation: true
+        xa-data-source-class-name:
+        xa-properties:
+      # org.springframework.boot.jta.atomikos.AtomikosProperties
+      # 其他配置
+      properties:
+        service:
+        max-actives: 50
+        max-timeout: 300000ms
+        default-jta-timeout: 10000ms
+        enable-logging: true
+        allow-sub-transactions: true
+        force-shutdown-on-vm-exit: false
+        log-base-dir:
+        log-base-name: tmlog
+        checkpoint-interval: 500
+        threaded-two-phase-commit: false
+        default-max-wait-time-on-shutdown:
+        transaction-manager-unique-name:
+        # 恢复配置
+        recovery:
+          forget-orphaned-log-entries-delay: 86400000ms
+          delay: 10000ms
+          max-retries: 5
+          retry-interval: 10000ms
