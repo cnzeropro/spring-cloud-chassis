@@ -20,6 +20,14 @@
             <groupId>org.zero</groupId>
             <artifactId>common-data</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <version>${mybatis-plus.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-openfeign-core</artifactId>
@@ -31,12 +39,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-            <version>${mybatis-plus.version}</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
