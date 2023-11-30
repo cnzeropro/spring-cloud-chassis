@@ -14,12 +14,6 @@ import java.net.UnknownHostException;
 @Slf4j
 @SpringBootApplication
 public class DemoApplication extends SpringBootServletInitializer {
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(DemoApplication.class);
-    }
-
     public static void main(String[] args) throws UnknownHostException {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(DemoApplication.class, args);
         ConfigurableEnvironment environment = applicationContext.getEnvironment();
@@ -37,4 +31,11 @@ public class DemoApplication extends SpringBootServletInitializer {
 
     }
 
+    /**
+     * 支持WAR部署
+     */
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(DemoApplication.class);
+    }
 }

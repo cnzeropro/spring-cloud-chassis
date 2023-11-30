@@ -11,11 +11,11 @@ public class BaseException extends RuntimeException {
     /**
      * 用户提示消息
      */
-    private final String promptMessage;
+    protected final String promptMessage;
     /**
      * 系统错误信息
      */
-    private final BaseSysMessage sysMessage;
+    protected final BaseSysMessage sysMessage;
 
     public BaseException() {
         this((String) null);

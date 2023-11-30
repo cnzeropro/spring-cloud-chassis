@@ -6,6 +6,7 @@ import feign.RequestTemplate;
 import feign.Target;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,7 +29,6 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     /* *************************************************** 系统自定义异常 *************************************************** */
-
     @ExceptionHandler(org.zero.common.data.exception.UtilException.class)
     public Result<Void> utilException(org.zero.common.data.exception.UtilException e) {
         log.error("Util class method call exception", e);
@@ -42,6 +42,13 @@ public class GlobalExceptionHandler {
     }
 
     /* *************************************************** web异常 *************************************************** */
+    @ExceptionHandler(org.springframework.web.client.HttpStatusCodeException.class)
+    public ResponseEntity<Result<Void>> handleException(org.springframework.web.client.HttpStatusCodeException e) {
+        log.error("Http exception", e);
+        HttpStatus httpStatus = e.getStatusCode();
+        return ResponseEntity.status(httpStatus).body(Result.fail(httpStatus, e.getStatusText()));
+    }
+
     @ExceptionHandler(org.springframework.web.servlet.ModelAndViewDefiningException.class)
     public Result<Void> modelAndViewDefiningException(org.springframework.web.servlet.ModelAndViewDefiningException e) {
         log.error("Model and view definition exception", e);
