@@ -1,0 +1,68 @@
+# cn.dev33.satoken.config.SaTokenConfig
+# Sa-Token配置
+sa-token:
+  # token名称。默认：satoken
+  token-name: satoken
+  # token有效期（单位：秒），-1代表永久有效。默认：30天
+  timeout: 2592000
+  # token最低活跃频率（单位：秒），如果token超过此时间没有访问系统就会被冻结。默认：-1（不冻结）
+  active-timeout: -1
+  # 是否启用动态activeTimeout功能。默认：false
+  dynamic-active-timeout: false
+  # 是否允许同一账号多地同时登录。默认：true
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个token。默认：true
+  is-share: true
+  # 同一账号最大登录数量，-1代表不限（只有在 isConcurrent=true, isShare=false 时此配置项才有意义）。默认：12
+  max-login-count: 12
+  # 在每次创建token时的最高循环次数，用于保证token唯一性（-1表示不循环尝试，直接使用）。默认：12
+  max-try-times: 12
+  # 是否尝试从请求体里读取token。默认：true
+  is-read-body: true
+  # 是否尝试从header里读取token。默认：true
+  is-read-header: true
+  # 是否尝试从cookie里读取token。默认：true
+  is-read-cookie: true
+  # 是否在登录后将token写入到响应头。默认：false
+  is-write-header: false
+  # token风格。默认：uuid。可选：uuid、simple-uuid、random-32、random-64、random-128、tik
+  token-style: uuid
+  data-refresh-period: 30
+  token-session-check-login: true
+  auto-renew: true
+  token-prefix:
+  is-print: true
+  is-log: false
+  log-level: trace
+  log-level-int: 1
+  is-color-log:
+  jwt-secret-key:
+  basic:
+  curr-domain:
+  same-token-timeout: 86400
+  check-same-token: false
+  cookie:
+    domain:
+    path:
+    secure: false
+    httpOnly: false
+    sameSite:
+  sign:
+    secretKey:
+    timestampDisparity: 900000
+    isCheckNonce: true
+  # cn.dev33.satoken.config.SaSsoConfig
+  sso:
+    mode:
+    ticket-timeout: 300
+    allow-url: '*'
+    is-slo: true
+    is-http: true
+    client:
+    auth-url: /sso/auth
+    check-ticket-url: /sso/checkTicket
+    get-data-url: /sso/getData
+    userinfo-url: /sso/userinfo
+    slo-url: /sso/signout
+    sso-logout-call:
+    server-url:

@@ -1,0 +1,129 @@
+# https://baomidou.com/pages/56bac0/#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE
+# com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties
+# MP配置
+mybatis-plus:
+  # 启动时是否检查MyBatis XML文件的存在。默认：false
+  check-config-location: false
+  # MyBatis配置文件位置
+  config-location:
+  # MyBatis Mapper所对应的XML文件位置。默认：classpath*:/mapper/**/*.xml
+  mapper-locations:
+    - classpath*:/mapper/**/*.xml
+  # MyBaits别名包扫描路径，通过该属性可以给包中的类注册别名
+  type-aliases-package:
+  # 筛选类型别名的超类。需要和typeAliasesPackage一起使用，如果配置了该属性，则仅仅会扫描路径下以该类作为父类的域对象
+  type-aliases-super-type:
+  # TypeHandler扫描路径
+  type-handlers-package:
+  # 指定MyBatis的执行器。默认：SIMPLE。可选：SIMPLE、REUSE、BATCH
+  executor-type: SIMPLE
+  # 原生MyBatis所支持的配置
+  configuration:
+    # 是否开启自动驼峰命名规则映射。默认：true
+    map-underscore-to-camel-case: true
+    # 默认枚举处理类。默认：org.apache.ibatis.type.EnumTypeHandler
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
+    # 懒加载的对象是否被任何懒属性全部加载。默认：true。需要和lazyLoadingEnabled一起使用
+    aggressive-lazy-loading: true
+    # 是否开启全局延迟加载。默认：false
+    lazy-loading-enabled: false
+    # MyBatis自动映射策略。默认：PARTIAL。可选：PARTIAL、NONE、FULL
+    auto-mapping-behavior: PARTIAL
+    # MyBatis自动映射时未知列或未知属性处理策略。默认：NONE。可选：NONE、WARNING、FAILING
+    auto-mapping-unknown-column-behavior: NONE
+    # 本地缓存范围。默认：SESSION。可选：SESSION、STATEMENT
+    local-cache-scope: SESSION
+    # 是否全局启用任何缓存。默认：true
+    cache-enabled: true
+    # 当结果集中值为null的时候是否调用映射对象的Setter方法。默认：false
+    call-setters-on-nulls: false
+    # 提供Configuration实例的工厂类
+    configuration-factory:
+    # 是否允许对嵌套语句使用RowBounds。默认：false
+    safe-row-bounds-enabled: false
+    # 是否允许对嵌套语句使用ResultHandler。默认：true
+    safe-result-handler-enabled: true
+    # 是否允许从单个语句返回多个ResultSet（需要兼容的驱动程序）。默认：true
+    multiple-result-sets-enabled: true
+    # 是否允许对生成的密钥提供JDBC支持。默认：false
+    use-generated-keys: false
+    # 使用列标签而不是列名称。默认：true
+    use-column-label: true
+    # 是否允许使用方法签名中声明的实际名称来引用语句参数。默认：false
+    use-actual-param-name: true
+    # 是否在所有列均为NULL时返回null。启用此设置后，MyBatis会返回一个空实例。默认：false
+    return-instance-for-empty-row: false
+    # 从SQL中删除多余的空格字符。默认：false
+    shrink-whitespaces-in-sql: false
+    # “foreach”标记上“nullable”属性的默认值。默认：false
+    nullable-on-for-each: false
+    # 应用构造函数自动映射时，参数名称用于搜索要映射的列，而不是依赖于列顺序。默认值为 false。
+    arg-name-based-constructor-auto-mapping: false
+    # 默认执行器。默认：SIMPLE。可选：SIMPLE、REUSE、BATCH
+    default-executor-type: SIMPLE
+    # 默认等待数据库响应的秒数
+    default-statement-timeout:
+    # 控制返回结果的提取大小
+    default-fetch-size:
+    # 当未为参数提供特定的JDBC类型时，指定null值的JDBC类型。默认：OTHER。可选：OTHER、ARRAY、NUMERIC、VARCHAR等等
+    jdbc-type-for-null: OTHER
+    # 缺省滚动策略时的滚动策略
+    default-result-set-type:
+    # 日志的前缀字符串
+    log-prefix:
+    # 指定哪些Object的方法触发延迟加载。默认：[equals，clone，hashCode，toString]
+    lazy-load-trigger-methods:
+      - equals
+      - clone
+      - hashCode
+      - toString
+    # 指定日志实现
+    log-impl:
+    # 指定VFS实现
+    vfs-impl:
+    # 提供程序方法的sql提供程序类
+    default-sql-provider-type:
+    # 默认脚本语言驱动
+    default-scripting-language-driver:
+    # 指定任何配置变量
+    variables:
+  # MyBatis-Plus全局策略配置
+  global-config:
+    # 是否控制台打印mybatis-plus的LOGO。默认：true
+    banner: true
+    # 是否初始化SqlRunner。默认：false
+    enable-sql-runner: false
+    # Mapper父类。默认：com.baomidou.mybatisplus.core.mapper.Mapper
+    super-mapper-class: com.baomidou.mybatisplus.core.mapper.Mapper
+    # DB配置
+    db-config:
+      # 全局默认主键类型。默认：ASSIGN_ID。可选：AUTO、NONE、INPUT、ASSIGN_ID、ASSIGN_UUID
+      id-type: ASSIGN_ID
+      # 数据库模式
+      schema:
+      # 表名前缀
+      table-prefix:
+      # 表名format
+      table-format:
+      # 表名是否使用驼峰转下划线命名。默认：true
+      table-underline: true
+      # 大写命名，对表名和字段名均生效。默认：false
+      capital-mode: false
+      # 字段format
+      column-format:
+      # 属性format
+      property-format:
+      # 全局的entity的逻辑删除字段属性名
+      logic-delete-field: deleted
+      # 逻辑未删除值。默认：0
+      logic-not-delete-value: 0
+      # 逻辑已删除值。默认：1
+      logic-delete-value: 1
+      # 在insert的时候的字段验证策略。默认：NOT_NULL。可选：DEFAULT、ALWAYS、NOT_NULL、NOT_EMPTY、NEVER
+      insert-strategy: NOT_NULL
+      # 在update的时候的字段验证策略。默认：NOT_NULL。可选：DEFAULT、ALWAYS、NOT_NULL、NOT_EMPTY、NEVER
+      update-strategy: NOT_NULL
+      # 在生成where条件的时候的字段验证策略。默认：NOT_NULL。可选：DEFAULT、ALWAYS、NOT_NULL、NOT_EMPTY、NEVER
+      where-strategy: NOT_NULL
+  # 外部化MyBatis Properties配置
+  configuration-properties:
