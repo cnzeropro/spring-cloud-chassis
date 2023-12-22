@@ -1,8 +1,0 @@
-spring:
-  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.data.spring.dao.exceptiontranslation.enabled
-  # 数据访问设置
-  dao:
-    # 异常处理
-    exceptiontranslation:
-      # 是否启用PersistenceExceptionTranslationPostProcessor。默认：true
-      enabled: true

@@ -11,15 +11,13 @@
   </parent>
 
   <groupId>org.zero</groupId>
-  <artifactId>cloud-demo</artifactId>
+  <artifactId>micro-service-demo</artifactId>
   <version>1.0.0</version>
 
   <packaging>pom</packaging>
   <modules>
-    <module>common</module>
-    <module>gateway</module>
+    <module>micro-service-demo</module>
     <module>iam</module>
-    <module>demo</module>
   </modules>
 
   <name>cloud-demo</name>
@@ -28,24 +26,25 @@
   <properties>
     <!-- properties -->
     <java.version>1.8</java.version>
+    <project.encoding>UTF-8</project.encoding>
+    <resource.delimiter>@</resource.delimiter>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <project.encoding>UTF-8</project.encoding>
     <maven.compiler.encoding>${project.encoding}</maven.compiler.encoding>
     <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
-    <resource.delimiter>@</resource.delimiter>
 
     <!-- dependencies -->
     <common.version>${project.version}</common.version>
     <!-- spring dependencies -->
-    <!-- 基于java 8的最后一版 -->
     <spring-boot.version>2.7.17</spring-boot.version>
     <spring-cloud.version>2021.0.5</spring-cloud.version>
     <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
     <spring-cloud-huawei.version>1.11.0-2021.0.x</spring-cloud-huawei.version>
+    <spring-cloud-azure.version>4.14.0</spring-cloud-azure.version>
+    <spring-cloud-netflix.version>3.1.8</spring-cloud-netflix.version>
     <!-- spring other dependencies -->
-    <spring-shell.version>2.1.7</spring-shell.version>
+    <spring-shell.version>2.1.15</spring-shell.version>
     <spring-boot-admin.version>2.7.14</spring-boot-admin.version>
     <!-- starter dependencies -->
     <arthas.version>3.4.8</arthas.version>
@@ -91,28 +90,49 @@
     <grpc.version>1.59.0</grpc.version>
     <protobuf.version>3.24.4</protobuf.version>
 
+    <!-- extensions -->
+    <os-plugin.version>1.7.1</os-plugin.version>
+
     <!-- plugins -->
     <!-- spring plugins -->
     <spring-javaformat-plugin.version>0.0.35</spring-javaformat-plugin.version>
     <!-- other plugins -->
     <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
     <docker-plugin.version>0.42.0</docker-plugin.version>
-    <os-plugin.version>1.7.1</os-plugin.version>
   </properties>
 
   <!-- 全局依赖 -->
   <dependencies>
-    <!-- lombok -->
-    <!-- 思来想去，感觉只有lombok全局会用😅 -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-logging</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
   <dependencyManagement>
     <dependencies>
-      <!-- common -->
+      <!-- Common -->
       <dependency>
         <groupId>org.zero</groupId>
         <artifactId>common-bom</artifactId>
@@ -121,7 +141,6 @@
         <scope>import</scope>
       </dependency>
       <!-- Spring Boot -->
-      <!-- https://docs.spring.io/spring-boot/docs/2.7.17/reference/html/ -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -130,7 +149,6 @@
         <scope>import</scope>
       </dependency>
       <!-- Spring Cloud -->
-      <!-- https://docs.spring.io/spring-cloud/docs/2021.0.8/reference/html/ -->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
@@ -139,7 +157,6 @@
         <scope>import</scope>
       </dependency>
       <!-- Spring Cloud Alibaba -->
-      <!-- https://sca.aliyun.com/zh-cn/docs/next/overview/what-is-sca -->
       <dependency>
         <groupId>com.alibaba.cloud</groupId>
         <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -148,7 +165,6 @@
         <scope>import</scope>
       </dependency>
       <!-- Spring Cloud Huawei -->
-      <!-- https://github.com/huaweicloud/spring-cloud-huawei/wiki -->
       <dependency>
         <groupId>com.huaweicloud</groupId>
         <artifactId>spring-cloud-huawei-bom</artifactId>
@@ -156,8 +172,23 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- Spring Cloud Azure -->
+      <dependency>
+        <groupId>com.azure.spring</groupId>
+        <artifactId>spring-cloud-azure-dependencies</artifactId>
+        <version>${spring-cloud-azure.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Spring Cloud Netflix -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-netflix-dependencies</artifactId>
+        <version>${spring-cloud-netflix.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <!-- Spring Shell -->
-      <!-- https://docs.spring.io/spring-shell/docs/2.1.13/site/reference/htmlsingle/ -->
       <dependency>
         <groupId>org.springframework.shell</groupId>
         <artifactId>spring-shell-dependencies</artifactId>
@@ -166,7 +197,6 @@
         <scope>import</scope>
       </dependency>
       <!-- Spring Boot Admin（监控） -->
-      <!-- https://github.com/codecentric/spring-boot-admin -->
       <dependency>
         <groupId>de.codecentric</groupId>
         <artifactId>spring-boot-admin-dependencies</artifactId>
@@ -175,7 +205,6 @@
         <scope>import</scope>
       </dependency>
       <!-- Hutool（工具集） -->
-      <!-- https://doc.hutool.cn/pages/index/ -->
       <dependency>
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-bom</artifactId>
@@ -184,7 +213,6 @@
         <scope>import</scope>
       </dependency>
       <!-- Dubbo -->
-      <!-- https://cn.dubbo.apache.org/ -->
       <dependency>
         <groupId>org.apache.dubbo</groupId>
         <artifactId>dubbo-bom</artifactId>

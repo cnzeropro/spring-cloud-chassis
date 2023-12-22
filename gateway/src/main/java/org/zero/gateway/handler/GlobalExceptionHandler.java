@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 
 /**
- * 网关异常通用处理器，只作用在 webflux 环境下，优先级低于 {@link org.springframework.web.server.handler.ResponseStatusExceptionHandler} 执行
+ * 网关通用异常处理器，只作用在 webflux 环境下，优先级低于 {@link org.springframework.web.server.handler.ResponseStatusExceptionHandler} 执行
  *
  * @author zero
  * @date 2020/4/28
@@ -34,25 +34,24 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         ServerHttpResponse response = exchange.getResponse();
-
+        log.warn(String.format("Error in path: %s", exchange.getRequest().getPath()), ex);
         if (response.isCommitted()) {
             return Mono.error(ex);
         }
-
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         if (ex instanceof ResponseStatusException) {
             response.setStatusCode(((ResponseStatusException) ex).getStatus());
         }
-
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
+            byte[] bytes = new byte[0];
             try {
-                log.warn(String.format("Error in Spring Cloud Gateway: %s", exchange.getRequest().getPath()), ex);
-                return bufferFactory.wrap(objectMapper.writeValueAsBytes(Result.fail(ex.getMessage())));
+                Result<Void> result = Result.fail(ex.getMessage());
+                bytes= objectMapper.writeValueAsBytes(result);
             } catch (JsonProcessingException e) {
-                log.error("Writing response msg error", ex);
-                return bufferFactory.wrap(new byte[0]);
+                log.warn("Writing response msg error", e);
             }
+            return bufferFactory.wrap(bytes);
         }));
     }
 }

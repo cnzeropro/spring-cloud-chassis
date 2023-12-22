@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
-import org.zero.gateway.config.property.SwaggerDocProperties;
+import org.zero.gateway.config.props.SwaggerDocProperties;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;

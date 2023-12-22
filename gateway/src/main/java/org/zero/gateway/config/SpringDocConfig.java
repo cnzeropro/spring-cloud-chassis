@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.zero.gateway.config.property.SwaggerDocProperties;
+import org.zero.gateway.config.props.SwaggerDocProperties;
 
 import java.util.ArrayList;
 import java.util.List;

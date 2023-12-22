@@ -12,9 +12,11 @@ import java.util.Optional;
 
 /**
  * 网关配置
+ * <p>
+ * 自动装配：{@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration}
  *
- * @author zero
- * @date 2022/10/8
+ * @author Zero (cnzeropro@qq.com)
+ * @since 2021/12/1 14:41
  */
 @Configuration(proxyBeanMethods = false)
 public class GatewayConfig {
@@ -26,9 +28,9 @@ public class GatewayConfig {
     @Bean
     public KeyResolver keyResolver() {
         return exchange -> Mono.just(Optional.of(exchange.getRequest())
-                .map(ServerHttpRequest::getRemoteAddress)
-                .map(InetSocketAddress::getAddress)
-                .map(InetAddress::getHostAddress)
-                .orElseThrow(IllegalArgumentException::new));
+            .map(ServerHttpRequest::getRemoteAddress)
+            .map(InetSocketAddress::getAddress)
+            .map(InetAddress::getHostAddress)
+            .orElseThrow(IllegalArgumentException::new));
     }
 }

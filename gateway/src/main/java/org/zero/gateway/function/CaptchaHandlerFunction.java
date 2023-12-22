@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2020 pig4cloud Authors. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.zero.gateway.function;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +13,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import org.zero.gateway.util.CaptchaUtil;
+import org.zero.common.core.util.java.captcha.ArithmeticCaptchaCreator;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
@@ -52,14 +36,18 @@ public class CaptchaHandlerFunction implements HandlerFunction<ServerResponse> {
     public Mono<ServerResponse> handle(ServerRequest request) {
         MediaType imageJpeg = MediaType.IMAGE_JPEG;
         FastByteArrayOutputStream byteArrayOutputStream = new FastByteArrayOutputStream();
-        String code = CaptchaUtil.math(imageJpeg.getSubtype(), byteArrayOutputStream);
+        String code = ArithmeticCaptchaCreator.creator()
+            .createTexts()
+            .createImg()
+            .outAndGet(imageJpeg.getSubtype(), byteArrayOutputStream);
         request.queryParam("key")
-                .ifPresent(key -> redisTemplate.opsForValue().set("captcha:" + key, code, 3 * 60L, TimeUnit.SECONDS));
+            .ifPresent(key -> redisTemplate.opsForValue()
+                .set("captcha:" + key, code, 3 * 60L, TimeUnit.SECONDS));
         return ServerResponse.status(HttpStatus.OK)
-                .contentLength(byteArrayOutputStream.size())
-                .contentType(imageJpeg)
-                .cacheControl(CacheControl.noStore())
-                .body(BodyInserters.fromResource(new ByteArrayResource(byteArrayOutputStream.toByteArray())));
+            .contentLength(byteArrayOutputStream.size())
+            .contentType(imageJpeg)
+            .cacheControl(CacheControl.noStore())
+            .body(BodyInserters.fromResource(new ByteArrayResource(byteArrayOutputStream.toByteArray())));
     }
 
 }

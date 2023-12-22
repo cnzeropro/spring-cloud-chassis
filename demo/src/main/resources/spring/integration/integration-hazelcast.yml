@@ -1,7 +1,0 @@
-spring:
-  # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.integration.spring.hazelcast.config
-  # org.springframework.boot.autoconfigure.hazelcast.HazelcastProperties
-  # Hazelcast配置
-  hazelcast:
-    # 初始化Hazelcast的配置文件的位置
-    config:
