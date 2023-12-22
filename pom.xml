@@ -16,11 +16,11 @@
 
   <packaging>pom</packaging>
   <modules>
-    <module>micro-service-demo</module>
+    <module>gateway</module>
     <module>iam</module>
   </modules>
 
-  <name>cloud-demo</name>
+  <name>micro-service-demo</name>
   <description>微服务 Demo</description>
 
   <properties>
