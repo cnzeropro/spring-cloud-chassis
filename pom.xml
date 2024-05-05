@@ -16,6 +16,7 @@
 
   <packaging>pom</packaging>
   <modules>
+    <module>common</module>
     <module>gateway</module>
     <module>iam</module>
   </modules>
@@ -196,7 +197,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Spring Boot Admin（监控） -->
+      <!-- Spring Boot Admin -->
       <dependency>
         <groupId>de.codecentric</groupId>
         <artifactId>spring-boot-admin-dependencies</artifactId>
@@ -204,7 +205,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- Hutool（工具集） -->
+      <!-- Hutool -->
       <dependency>
         <groupId>cn.hutool</groupId>
         <artifactId>hutool-bom</artifactId>
