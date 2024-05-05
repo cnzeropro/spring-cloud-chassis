@@ -14,7 +14,7 @@
 
     <packaging>pom</packaging>
     <modules>
-        <module>iam-common</module>
+        <module>iam-api</module>
         <module>iam-service</module>
     </modules>
 

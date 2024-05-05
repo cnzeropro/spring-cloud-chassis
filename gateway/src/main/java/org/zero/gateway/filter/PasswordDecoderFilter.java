@@ -1,5 +1,6 @@
 package org.zero.gateway.filter;
 
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.AES;
@@ -54,7 +55,7 @@ public class PasswordDecoderFilter extends AbstractGatewayFilterFactory<Object> 
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             // 1. 不是登录请求，通过
-            if (!StrUtil.containsAnyIgnoreCase(request.getURI().getPath(), "/oauth2/token")) {
+            if (!CharSequenceUtil.containsAnyIgnoreCase(request.getURI().getPath(), "/oauth2/token")) {
                 return chain.filter(exchange);
             }
 
