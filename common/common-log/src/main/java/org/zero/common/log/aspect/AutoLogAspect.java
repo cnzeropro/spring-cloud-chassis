@@ -12,7 +12,7 @@ import org.zero.common.log.constant.LogMessageEngine;
 import org.zero.common.log.constant.LogType;
 import org.zero.common.log.constant.OperateType;
 import org.zero.common.log.event.SysLogEvent;
-import org.zero.common.log.model.SysLog;
+import org.zero.common.api.basic.log.model.SysLogDTO;
 import org.zero.common.log.supplier.LogContext;
 import org.zero.common.log.supplier.LogSupplier;
 
@@ -49,7 +49,7 @@ public class AutoLogAspect {
                 .setMethod(method)
                 .setParams(args);
 
-        SysLog sysLog = SysLog.builder()
+        SysLogDTO sysLog = SysLogDTO.builder()
                 .app(app)
                 .module(module)
                 .type(logType)
@@ -92,7 +92,7 @@ public class AutoLogAspect {
         return result;
     }
 
-    private void setMessage(SysLog sysLog, LogSupplier supplier, LogContext context) {
+    private void setMessage(SysLogDTO sysLog, LogSupplier supplier, LogContext context) {
         String message = null;
         try {
             message = supplier.getMessage(context);

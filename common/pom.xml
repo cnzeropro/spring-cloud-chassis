@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
     <modules>
       <module>common-log</module>
-      <module>common-api</module>
+      <module>common-api-basic</module>
     </modules>
 
     <name>common</name>

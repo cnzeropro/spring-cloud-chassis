@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.zero.common.log.feign.RemoteLogService;
-import org.zero.common.log.model.SysLog;
+import org.zero.common.api.basic.log.model.SysLogDTO;
 
 /**
  * 异步监听日志事件
@@ -16,7 +16,7 @@ public class SysLogListener {
 	@Async
 	@EventListener(SysLogEvent.class)
 	public void saveSysLog(SysLogEvent event) {
-		SysLog sysLog = event.getSource();
+		SysLogDTO sysLog = event.getSource();
 		remoteLogService.save(sysLog);
 	}
 }

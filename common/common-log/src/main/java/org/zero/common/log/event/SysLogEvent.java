@@ -1,7 +1,7 @@
 package org.zero.common.log.event;
 
 import org.springframework.context.ApplicationEvent;
-import org.zero.common.log.model.SysLog;
+import org.zero.common.api.basic.log.model.SysLogDTO;
 
 /**
  * 系统日志事件
@@ -11,12 +11,12 @@ import org.zero.common.log.model.SysLog;
  */
 public class SysLogEvent extends ApplicationEvent {
 
-    public SysLogEvent(SysLog source) {
+    public SysLogEvent(SysLogDTO source) {
         super(source);
     }
 
     @Override
-    public SysLog getSource() {
-        return (SysLog) source;
+    public SysLogDTO getSource() {
+        return (SysLogDTO) source;
     }
 }

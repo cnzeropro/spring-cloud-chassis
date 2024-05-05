@@ -12,4 +12,15 @@
 
   <artifactId>common-log</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.zero</groupId>
+      <artifactId>common-api-basic</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-core</artifactId>
+    </dependency>
+  </dependencies>
 </project>

@@ -2,7 +2,6 @@ package org.zero.common.log.annotation;
 
 import org.springframework.context.annotation.Import;
 import org.zero.common.log.config.LogConfiguration;
-import org.zero.common.swagger.config.SwaggerConfiguration;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

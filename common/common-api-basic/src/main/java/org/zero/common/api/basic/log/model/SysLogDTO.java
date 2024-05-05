@@ -1,4 +1,4 @@
-package org.zero.common.log.model;
+package org.zero.common.api.basic.log.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.zero.common.log.constant.LogType;
-import org.zero.common.log.constant.OperateType;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -22,7 +20,7 @@ import java.time.LocalDateTime;
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class SysLog implements Serializable {
+public class SysLogDTO implements Serializable {
     /**
      * 日志内容
      */
@@ -33,12 +31,12 @@ public class SysLog implements Serializable {
      * 日志类型
      */
     @NotBlank(message = "日志类型不能为空")
-    private LogType type;
+    private Integer type;
 
     /**
      * 操作类型
      */
-    private OperateType operateType;
+    private Integer operateType;
 
     /**
      * 操作者
