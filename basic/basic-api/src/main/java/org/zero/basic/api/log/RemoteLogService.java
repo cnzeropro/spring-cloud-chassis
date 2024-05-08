@@ -3,7 +3,7 @@ package org.zero.basic.api.log;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.zero.common.api.basic.log.model.SysLogDTO;
+import org.zero.basic.api.log.model.SysLogDTO;
 import org.zero.common.data.model.vo.Result;
 
 /**

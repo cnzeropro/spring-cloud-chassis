@@ -11,4 +11,16 @@
   </parent>
 
   <artifactId>basic-service</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.zero</groupId>
+      <artifactId>common-data</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+    </dependency>
+  </dependencies>
 </project>

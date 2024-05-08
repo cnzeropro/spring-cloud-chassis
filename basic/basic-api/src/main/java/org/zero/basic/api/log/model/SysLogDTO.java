@@ -63,7 +63,7 @@ public class SysLogDTO implements Serializable {
      */
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime executionTime;
+    private LocalDateTime operateTime;
 
     /**
      * 持续时间（纳秒）

@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME:basic}
+  cloud:
+    nacos:
+      username: @nacos.username@
+      password: @nacos.password@
+      discovery:
+        server-addr: ${NACOS_HOST:nacos}:${NACOS_PORT:8848}
+        group: @nacos.group@
+        namespace:
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        group: ${spring.cloud.nacos.discovery.group}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        prefix: ${spring.application.name}
+        file-extension: yml
+  config:
+    activate:
+      on-profile: ${PROFILE_ACTIVE:@profile.active@}
+    # 使用 Config Data Loader 模式
+    import:
+      - nacos:${spring.cloud.nacos.config.prefix}-${spring.config.activate.on-profile}.${spring.cloud.nacos.config.file-extension}
+      - optional:nacos:common.${spring.cloud.nacos.config.file-extension}
+      - optional:nacos:common-${spring.config.activate.on-profile}.${spring.cloud.nacos.config.file-extension}

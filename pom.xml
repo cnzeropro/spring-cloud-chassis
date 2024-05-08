@@ -86,6 +86,7 @@
     <mapstruct.version>1.5.5.Final</mapstruct.version>
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <!-- other dependencies -->
+    <lombok.version>1.18.32</lombok.version>
     <mysql.version>8.0.32</mysql.version>
     <grpc.version>1.59.0</grpc.version>
     <protobuf.version>3.24.4</protobuf.version>
@@ -348,6 +349,12 @@
         <groupId>com.lmax</groupId>
         <artifactId>disruptor</artifactId>
         <version>${disruptor.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -855,10 +862,12 @@
     <profile>
       <id>dev</id>
       <properties>
-        <profiles.active>dev</profiles.active>
+        <profile.active>dev</profile.active>
 
         <nacos.username>nacos</nacos.username>
         <nacos.password>nacos</nacos.password>
+        <nacos.group>DEFAULT_GROUP</nacos.group>
+        <nacos.namespace>${artifactId}</nacos.namespace>
 
         <docker.host>http://127.0.0.1:2375</docker.host>
         <docker.registry>127.0.0.1:8081</docker.registry>

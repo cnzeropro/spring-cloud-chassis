@@ -16,5 +16,6 @@
   <modules>
     <module>basic-api</module>
     <module>basic-service</module>
+    <module>basic-controller</module>
   </modules>
 </project>
