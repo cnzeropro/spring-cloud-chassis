@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.zero</groupId>
-  <artifactId>spring-cloud-template</artifactId>
+  <artifactId>spring-cloud-chassis</artifactId>
   <version>1.0.0</version>
 
   <packaging>pom</packaging>
@@ -15,7 +15,7 @@
     <module>basic</module>
   </modules>
 
-  <name>spring-cloud-template</name>
+  <name>spring-cloud-chassis</name>
   <description>Spring Cloud 微服务脚手架 / 项目模板</description>
 
   <properties>

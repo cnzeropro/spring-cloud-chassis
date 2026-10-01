@@ -1,4 +1,4 @@
-# spring-cloud-template
+# spring-cloud-chassis
 
 Spring Cloud 微服务脚手架：作为新项目的起点模板，`Use this template` 或克隆后即可在其上开发业务模块。
 
@@ -20,7 +20,7 @@ Spring Cloud 微服务脚手架：作为新项目的起点模板，`Use this tem
 ## 模块结构
 
 ```
-spring-cloud-template
+spring-cloud-chassis
 ├── common                  # 通用能力（common-log：注解式操作日志 + 事件异步落库）
 ├── gateway       :5100     # 网关（路由、验证码、密码解码、Swagger 鉴权、访问日志过滤器）
 ├── iam                     # 身份与权限：iam-api（DTO/PO）+ iam-service
