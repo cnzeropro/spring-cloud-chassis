@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.zero</groupId>
-  <artifactId>micro-service-demo</artifactId>
+  <artifactId>spring-cloud-template</artifactId>
   <version>1.0.0</version>
 
   <packaging>pom</packaging>
@@ -15,8 +15,8 @@
     <module>basic</module>
   </modules>
 
-  <name>micro-service-demo</name>
-  <description>微服务 Demo</description>
+  <name>spring-cloud-template</name>
+  <description>Spring Cloud 微服务脚手架 / 项目模板</description>
 
   <properties>
     <!-- properties -->

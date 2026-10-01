@@ -6,7 +6,7 @@
 
   <parent>
     <groupId>org.zero</groupId>
-    <artifactId>micro-service-demo</artifactId>
+    <artifactId>spring-cloud-template</artifactId>
     <version>1.0.0</version>
   </parent>
 
